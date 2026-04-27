@@ -1,0 +1,44 @@
+/* Default theme -> Light Mode vars*/
+:root{
+    --color-bg: #E2E8F0;
+    --color-text: #0f1729;
+    --color-primary: #5048e5;
+    --color-secondary: #FFFFFF;
+    --color-accent: #0d968b;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/*  Universal selector to reset ugly styles injected 
+    by browsers for default */
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/*  Universal selector to reset padding & margin */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* Body selector */
+body{
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+}
+
+/* Heading selectors */
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--font-heading);
+}
+
+/* Container */
+.container{
+    
+}

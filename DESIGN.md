@@ -43,3 +43,5 @@
 ### https://www.realtimecolors.com
 
 ### https://webaim.org/resources/contrastchecker/
+
+### https://midu.dev/que-es-y-para-que-sirve-box-sizing-border-box/
