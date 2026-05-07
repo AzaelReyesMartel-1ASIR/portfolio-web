@@ -9,8 +9,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/style.css">
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>   
 </head>
 <body>
+    <div class="mouse-glow"></div>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal <span class="hint-key">↵ Enter</span></a>
 
     <header>
         <div class="container header-flex">
@@ -19,24 +30,26 @@
             </div>
             
             <nav id="main-nav">
-                <a href="#hero">Sobre mí</a>
+                <a href="#hero">Inicio</a>
+                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#skills">Habilidades</a>
                 <a href="#projects">Proyectos</a>
                 <a href="#contact">Contacto</a>
             </nav>
 
             <div class="header-controls">
-                <button id="theme-toggle" aria-label="Toggle dark mode">
+                <button id="theme-toggle" aria-label="Alternar modo oscuro">
                     <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
                     <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
                 </button>
-                <button class="menu-toggle" aria-label="Menu">
+                <button class="menu-toggle" aria-label="Menú">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
         <section id="hero">
             <div class="container hero-grid">
                 <div class="hero-text">
@@ -49,6 +62,82 @@
                             Descargar CV
                         </a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre-mi">
+            <div class="container">
+                <h2 class="section-title">Sobre mí</h2>
+            <div class="about-grid">
+                <div class="profile-column">
+                    <div class="profile-wrapper">
+                        <img src="img/miFoto_ORLA.jpg" alt="Azael Reyes Martel" class="profile-img">
+                    </div>
+                </div>
+                <div class="text-column">
+                    <p>Mi enfoque arquitectónico combina la robustez de la infraestructura con la elegancia del desarrollo frontend. Como especialista en sistemas, entiendo que cada línea de código ejecuta sobre hardware específico, y esa perspectiva me permite construir soluciones web que no solo se ven bien, sino que funcionan de manera óptima en cualquier entorno.</p>
+                    <p>Desde la configuración de servidores seguros hasta la implementación de interfaces responsivas, mi experiencia abarca todo el stack tecnológico. Me apasiona optimizar el rendimiento, garantizar la seguridad y crear experiencias de usuario fluidas que se sostengan sobre una base técnica sólida.</p>
+                    <p>Cada proyecto es una oportunidad para demostrar cómo la comprensión profunda de la infraestructura se traduce en aplicaciones más rápidas, seguras y escalables.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <h2 class="section-title">Habilidades y Tecnologías</h2>
+                <div class="skills-grid">
+                    <article class="skill-card project-card">
+                        <div class="card-body">
+                            <h3>Sistemas e Infraestructura</h3>
+                            <p>Administración de servidores, redes y despliegues.</p>
+                            <ul class="tech-stack">
+                                <li>Docker</li>
+                                <li>Linux</li>
+                                <li>AWS</li>
+                                <li>Nginx</li>
+                            </ul>
+                        </div>
+                    </article>
+                
+                    <article class="skill-card project-card">
+                        <div class="card-body">
+                            <h3>Backend & Datos</h3>
+                            <p>Desarrollo de APIs, bases de datos y lógica de servidor.</p>
+                            <ul class="tech-stack">
+                                <li>Laravel</li>
+                                <li>PHP</li>
+                                <li>PostgreSQL</li>
+                                <li>MySQL</li>
+                            </ul>
+                        </div>
+                    </article>
+                
+                    <article class="skill-card project-card">
+                        <div class="card-body">
+                            <h3>Frontend & UI</h3>
+                            <p>Creación de interfaces accesibles, dinámicas y responsive.</p>
+                            <ul class="tech-stack">
+                                <li>HTML5</li>
+                                <li>CSS3</li>
+                                <li>JavaScript</li>
+                                <li>React</li>
+                            </ul>
+                        </div>
+                    </article>
+                
+                    <article class="skill-card project-card">
+                        <div class="card-body">
+                            <h3>Soft Skills</h3>
+                            <p>Habilidades interpersonales y gestión de proyectos.</p>
+                            <ul class="tech-stack">
+                                <li>Resolución de problemas</li>
+                                <li>Adaptabilidad</li>
+                                <li>Comunicación</li>
+                                <li>Trabajo en equipo</li>
+                            </ul>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -76,7 +165,7 @@
                             <ul class="tech-stack">
                                 <li>Docker</li>
                                 <li>AWS</li>
-                                <li>Laravel (php) & React (TypeScript)</li>
+                                <li>Laravel & React</li>
                                 <li>PostgreSQL</li>
                                 <li>Nginx</li>
                             </ul>
@@ -116,11 +205,12 @@
             </div>
 
             <div class="copyright">
-                <span>Construido con determinación</span>
-                <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" shape-rendering="crispEdges">
-                    <path fill="var(--color-accent)" d="M4 2h2v1H4z M10 2h2v1H10z M3 3h4v1H3z M9 3h4v1H9z M2 4h12v3H2z M3 7h10v1H3z M4 8h8v1H4z M5 9h6v1H5z M6 10h4v1H6z M7 11h2v1H7z"/>
+                <span>Built with determination</span>
+                <svg viewBox="0 0 16 16" width="42" height="42" shape-rendering="crispEdges" style="margin: 0 12px; vertical-align: middle;">
+                    <path fill="var(--color-primary)" d="M4 2h2v1H4z M10 2h2v1H10z M3 3h4v1H3z M9 3h4v1H9z M2 4h12v3H2z M3 7h10v1H3z M4 8h8v1H4z M5 9h6v1H5z M6 10h4v1H6z M7 11h2v1H7z"/>
+                    <path fill="var(--color-accent)" d="M5 5h1v1H5z M6 6h1v1H6z M5 7h1v1H5z M8 7h3v1H8z"/>
                 </svg>
-                <span>por Azael Reyes &copy; 2026</span>
+                <span>by Azael Reyes &copy; 2026</span>
             </div>
         </div>
     </footer>
