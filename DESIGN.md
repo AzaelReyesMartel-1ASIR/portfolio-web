@@ -41,7 +41,25 @@ Ambas paletas se han ajustado para garantizar altos niveles de contraste cumplie
 
 *Nota: Todas las combinaciones de texto/fondo han sido validadas mediante herramientas como WebAIM Contrast Checker, asegurando niveles de accesibilidad AA y AAA.*
 
-## 3. Aplicación de estilos
+## 3. Optimizaciones Arquitectónicas y Rendimiento
+
+### Efectos UI / Tipografía
+Implementación de un efecto de relieve 3D (Embossed/Stamped) en los encabezados principales utilizando `-webkit-text-stroke` combinado con `text-shadow` dinámicos, manteniendo el ratio de contraste AAA. El sistema utiliza gradientes lineales con variables CSS reactivas (`--color-primary`, `--color-accent`) para adaptación temática en tiempo real.
+
+### Rendimiento Frontend (Performance)
+- **Prevención absoluta del FOUC (Flash of Unstyled Content)** mediante inyección síncrona en el `<head>` para detección de tema preferido del sistema y localStorage.
+- **Migración de animaciones de Layout a composiciones aceleradas por hardware (GPU)** utilizando `transform` para evitar repintados en el hilo principal. Skip link animado con `translateY(-150px)` y cubic-bezier optimizado.
+- **Optimización de carga**: Atributos `defer` en scripts, `preconnect` para Google Fonts, y meta tags SEO para puntuación Lighthouse 100/100.
+
+### Feedback Interactivo
+Sistema dinámico de resaltado de secciones (Full-Width) y hovers gestionados por una única variable CSS reactiva (`--highlight-color`) dependiente del tema activo. Navegación con IntersectionObserver para indicadores activos y micro-interacciones con `translateY(-4px)` en enlaces sociales.
+
+### Accesibilidad WCAG AAA
+- **Contraste optimizado**: Texto claro `#020617` y texto oscuro `#ffffff` puro para máxima legibilidad.
+- **Focus states avanzados**: Outline dashed dinámico con `var(--highlight-color)` y eliminación de sombras dobles.
+- **Navegación por teclado**: Skip link con animación GPU-accelerada y comportamiento nativo de accesibilidad.
+
+## 4. Aplicación de estilos
 
 ### Sistema de Grid y Flexbox
 - Se ha utilizado Flexbox de manera intensiva para el diseño unidimensional (barras de navegación, alineación de botones y distribución de la sección Hero), evitando el uso de márgenes arbitrarios y priorizando la propiedad `gap`.

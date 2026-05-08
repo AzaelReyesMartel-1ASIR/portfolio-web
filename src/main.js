@@ -93,8 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = document.querySelector(targetId);
             
             if (target) {
-                // Si no es el skip-link, forzamos scroll suave. Si lo es, dejamos que el navegador haga su magia de accesibilidad.
-                if(!this.classList.contains('skip-link')) {
+                                if(!this.classList.contains('skip-link')) {
                     e.preventDefault();
                     target.scrollIntoView({ behavior: 'smooth' });
                 }

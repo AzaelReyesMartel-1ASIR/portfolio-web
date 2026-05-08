@@ -1,7 +1,7 @@
 /* Variables */
 :root {
     --color-bg: #f8fafc;
-    --color-text: #0f172a;
+    --color-text: #020617;
     --color-primary: #2563eb;
     --color-secondary: #ffffff;
     --color-accent: #7c3aed;
@@ -23,7 +23,7 @@
 
 [data-theme="dark"] {
     --color-bg: #05050a;
-    --color-text: #f8fafc;
+    --color-text: #ffffff;
     --color-primary: #3b82f6;
     --color-secondary: #121218;
     --color-accent: #8b5cf6;
@@ -60,7 +60,7 @@ body {
     100% { background-size: 120% 120%; }
 }
 
-/* 2. Glow súper sutil y elegante (Efecto Linterna) */
+/* Mouse Glow */
 .mouse-glow {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -74,13 +74,13 @@ body {
 }
 header, main, footer { position: relative; z-index: 10; }
 
-/* 3. Blindaje de Z-index para que el texto NUNCA quede tapado */
+/* Z-index Protection */
 header, main, footer {
     position: relative;
     z-index: 10;
 }
 
-/* AAA Focus States Definitivos */
+/* Focus States */
 *:focus-visible {
     outline: 3px dashed var(--highlight-color) !important;
     outline-offset: 4px !important;
@@ -92,7 +92,7 @@ header, main, footer {
     box-shadow: none !important; 
 }
 
-/* Transición suave y notoria para el cambio de tema (0.7s) */
+/* Theme Transitions */
 body, header, .project-card, .skill-card, nav a, .skip-link, h1, h2, h3, p, span {
     transition: background-color 0.7s ease-in-out, color 0.7s ease-in-out, border-color 0.7s ease-in-out, box-shadow 0.7s ease-in-out;
 }
@@ -140,6 +140,19 @@ h3 {
     -webkit-text-fill-color: initial;
 }
 
+/* 3D Text Effects */
+h1 span, h2, h3, .gradient-text {
+    background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--color-text) 60%, transparent);
+    
+    text-shadow: 2px 3px 6px color-mix(in srgb, var(--color-bg) 90%, #000000);
+}
+
 
 /* Layout */
 .container {
@@ -157,7 +170,7 @@ main#main-content {
     outline: none !important;
 }
 
-/* Espaciado Premium (White Space) */
+/* Section Spacing */
 section, #hero, #sobre-mi, #skills, #projects {
     padding: 140px 0 !important;
 }
@@ -395,8 +408,21 @@ footer {
     gap: 0.5rem;
 }
 
+/* Social Hovers */
+.contact-links a:hover, 
+footer a:hover, 
 .social-links a:hover {
-    color: var(--color-accent);
+    color: var(--highlight-color) !important;
+    transform: translateY(-4px);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-links a:hover svg, 
+footer a:hover svg, 
+.social-links a:hover svg {
+    fill: var(--highlight-color);
+    color: var(--highlight-color);
+    transition: all 0.3s ease;
 }
 
 .copyright {
@@ -428,9 +454,10 @@ footer {
     border-radius: 12px;
 }
 
+/* Accessibility Skip Link */
 .skip-link {
     position: absolute;
-    top: -100px;
+    top: 20px;
     left: 20px;
     z-index: 9999;
     padding: 12px 24px;
@@ -438,18 +465,20 @@ footer {
     color: #ffffff;
     font-weight: bold;
     border-radius: 8px;
-    transition: top 0.3s ease;
+    transform: translateY(-150px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
     border: none;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
+
 .skip-link:focus {
-    top: 20px;
+    transform: translateY(0);
     outline: 3px solid var(--color-text) !important;
     outline-offset: 2px;
 }
 
 
-/* Enhanced contrast for interactive elements */
+/* Interactive Elements */
 a:focus-visible, 
 button:focus-visible, 
 .btn:focus-visible {
@@ -458,7 +487,7 @@ button:focus-visible,
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent), transparent 20%);
 }
 
-/* WCAG AAA compliance for text contrast */
+/* WCAG AAA Text */
 .text-accent, .section-title, .project-card h3, .skill-card h3 {
     background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     background-clip: text;
