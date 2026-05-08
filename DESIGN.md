@@ -170,3 +170,17 @@ El portfolio cumple rigurosamente con los protocolos WCAG 2.1 Nivel AA:
 - **Prefijos Vendor:** Incluidos `-webkit-` para máxima compatibilidad.
 - **Propiedades Estándar:** Uso de `background-clip` estándar junto a prefijos.
 - **Gradientes Modernos:** `color-mix()` para mezcla de colores avanzada.
+
+## 9. Arquitectura Visual y UI
+
+### Glassmorphism & Bento Box
+Implementación de contenedores lógicos utilizando `backdrop-filter: blur()` y gradientes de baja opacidad. Uso de bordes asimétricos (`border-top`, `border-left`) para simular la reflexión especular de la luz sobre cristal real. Los contenedores bento-wrapper utilizan animaciones aurora con `background-size: 200% 200%` y transiciones suaves de 12s para efecto living web.
+
+### Interacciones y GPU
+Elementos interactivos (`.alive-card`) con transformaciones animadas mediante `translateY` y curvas de Bézier personalizadas (`cubic-bezier`), delegadas a la GPU para mantener 60fps constantes. Sistema de hover 3D con `translateY(-8px)` y sombras dinámicas que responden al tema activo mediante `color-mix()`.
+
+### Estabilidad de Layout
+Refactorización del avatar mediante un patrón "Wrapper" (aislamiento de Flexbox) para garantizar el aspect-ratio perfecto y un marco flotante. El wrapper utiliza `flex: 0 0 auto` para prevención de deformaciones y padding con gradiente lineal para efecto de anillo premium.
+
+### Código Limpio
+Código base purgado y estructurado sin dependencias, maximizando el rendimiento (100/100 Lighthouse) y el contraste AAA. Comentarios organizativos en inglés únicamente, eliminando redundancias y manteniendo estructura semántica HTML5 con accesibilidad WCAG 2.1 Nivel AA.

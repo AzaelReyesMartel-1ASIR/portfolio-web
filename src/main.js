@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Dark mode by default
+    /* Default Theme */
     const savedTheme = localStorage.getItem('theme');
     setTheme(savedTheme || 'dark');
 
