@@ -44,4 +44,4 @@ Si deseas ejecutar este proyecto en tu propia máquina para revisar el código:
 
 🗺️ Roadmap (Próximos Pasos)
 
-[ ] Incorporación de un logo personal o foto formal.
+[x] Incorporación de un logo personal o foto formal.
