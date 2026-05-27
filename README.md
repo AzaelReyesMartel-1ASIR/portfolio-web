@@ -44,4 +44,10 @@ Si deseas ejecutar este proyecto en tu propia máquina para revisar el código:
 
 🗺️ Roadmap (Próximos Pasos)
 
-[x] Incorporación de un logo personal o foto formal.
+[ ] Migrar a Astro.
+
+[ ] Optimizar la estructura de directorios y ficheros, modulando y encapsulando de forma eficiente para que sea escalable.
+
+[ ] Mejorar Estilos / Añadir animaciones y cosas chulas.
+
+[ ] Implementar algún sistema sencillo de APIs para mostrar conocimientos en Backend y no solo Frontend.
