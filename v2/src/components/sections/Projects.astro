@@ -1,0 +1,58 @@
+---
+import { PROJECTS, type ProjectItem } from "../../data/projects";
+import ProjectCard from "../ui/ProjectCard.astro";
+
+interface Props {}
+
+const {} = Astro.props as Props;
+const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.featured);
+---
+
+<!-- [ASTRO: Projects.astro] -->
+<section id="proyectos" aria-label="Sección de proyectos destacados y profesionales" class="px-6 py-28 md:px-10 lg:px-14">
+  <div class="mx-auto w-full max-w-6xl">
+    <div class="mb-10 space-y-4">
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal">// projects.ts</p>
+      <h2 class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1">
+        Proyectos con foco en
+        <span class="grad-text">arquitectura real y ejecución</span>
+      </h2>
+      <p class="max-w-3xl text-sm leading-7 text-muted reveal rd2">
+        Implementaciones orientadas a backend, despliegue y calidad técnica. Cada proyecto está alineado
+        con objetivos de producción y mantenibilidad.
+      </p>
+    </div>
+
+    {featuredProject && (
+      <p class="mb-6 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-sky/85 reveal rd2">
+        Proyecto destacado actual: {featuredProject.title}
+      </p>
+    )}
+
+    <div class="projects-grid">
+      {PROJECTS.map((project, index) => (
+        <ProjectCard project={project} index={index} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (max-width: 1080px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
