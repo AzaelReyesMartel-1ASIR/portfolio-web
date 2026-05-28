@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/sections/Hero.astro";
+import About from "../components/sections/About.astro";
 ---
 
 <Layout
@@ -9,7 +10,7 @@ import Hero from "../components/sections/Hero.astro";
 >
   <main aria-label="Página principal del portfolio" class="pt-28">
     <Hero />
-    <section id="sobre-mi" aria-label="Sección sobre mí"></section>
+    <About />
     <section id="skills" aria-label="Sección de habilidades"></section>
     <section id="proyectos" aria-label="Sección de proyectos"></section>
     <section id="contacto" aria-label="Sección de contacto"></section>
@@ -18,8 +19,12 @@ import Hero from "../components/sections/Hero.astro";
   <script type="module">
     import { initTerminal } from "../scripts/terminal.ts";
     import { initScramble } from "../scripts/scramble.ts";
+    import { initReveal } from "../scripts/reveal.ts";
+    import { initCounters } from "../scripts/counters.ts";
 
     initTerminal();
     initScramble();
+    initReveal();
+    initCounters();
   </script>
 </Layout>

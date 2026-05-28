@@ -1,0 +1,224 @@
+---
+import { TIMELINE_ITEMS, type TimelineItem } from "../../data/timeline";
+
+interface Props {}
+
+const {} = Astro.props as Props;
+
+const featuredTimeline: readonly TimelineItem[] = TIMELINE_ITEMS.filter(
+  (item) =>
+    item.nodeType === "experience" ||
+    item.id === "asir-2022-2024" ||
+    item.id === "daw-2024-2026",
+);
+---
+
+<!-- [ASTRO: About.astro] -->
+<section
+  id="sobre-mi"
+  aria-label="Sección sobre Azael Reyes Martel"
+  class="px-6 py-28 md:px-10 lg:px-14"
+>
+  <div class="mx-auto w-full max-w-6xl">
+    <div class="mb-10 space-y-4">
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal">
+        // sobre-mi.ts
+      </p>
+      <h2 class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1">
+        Donde la infraestructura
+        <span class="grad-text">se encuentra con el código</span>
+      </h2>
+    </div>
+
+    <div class="about-bento-grid">
+      <article
+        class="about-bento-card bento-bio reveal rd1"
+        aria-label="Resumen de perfil profesional"
+      >
+        <h3 class="font-display text-xl text-ink">Perfil SysAdmin + Backend orientado a producción</h3>
+        <div class="mt-5 space-y-4 text-[0.96rem] leading-7 text-muted">
+          <p class="reveal rd1">
+            Diseño y mantengo sistemas donde la estabilidad de infraestructura y la calidad del código
+            son igual de importantes. Mi enfoque combina Linux, redes, Docker y servicios backend
+            para entregar soluciones reales en entornos exigentes.
+          </p>
+          <p class="reveal rd2">
+            En proyectos profesionales he trabajado con Laravel, integraciones sobre arquitectura N-Tier
+            y despliegues en AWS, cuidando rendimiento, observabilidad y seguridad operativa desde el
+            primer commit.
+          </p>
+          <p class="reveal rd3">
+            Mi objetivo es seguir creciendo como ingeniero de software enfocado en backend y plataformas:
+            menos improvisación, más sistemas robustos, mantenibles y listos para escalar.
+          </p>
+        </div>
+      </article>
+
+      <article
+        class="about-bento-card bento-stats reveal rd2"
+        aria-label="Métricas clave profesionales"
+      >
+        <h3 class="font-display text-lg text-ink">Métricas clave</h3>
+        <div class="mt-5 grid grid-cols-2 gap-3">
+          <div class="stat-tile">
+            <p class="font-display text-3xl text-sky">
+              <span class="js-counter" data-target="3" data-prefix="" data-suffix="+">3+</span>
+            </p>
+            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Proyectos reales</p>
+          </div>
+          <div class="stat-tile">
+            <p class="font-display text-3xl text-violet">
+              <span class="js-counter" data-target="2" data-prefix="" data-suffix="">2</span>
+            </p>
+            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Titulaciones FP</p>
+          </div>
+          <div class="stat-tile">
+            <p class="font-display text-3xl text-green">
+              <span class="js-counter" data-target="100" data-prefix="" data-suffix="%">100%</span>
+            </p>
+            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Commitment</p>
+          </div>
+          <div class="stat-tile">
+            <p class="font-display text-3xl text-orange">infinito</p>
+            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Café consumido</p>
+          </div>
+        </div>
+      </article>
+
+      <article
+        class="about-bento-card bento-focus reveal rd2"
+        aria-label="Stack principal y enfoque"
+      >
+        <h3 class="font-display text-lg text-ink">Foco técnico actual</h3>
+        <ul class="mt-5 space-y-3 text-sm text-muted">
+          <li class="focus-item">
+            <span class="focus-dot bg-sky shadow-[0_0_10px_rgba(56,189,248,0.55)]"></span>
+            Linux, Docker y Nginx para operaciones y despliegue.
+          </li>
+          <li class="focus-item">
+            <span class="focus-dot bg-violet shadow-[0_0_10px_rgba(167,139,250,0.55)]"></span>
+            Laravel + APIs REST con criterio de mantenibilidad.
+          </li>
+          <li class="focus-item">
+            <span class="focus-dot bg-green shadow-[0_0_10px_rgba(52,211,153,0.55)]"></span>
+            QA funcional y mejora continua con mentalidad de equipo.
+          </li>
+        </ul>
+      </article>
+
+      <article
+        class="about-bento-card bento-timeline reveal rd3"
+        aria-label="Trayectoria profesional y académica"
+      >
+        <h3 class="font-display text-lg text-ink">Trayectoria</h3>
+        <div class="mt-5 space-y-3">
+          {featuredTimeline.map((item) => (
+            <div class="timeline-row">
+              <p class="font-mono text-[0.72rem] uppercase tracking-wide text-sky">{item.yearLabel}</p>
+              <p class="mt-1 text-sm font-semibold text-ink">{item.role}</p>
+              <p class="text-xs text-muted">
+                {item.organization} · {item.period}
+              </p>
+              {item.details.length > 0 && (
+                <ul class="mt-2 flex flex-wrap gap-2">
+                  {item.details.slice(0, 3).map((detail) => (
+                    <li class="rounded-full border border-white/10 bg-white/4 px-2.5 py-1 font-mono text-[0.68rem] text-muted">
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-bento-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "bio bio stats"
+      "focus timeline timeline";
+  }
+
+  .about-bento-card {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: rgba(12, 21, 48, 0.72);
+    padding: 1.25rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .bento-bio {
+    grid-area: bio;
+  }
+
+  .bento-stats {
+    grid-area: stats;
+  }
+
+  .bento-focus {
+    grid-area: focus;
+  }
+
+  .bento-timeline {
+    grid-area: timeline;
+  }
+
+  .stat-tile {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.75rem;
+    min-height: 90px;
+  }
+
+  .focus-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    line-height: 1.45;
+  }
+
+  .focus-dot {
+    margin-top: 0.32rem;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .timeline-row {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-left: 2px solid rgba(56, 189, 248, 0.35);
+    border-radius: 14px;
+    background: rgba(4, 8, 26, 0.45);
+    padding: 0.8rem;
+  }
+
+  @media (max-width: 1080px) {
+    .about-bento-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "bio bio"
+        "stats focus"
+        "timeline timeline";
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-bento-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "bio"
+        "stats"
+        "focus"
+        "timeline";
+    }
+  }
+</style>
