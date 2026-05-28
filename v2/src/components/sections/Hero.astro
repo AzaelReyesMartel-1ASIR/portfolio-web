@@ -1,0 +1,152 @@
+---
+import { Image } from "astro:assets";
+---
+
+<!-- [ASTRO: Hero.astro] -->
+<section
+  id="inicio"
+  aria-label="Presentación principal de Azael Reyes"
+  class="relative overflow-hidden px-6 pb-14 pt-10 md:px-10 lg:px-14"
+>
+  <div
+    class="hero-glow-a pointer-events-none absolute -left-20 top-8 h-72 w-72 rounded-full bg-sky/20 blur-3xl transition-transform duration-500 ease-out"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="hero-glow-b pointer-events-none absolute -right-14 bottom-0 h-80 w-80 rounded-full bg-violet/20 blur-3xl transition-transform duration-500 ease-out"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_380px] lg:items-center">
+    <div class="hero-left space-y-6">
+      <p class="font-mono text-sm text-muted">$ whoami</p>
+      <h1 id="scramble-name" class="grad-text font-display text-[clamp(2.8rem,6vw,4.5rem)] leading-[0.95]">
+        Azael Reyes
+      </h1>
+
+      <p class="font-mono text-base text-sky md:text-lg">
+        &gt; <span id="hero-role-text">Software Engineer</span><span class="animate-term-blink">|</span>
+      </p>
+
+      <div class="flex flex-wrap items-center gap-2.5">
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-3 py-1.5 font-mono text-xs text-sky"
+        >
+          <span class="h-1.5 w-1.5 animate-dot-pulse rounded-full bg-sky shadow-[0_0_8px_var(--sky)]"></span>
+          B2B &amp; Teams
+        </span>
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-green/30 bg-green/10 px-3 py-1.5 font-mono text-xs text-green"
+        >
+          <span class="hero-dot-delay h-1.5 w-1.5 animate-dot-pulse rounded-full bg-green shadow-[0_0_8px_var(--green)]"></span>
+          Freelance Open
+        </span>
+      </div>
+
+      <article
+        aria-label="Emulador de terminal de arranque"
+        class="terminal-shell relative min-h-[182px] overflow-hidden rounded-2xl border border-white/8 bg-card shadow-[0_0_0_1px_rgba(56,189,248,0.06),0_24px_60px_rgba(0,0,0,0.5)]"
+      >
+        <header class="flex items-center justify-between border-b border-white/10 bg-[#0a1228] px-4 py-2.5">
+          <div class="flex items-center gap-2" aria-hidden="true">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
+          </div>
+          <p class="font-mono text-[0.68rem] text-muted">azael@canarias:~$</p>
+          <span class="w-[52px]" aria-hidden="true"></span>
+        </header>
+
+        <div id="terminal-lines" class="relative space-y-1.5 bg-[#050b1a] px-4 py-4 font-mono text-[0.73rem] leading-[1.9]">
+          <p class="text-sky">$ ./boot_profile.sh --verbose</p>
+          <p class="text-muted">[....] Initializing kernel...</p>
+          <p class="text-green">[OK]   Docker daemon started</p>
+          <p class="text-green">[OK]   PostgreSQL :: connected</p>
+          <p class="text-green">[OK]   Laravel API :: port 8000</p>
+          <p class="text-green">[OK]   Nginx :: proxy_pass ready</p>
+          <p class="text-green">[OK]   SSL/TLS :: cert valid 365d</p>
+          <p class="text-orange">[WARN] Frontend: vanilla mode</p>
+          <p class="text-violet">
+            &gt; Stack ready. Loading engineer_<span class="animate-term-blink">|</span>
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <aside aria-label="Foto de perfil con máscara animada" class="photo-wrapper relative mx-auto w-fit animate-float-y">
+      <div class="photo-ring relative h-[300px] w-[300px] animate-morph-blob animate-glow-pulse bg-gradient-to-br from-sky via-violet to-violet p-[3px]">
+        <div class="photo-inner h-full w-full overflow-hidden">
+          <Image
+            src="/img/YO-FORMAL.png"
+            alt="Foto de perfil de Azael Reyes Martel"
+            width={300}
+            height={300}
+            class="photo-img h-full w-full object-cover object-[center_top]"
+            loading="eager"
+            decoding="async"
+          />
+          <div
+            class="photo-fallback pointer-events-none absolute inset-0 hidden items-center justify-center bg-bg/80"
+            aria-hidden="true"
+          >
+            <span class="grad-text font-display text-6xl font-extrabold">AR</span>
+          </div>
+        </div>
+      </div>
+
+      <span
+        class="absolute -left-6 top-5 inline-flex items-center gap-2 rounded-full border border-green/35 bg-[rgba(8,15,36,0.9)] px-3 py-1.5 font-mono text-xs text-green backdrop-blur-md"
+      >
+        <span class="h-1.5 w-1.5 animate-dot-pulse rounded-full bg-green"></span>
+        Open to work
+      </span>
+
+      <span
+        class="absolute -bottom-2 -right-7 rounded-full border border-sky/35 bg-[rgba(8,15,36,0.9)] px-3 py-1.5 font-mono text-xs text-sky backdrop-blur-md"
+      >
+        ASIR · DAW
+      </span>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .hero-dot-delay {
+    animation-delay: 0.5s;
+  }
+
+  .terminal-shell::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -2px;
+    height: 18px;
+    background: linear-gradient(to bottom, rgba(56, 189, 248, 0.16), rgba(56, 189, 248, 0));
+    animation: scanline 4s linear infinite;
+    pointer-events: none;
+  }
+
+  .photo-ring {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  .photo-inner {
+    border-radius: inherit;
+    position: relative;
+  }
+
+  .photo-img {
+    border-radius: inherit;
+    filter: grayscale(75%) contrast(1.1);
+    transition: filter 0.6s ease;
+  }
+
+  .photo-ring:hover .photo-img {
+    filter: grayscale(0%) contrast(1);
+  }
+
+  .photo-ring:hover {
+    box-shadow: 0 0 80px rgba(56, 189, 248, 0.5), 0 0 120px rgba(167, 139, 250, 0.3);
+  }
+</style>
