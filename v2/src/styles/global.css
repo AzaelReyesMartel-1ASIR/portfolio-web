@@ -1,0 +1,208 @@
+@import "tailwindcss";
+@import "./fonts.css";
+
+/* Tailwind v4 theme tokens */
+@theme {
+  --color-bg: #04081a;
+  --color-surf: #080f24;
+  --color-card: #0c1530;
+  --color-sky: #38bdf8;
+  --color-violet: #a78bfa;
+  --color-green: #34d399;
+  --color-orange: #fb923c;
+  --color-red: #f87171;
+  --color-muted: #7a90bb;
+  --color-ink: #e0eaff;
+
+  --font-display: "Syne", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --animate-grad-move: gradMove 4s linear infinite alternate;
+  --animate-morph-blob: morphBlob 10s ease-in-out infinite;
+  --animate-float-y: floatY 5s ease-in-out infinite;
+  --animate-dot-pulse: dotPulse 2s ease-in-out infinite;
+  --animate-marquee-run: marqueeRun 26s linear infinite;
+  --animate-term-blink: termBlink 0.7s step-end infinite;
+  --animate-scanline: scanline 4s linear infinite;
+  --animate-glow-pulse: glowPulse 4s ease-in-out infinite;
+}
+
+:root {
+  --bg: #04081a;
+  --surf: #080f24;
+  --card: #0c1530;
+  --border: rgba(255, 255, 255, 0.065);
+  --text: #e0eaff;
+  --muted: #7a90bb;
+  --sky: #38bdf8;
+  --violet: #a78bfa;
+  --green: #34d399;
+  --orange: #fb923c;
+  --red: #f87171;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+.grad-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 55%, #a78bfa 100%);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradMove 4s linear infinite alternate;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.vis {
+  opacity: 1;
+  transform: none;
+}
+
+.rd1 {
+  transition-delay: 0.1s;
+}
+
+.rd2 {
+  transition-delay: 0.2s;
+}
+
+.rd3 {
+  transition-delay: 0.3s;
+}
+
+.rd4 {
+  transition-delay: 0.4s;
+}
+
+@keyframes gradMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes morphBlob {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  50% {
+    border-radius: 50% 60% 30% 40% / 30% 40% 50% 60%;
+  }
+  75% {
+    border-radius: 40% 50% 60% 30% / 40% 60% 40% 50%;
+  }
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes dotPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes marqueeRun {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes termBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes scanline {
+  0% {
+    top: -2px;
+  }
+  100% {
+    top: 102%;
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 55px rgba(56, 189, 248, 0.5), 0 0 90px rgba(167, 139, 250, 0.2);
+  }
+}
