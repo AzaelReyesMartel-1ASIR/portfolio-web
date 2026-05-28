@@ -1,0 +1,72 @@
+---
+interface Props {
+  className?: string;
+  ariaLabel?: string;
+  showDevLabel?: boolean;
+}
+
+const {
+  className = "",
+  ariaLabel = "Logo de Azael Reyes",
+  showDevLabel = true,
+} = Astro.props;
+---
+
+<!-- [ASTRO: Logo.astro] -->
+<span class={`inline-flex items-center gap-2 ${className}`} aria-label={ariaLabel}>
+  <svg
+    viewBox="0 0 20 16"
+    shape-rendering="crispEdges"
+    role="img"
+    aria-hidden="true"
+    class="h-[22px] w-[28px] text-sky"
+    fill="currentColor"
+  >
+    <title>Pixel heart logo</title>
+
+    <!-- Row 0 -->
+    <rect x="4" y="0" width="4" height="2"></rect>
+    <rect x="12" y="0" width="4" height="2"></rect>
+
+    <!-- Row 1 -->
+    <rect x="2" y="2" width="16" height="2"></rect>
+
+    <!-- Row 2 -->
+    <rect x="0" y="4" width="20" height="2"></rect>
+
+    <!-- Row 3 -->
+    <rect x="0" y="6" width="20" height="2"></rect>
+
+    <!-- Row 4 -->
+    <rect x="2" y="8" width="16" height="2"></rect>
+
+    <!-- Row 5 -->
+    <rect x="4" y="10" width="12" height="2"></rect>
+
+    <!-- Row 6 -->
+    <rect x="6" y="12" width="8" height="2"></rect>
+
+    <!-- Row 7 -->
+    <rect x="8" y="14" width="4" height="2"></rect>
+
+    <text
+      x="10"
+      y="7"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      font-size="3.5"
+      font-family="JetBrains Mono, monospace"
+      fill="#04081a"
+    >
+      &gt;_
+    </text>
+  </svg>
+
+  {
+    showDevLabel && (
+      <span class="font-mono text-xs tracking-[0.14em] text-ink/90">
+        azael<span class="dev text-sky">.dev</span>
+      </span>
+    )
+  }
+</span>

@@ -1,0 +1,10 @@
+---
+interface Props {
+  ariaLabel?: string;
+}
+
+const { ariaLabel = "Cursor personalizado decorativo" } = Astro.props;
+---
+
+<!-- [ASTRO: Cursor.astro] -->
+<div id="cursor-dot" aria-label={ariaLabel} aria-hidden="true"></div>

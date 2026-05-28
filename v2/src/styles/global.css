@@ -62,6 +62,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: none;
 }
 
 img,
@@ -120,6 +121,48 @@ select {
 
 .rd4 {
   transition-delay: 0.4s;
+}
+
+#cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  border-radius: 999px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+#cursor-dot.big {
+  width: 44px;
+  height: 44px;
+}
+
+.c-trail {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  z-index: 99998;
+  pointer-events: none;
+  border-radius: 999px;
+  background: var(--sky);
+  transform: translate(0, 0);
+}
+
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
+
+  #cursor-dot,
+  .c-trail {
+    display: none;
+  }
 }
 
 @keyframes gradMove {

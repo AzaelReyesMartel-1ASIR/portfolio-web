@@ -1,4 +1,8 @@
 ---
+import Footer from "../components/layout/Footer.astro";
+import Header from "../components/layout/Header.astro";
+import Cursor from "../components/ui/Cursor.astro";
+
 interface Props {
   title?: string;
   description?: string;
@@ -24,6 +28,25 @@ import "../styles/global.css";
     <title>{title}</title>
   </head>
   <body>
+    <Header />
+    <Cursor />
     <slot />
+    <Footer />
+    <button
+      id="back-to-top"
+      type="button"
+      class="magnetic fixed bottom-5 right-5 z-[950] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-card/90 text-sky opacity-0 shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:border-sky/45"
+      aria-label="Volver arriba"
+    >
+      <span aria-hidden="true" class="font-mono text-base">↑</span>
+    </button>
+
+    <script type="module">
+      import { initHeader } from "../scripts/header.ts";
+      import { initCursor } from "../scripts/cursor.ts";
+
+      initHeader();
+      initCursor();
+    </script>
   </body>
 </html>

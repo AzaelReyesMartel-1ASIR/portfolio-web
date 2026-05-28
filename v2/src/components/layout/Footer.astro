@@ -1,0 +1,52 @@
+---
+import Logo from "../ui/Logo.astro";
+
+interface FooterLink {
+  href: string;
+  label: string;
+}
+
+const quickLinks: FooterLink[] = [
+  { href: "#inicio", label: "Inicio" },
+  { href: "#sobre-mi", label: "Sobre mí" },
+  { href: "#skills", label: "Skills" },
+  { href: "#proyectos", label: "Proyectos" },
+  { href: "#contacto", label: "Contacto" },
+];
+---
+
+<!-- [ASTRO: Footer.astro] -->
+<footer
+  class="border-t border-white/10 bg-surf/40"
+  aria-label="Pie de página del portfolio"
+>
+  <div class="mx-auto grid w-full max-w-6xl gap-6 px-5 py-8 md:px-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+    <p class="text-center font-mono text-xs tracking-[0.04em] text-muted lg:text-left">
+      built with &lt;determination /&gt; by Azael Reyes © 2026
+    </p>
+
+    <a
+      href="#inicio"
+      class="mx-auto inline-flex items-center justify-center rounded-full border border-white/10 bg-card/70 px-3 py-1.5 transition-colors duration-200 hover:border-sky/35"
+      aria-label="Volver al inicio"
+    >
+      <Logo className="scale-90" showDevLabel={false} />
+    </a>
+
+    <nav
+      aria-label="Navegación rápida del pie"
+      class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-end"
+    >
+      {
+        quickLinks.map((item) => (
+          <a
+            href={item.href}
+            class="font-body text-xs font-medium text-ink/80 transition-colors duration-200 hover:text-sky"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</footer>
