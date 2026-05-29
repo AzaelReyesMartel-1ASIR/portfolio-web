@@ -1,4 +1,9 @@
 ---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 interface Props {}
 
 const {} = Astro.props as Props;
@@ -7,19 +12,18 @@ const {} = Astro.props as Props;
 <!-- [ASTRO: Contact.astro] -->
 <section
   id="contacto"
-  aria-label="Sección de contacto profesional"
+  aria-label={t('contact.aria')}
   class="px-6 py-28 md:px-10 lg:px-14"
 >
   <div class="mx-auto grid w-full max-w-6xl gap-5 lg:grid-cols-[1.05fr_0.95fr]">
     <article class="reveal rounded-2xl border border-white/10 bg-linear-to-br from-card to-surf p-6 shadow-[0_18px_45px_rgba(0,0,0,0.35)] contact-card">
-      <p class="mb-3 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky">// contact</p>
+      <p class="mb-3 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky">{t('contact.label')}</p>
       <h2 class="font-display text-[clamp(1.8rem,4vw,2.45rem)] leading-tight text-ink">
-        ¿Construimos algo
-        <span class="grad-text">en producción?</span>
+        {t('contact.heading')}
+        <span class="grad-text">{t('contact.heading.em')}</span>
       </h2>
       <p class="mt-4 max-w-xl text-sm leading-7 text-muted">
-        Disponible para proyectos B2B, freelance y colaboración en equipos técnicos. Respondo con foco en
-        arquitectura, delivery y operación real.
+        {t('contact.body')}
       </p>
 
       <div class="mt-7 flex flex-wrap gap-3">
@@ -28,7 +32,7 @@ const {} = Astro.props as Props;
           href="mailto:azadaw2004@gmail.com"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          Email Directo
+          {t('contact.cta.email')}
         </a>
         <a
           class="contact-btn magnetic group flex items-center gap-2 rounded-xl border border-violet/35 bg-violet/10 px-4 py-2 font-mono text-[0.72rem] uppercase tracking-[0.13em] text-violet transition-all duration-200 hover:-translate-y-0.5 hover:bg-violet/20 hover:shadow-[0_0_18px_rgba(167,139,250,0.25)]"
@@ -36,7 +40,7 @@ const {} = Astro.props as Props;
           target="_blank" rel="noreferrer"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-          GitHub
+          {t('contact.cta.github')}
         </a>
         <a
           class="contact-btn magnetic group flex items-center gap-2 rounded-xl border border-green/35 bg-green/10 px-4 py-2 font-mono text-[0.72rem] uppercase tracking-[0.13em] text-green transition-all duration-200 hover:-translate-y-0.5 hover:bg-green/20 hover:shadow-[0_0_18px_rgba(52,211,153,0.25)]"
@@ -44,23 +48,23 @@ const {} = Astro.props as Props;
           target="_blank" rel="noreferrer"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
+          {t('contact.cta.linkedin')}
         </a>
       </div>
     </article>
 
     <aside class="reveal rd1 rounded-2xl border border-white/10 bg-card/55 p-6 contact-aside">
-      <h3 class="font-display text-xl text-ink">Availability</h3>
+      <h3 class="font-display text-xl text-ink">{t('contact.availability')}</h3>
       <p class="mt-3 text-sm leading-7 text-muted">
-        Modo dual activo para consultoría B2B, producto y squads remotos.
+        {t('contact.availability.body')}
       </p>
 
       <div class="mt-6 flex flex-wrap gap-3">
         <span class="rounded-full border border-sky/35 bg-sky/10 px-4 py-1.5 font-mono text-[0.67rem] uppercase tracking-[0.13em] text-sky">
-          B2B & Teams
+          {t('contact.availability.b2b')}
         </span>
         <span class="rounded-full border border-green/35 bg-green/10 px-4 py-1.5 font-mono text-[0.67rem] uppercase tracking-[0.13em] text-green">
-          Freelance Open
+          {t('contact.availability.freelance')}
         </span>
       </div>
 
@@ -68,7 +72,7 @@ const {} = Astro.props as Props;
         id="status-badge"
         class="mt-7 min-h-12 rounded-xl border border-white/10 bg-surf/70 p-3"
         aria-live="polite"
-        aria-label="Estado de la API"
+        aria-label={t('contact.status.aria')}
       ></div>
     </aside>
   </div>

@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/sections/Hero.astro";
+import About from "../../components/sections/About.astro";
+import Skills from "../../components/sections/Skills.astro";
+import Certificates from "../../components/sections/Certificates.astro";
+import Architecture from "../../components/sections/Architecture.astro";
+import Projects from "../../components/sections/Projects.astro";
+import Contact from "../../components/sections/Contact.astro";
+---
+
+<Layout
+  title="Azael Reyes Martel — Portfolio"
+  description="Azael Reyes Martel's professional portfolio, Software Engineer specializing in Backend, SysAdmin, Docker, and Laravel."
+  lang="en"
+>
+  <main aria-label="Main page of the portfolio">
+    <Hero />
+    <About />
+    <Skills />
+    <!-- <Certificates /> -->
+    <Architecture />
+    <Projects />
+    <Contact />
+  </main>
+
+  <script>
+    import { initTerminal } from "../../scripts/terminal.ts";
+    import { initScramble } from "../../scripts/scramble.ts";
+    import { initReveal } from "../../scripts/reveal.ts";
+    import { initCounters } from "../../scripts/counters.ts";
+    import { initSpotlight } from "../../scripts/spotlight.ts";
+    import { initStatus } from "../../scripts/status.ts";
+
+    initTerminal();
+    initScramble();
+    initReveal();
+    initCounters();
+    initSpotlight();
+    initStatus();
+  </script>
+</Layout>

@@ -1,6 +1,10 @@
 ---
 import BentoCard from "../ui/BentoCard.astro";
 import { SKILL_GROUPS, type SkillGroup } from "../../data/skills";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 interface Props {}
 
@@ -23,21 +27,27 @@ const networkSecurity: SkillGroup = groupMap["network-security"];
 <!-- [ASTRO: Skills.astro] -->
 <section
   id="skills"
-  aria-label="Sección de habilidades técnicas"
+  aria-label={t('skills.aria')}
   class="px-6 py-28 md:px-10 lg:px-14"
 >
   <div class="mx-auto w-full max-w-6xl">
     <div class="mb-10 space-y-4">
-      <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal">// skills.ts</p>
-      <h2 class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1">
-        Stack técnico listo para
-        <span class="grad-text">producción y escalado</span>
+      <p
+        class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal"
+      >
+        {t('skills.label')}
+      </p>
+      <h2
+        class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1"
+      >
+        {t('skills.heading')}
+        <span class="grad-text">{t('skills.heading.em')}</span>
       </h2>
     </div>
 
     <div class="skills-bento-grid">
       <BentoCard
-        title={systemsDevops.title}
+        title={t('skills.title.systems')}
         accent={systemsDevops.accent}
         tags={systemsDevops.tags}
         bars={systemsDevops.bars}
@@ -45,21 +55,21 @@ const networkSecurity: SkillGroup = groupMap["network-security"];
         revealDelayClass="rd1"
       />
       <BentoCard
-        title={backendDb.title}
+        title={t('skills.title.backend')}
         accent={backendDb.accent}
         tags={backendDb.tags}
         areaClass="skills-backend"
         revealDelayClass="rd2"
       />
       <BentoCard
-        title={frontendUi.title}
+        title={t('skills.title.frontend')}
         accent={frontendUi.accent}
         tags={frontendUi.tags}
         areaClass="skills-frontend"
         revealDelayClass="rd3"
       />
       <BentoCard
-        title={networkSecurity.title}
+        title={t('skills.title.network')}
         accent={networkSecurity.accent}
         tags={networkSecurity.tags}
         areaClass="skills-network"

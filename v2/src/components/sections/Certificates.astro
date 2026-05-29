@@ -1,0 +1,112 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+interface CertificateItem {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  accent: "sky" | "violet" | "green";
+}
+
+const certificates: CertificateItem[] = [
+  {
+    id: "asir",
+    title: t('timeline.asir-2022-2024.role' as any),
+    issuer: "CIFP Villa de Agüimes",
+    date: "2024",
+    accent: "sky",
+  },
+  {
+    id: "daw",
+    title: t('timeline.daw-2024-2026.role' as any),
+    issuer: "CIFP Villa de Agüimes",
+    date: "2026",
+    accent: "violet",
+  },
+  {
+    id: "laravel",
+    title: "PHP/Laravel Backend Certification",
+    issuer: "Bitbox SL",
+    date: "2026",
+    accent: "green",
+  },
+];
+---
+
+<!-- [ASTRO: Certificates.astro] -->
+<section
+  id="certificates"
+  aria-label={t('certificates.aria')}
+  class="px-6 py-28 md:px-10 lg:px-14"
+>
+  <div class="mx-auto w-full max-w-6xl">
+    <div class="mb-10 space-y-4">
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal">
+        {t('certificates.label')}
+      </p>
+      <h2 class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1">
+        {t('certificates.title')}
+      </h2>
+      <p class="max-w-3xl text-sm leading-7 text-muted reveal rd2">
+        {t('certificates.subtitle')}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {certificates.map((cert, index) => {
+        const delayClassMap = ["rd1", "rd2", "rd3"];
+        const delayClass = delayClassMap[index % 3];
+        return (
+          <article
+            class={`reveal ${delayClass} spt card-hover relative overflow-hidden rounded-2xl border p-6 bg-card/65 transition-all duration-300 ${
+              cert.accent === 'sky'
+                ? 'border-sky/20 hover:border-sky/45 project-accent-sky'
+                : cert.accent === 'violet'
+                ? 'border-violet/20 hover:border-violet/45 project-accent-violet'
+                : 'border-green/20 hover:border-green/45 project-accent-green'
+            }`}
+          >
+            <!-- Decorative certificate badge icon -->
+            <div class="flex items-center justify-between mb-6">
+              <div class={`p-2.5 rounded-xl ${
+                cert.accent === 'sky'
+                  ? 'bg-sky/10 text-sky border border-sky/20'
+                  : cert.accent === 'violet'
+                  ? 'bg-violet/10 text-violet border border-violet/20'
+                  : 'bg-green/10 text-green border border-green/20'
+              }`}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+              </div>
+              <span class="font-mono text-xs text-muted">{cert.date}</span>
+            </div>
+
+            <h3 class="font-display text-xl leading-snug text-ink mb-2">{cert.title}</h3>
+            <p class="text-sm text-muted mb-4">{cert.issuer}</p>
+
+            <!-- Decorative certificate mockup graphic -->
+            <div class={`h-36 rounded-xl w-full relative overflow-hidden flex items-center justify-center border border-white/5 bg-linear-to-br ${
+              cert.accent === 'sky'
+                ? 'from-[#052b48] to-[#040f28]'
+                : cert.accent === 'violet'
+                ? 'from-[#2a174c] to-[#0a081c]'
+                : 'from-[#0a3525] to-[#04120f]'
+            }`} aria-hidden="true">
+              <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 8px 8px;"></div>
+              <!-- Simulated document crest -->
+              <div class="flex flex-col items-center opacity-60">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class={`mb-2 ${
+                  cert.accent === 'sky' ? 'text-sky' : cert.accent === 'violet' ? 'text-violet' : 'text-green'
+                }`}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">Azael Reyes</span>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

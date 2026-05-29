@@ -4,8 +4,9 @@ interface Point {
   node: HTMLDivElement;
 }
 
-const TRAIL_COUNT = 7;
-const FOLLOW_FACTOR = 0.38;
+const TRAIL_COUNT    = 7;
+const FOLLOW_FACTOR  = 0.38;
+const OUTLINE_LAG    = 0.12;   // outline follows slower than the dot
 const MAGNETIC_FACTOR = 0.28;
 
 function isTouchDevice(): boolean {
@@ -104,37 +105,61 @@ export function initCursor(): void {
     return;
   }
 
-  const cursorDot = document.getElementById("cursor-dot");
+  const cursorDot     = document.getElementById('cursor-dot');
+  const cursorOutline = document.getElementById('cursor-outline');
   if (!(cursorDot instanceof HTMLElement)) {
     return;
   }
 
   const trailPoints = createTrailNodes();
-  const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  const pointer  = { x: window.innerWidth / 2,  y: window.innerHeight / 2 };
+  const outlined = { x: window.innerWidth / 2,  y: window.innerHeight / 2 };
   let trailRaf = 0;
 
-  document.addEventListener("mousemove", (event: MouseEvent) => {
+  document.addEventListener('mousemove', (event: MouseEvent) => {
     pointer.x = event.clientX;
     pointer.y = event.clientY;
   });
 
   const animateTrail = (): void => {
+    // Trail nodes
     trailPoints.forEach((point, index) => {
       const leader = index === 0 ? pointer : trailPoints[index - 1];
       point.x += (leader.x - point.x) * FOLLOW_FACTOR;
       point.y += (leader.y - point.y) * FOLLOW_FACTOR;
       point.node.style.transform = `translate(${point.x}px, ${point.y}px) translate(-50%, -50%)`;
     });
+
+    // Dot — snaps instantly to pointer
     cursorDot.style.transform = `translate(${pointer.x}px, ${pointer.y}px) translate(-50%, -50%)`;
+
+    // Outline — follows with OUTLINE_LAG for a trailing ring effect
+    if (cursorOutline instanceof HTMLElement) {
+      outlined.x += (pointer.x - outlined.x) * OUTLINE_LAG;
+      outlined.y += (pointer.y - outlined.y) * OUTLINE_LAG;
+      cursorOutline.style.transform = `translate(${outlined.x}px, ${outlined.y}px) translate(-50%, -50%)`;
+    }
+
     trailRaf = requestAnimationFrame(animateTrail);
   };
+
+  // Cursor-hover feedback: ring grows + changes color on interactive elements
+  function setupOutlineHover(): void {
+    if (!(cursorOutline instanceof HTMLElement)) return;
+    const interactives = document.querySelectorAll<HTMLElement>('a, button, [role="button"]');
+    interactives.forEach((el) => {
+      el.addEventListener('mouseenter', () => cursorOutline.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-hover'));
+    });
+  }
 
   setupCursorScale(cursorDot);
   setupMagneticElements();
   setupHeroParallax();
+  setupOutlineHover();
   trailRaf = requestAnimationFrame(animateTrail);
 
-  window.addEventListener("beforeunload", () => {
+  window.addEventListener('beforeunload', () => {
     cancelAnimationFrame(trailRaf);
   });
 }

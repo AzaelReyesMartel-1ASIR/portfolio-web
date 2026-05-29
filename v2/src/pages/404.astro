@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Timeline Corrupted | Azael Reyes">
+  <main class="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black overflow-hidden">
+    <!-- Film grain / noise texture -->
+    <div
+      class="pointer-events-none absolute inset-0 opacity-20 mix-blend-screen"
+      style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Scanlines overlay -->
+    <div
+      class="pointer-events-none absolute inset-0 opacity-[0.04]"
+      style="background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, #f00 2px, #f00 4px);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Error content -->
+    <div class="z-10 text-center font-mono px-6">
+      <!-- Re:Zero clock SVG -->
+      <svg
+        class="rezero-clock mx-auto mb-8 h-16 w-16 text-red-600 opacity-80"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.2"
+        stroke-dasharray="2 2"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="12" x2="12" y2="4" class="clock-hand-m" />
+        <line x1="12" y1="12" x2="17" y2="12" class="clock-hand-h" />
+      </svg>
+
+      <h1
+        class="glitch-text text-red-600 text-3xl md:text-5xl font-bold tracking-widest mb-4"
+        data-text="[FATAL ERROR]"
+        aria-label="Error 404 — página no encontrada"
+      >
+        [FATAL ERROR]
+      </h1>
+
+      <p class="text-red-500/80 text-sm md:text-base mb-2 animate-pulse">
+        TIMELINE CORRUPTED · CODE 404
+      </p>
+      <p class="text-red-400/60 text-xs font-mono">
+        INITIATING RETURN BY DEATH<span class="blink">...</span>
+      </p>
+
+      <!-- Countdown bar -->
+      <div class="mt-8 mx-auto w-64 h-[2px] bg-red-900/40 rounded-full overflow-hidden">
+        <div id="countdown-bar" class="h-full bg-red-600 rounded-full" style="width:100%"></div>
+      </div>
+      <p class="mt-2 text-red-600/50 text-[0.65rem] tracking-widest">REWINDING IN <span id="countdown-secs">3</span>s</p>
+    </div>
+
+    <!-- Return by Death: redirect after 3.5s -->
+    <script is:inline>
+      (function () {
+        var DELAY = 3500;
+        var bar   = document.getElementById('countdown-bar');
+        var secs  = document.getElementById('countdown-secs');
+        var start = performance.now();
+
+        function tick(now) {
+          var elapsed = now - start;
+          var pct     = Math.max(0, 1 - elapsed / DELAY);
+          if (bar)  bar.style.width = (pct * 100) + '%';
+          if (secs) secs.textContent = Math.ceil(pct * 3);
+          if (elapsed < DELAY) {
+            requestAnimationFrame(tick);
+          } else {
+            window.location.href = '/';
+          }
+        }
+
+        requestAnimationFrame(tick);
+      })();
+    </script>
+  </main>
+</Layout>
+
+<style>
+  /* ── Re:Zero clock: rewinds counter-clockwise ── */
+  .rezero-clock {
+    transform-origin: center;
+    animation: rewind404 4s linear infinite;
+  }
+
+  @keyframes rewind404 {
+    from { transform: rotate(0deg);    }
+    to   { transform: rotate(-360deg); }
+  }
+
+  /* ── Glitch chromatic aberration ── */
+  .glitch-text {
+    text-shadow:
+      2px  0 0 rgba(255, 0, 0, 0.8),
+      -2px 0 0 rgba(139, 92, 246, 0.8);
+    animation: shake404 0.2s infinite;
+  }
+
+  @keyframes shake404 {
+    0%   { transform: translate(1px,  1px)  rotate(0deg);  }
+    10%  { transform: translate(-1px,-2px)  rotate(-1deg); }
+    20%  { transform: translate(-3px, 0px)  rotate(1deg);  }
+    30%  { transform: translate(3px,  2px)  rotate(0deg);  }
+    40%  { transform: translate(1px, -1px)  rotate(1deg);  }
+    50%  { transform: translate(-1px, 2px)  rotate(-1deg); }
+    60%  { transform: translate(-3px, 1px)  rotate(0deg);  }
+    70%  { transform: translate(3px,  1px)  rotate(-1deg); }
+    80%  { transform: translate(-1px,-1px)  rotate(1deg);  }
+    90%  { transform: translate(1px,  2px)  rotate(0deg);  }
+    100% { transform: translate(1px, -2px)  rotate(-1deg); }
+  }
+
+  /* ── Countdown bar transition ── */
+  #countdown-bar {
+    transition: width 0.1s linear;
+  }
+
+  /* ── Blinking ellipsis ── */
+  .blink {
+    animation: blink404 1s step-end infinite;
+  }
+
+  @keyframes blink404 {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
+</style>

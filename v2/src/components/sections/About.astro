@@ -1,5 +1,9 @@
 ---
 import { TIMELINE_ITEMS, type TimelineItem } from "../../data/timeline";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 interface Props {}
 
@@ -16,121 +20,175 @@ const featuredTimeline: readonly TimelineItem[] = TIMELINE_ITEMS.filter(
 <!-- [ASTRO: About.astro] -->
 <section
   id="sobre-mi"
-  aria-label="Sección sobre Azael Reyes Martel"
+  aria-label={t('about.aria')}
   class="px-6 py-28 md:px-10 lg:px-14"
 >
   <div class="mx-auto w-full max-w-6xl">
     <div class="mb-10 space-y-4">
-      <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal">
-        // sobre-mi.ts
+      <p
+        class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal"
+      >
+        {t('about.label')}
       </p>
-      <h2 class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1">
-        Donde la infraestructura
-        <span class="grad-text">se encuentra con el código</span>
+      <h2
+        class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1"
+      >
+        {t('about.heading')}
+        <span class="grad-text">{t('about.heading.em')}</span>
       </h2>
     </div>
 
     <div class="about-bento-grid">
       <article
         class="about-bento-card bento-bio reveal rd1"
-        aria-label="Resumen de perfil profesional"
+        aria-label={t('about.bio.aria')}
       >
-        <h3 class="font-display text-xl text-ink">Perfil SysAdmin + Backend orientado a producción</h3>
+        <h3 class="font-display text-xl text-ink">
+          {t('about.bio.title')}
+        </h3>
         <div class="mt-5 space-y-4 text-[0.96rem] leading-7 text-muted">
           <p class="reveal rd1">
-            Diseño y mantengo sistemas donde la estabilidad de infraestructura y la calidad del código
-            son igual de importantes. Mi enfoque combina Linux, redes, Docker y servicios backend
-            para entregar soluciones reales en entornos exigentes.
+            {t('about.bio.p1')}
           </p>
           <p class="reveal rd2">
-            En proyectos profesionales he trabajado con Laravel, integraciones sobre arquitectura N-Tier
-            y despliegues en AWS, cuidando rendimiento, observabilidad y seguridad operativa desde el
-            primer commit.
+            {t('about.bio.p2')}
           </p>
           <p class="reveal rd3">
-            Mi objetivo es seguir creciendo como ingeniero de software enfocado en backend y plataformas:
-            menos improvisación, más sistemas robustos, mantenibles y listos para escalar.
+            {t('about.bio.p3')}
           </p>
         </div>
       </article>
 
       <article
         class="about-bento-card bento-stats reveal rd2"
-        aria-label="Métricas clave profesionales"
+        aria-label={t('about.stats.aria')}
       >
-        <h3 class="font-display text-lg text-ink">Métricas clave</h3>
+        <h3 class="font-display text-lg text-ink">{t('about.stats.title')}</h3>
         <div class="mt-5 grid grid-cols-2 gap-3">
           <div class="stat-tile">
             <p class="font-display text-3xl text-sky">
-              <span class="js-counter" data-target="3" data-prefix="" data-suffix="+">3+</span>
+              <span
+                class="js-counter"
+                data-target="3"
+                data-prefix=""
+                data-suffix="+">3+</span
+              >
             </p>
-            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Proyectos reales</p>
+            <p
+              class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted"
+            >
+              {t('about.stats.projects')}
+            </p>
           </div>
           <div class="stat-tile">
             <p class="font-display text-3xl text-violet">
-              <span class="js-counter" data-target="2" data-prefix="" data-suffix="">2</span>
+              <span
+                class="js-counter"
+                data-target="2"
+                data-prefix=""
+                data-suffix="">2</span
+              >
             </p>
-            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Titulaciones FP</p>
+            <p
+              class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted"
+            >
+              {t('about.stats.degrees')}
+            </p>
           </div>
           <div class="stat-tile">
             <p class="font-display text-3xl text-green">
-              <span class="js-counter" data-target="100" data-prefix="" data-suffix="%">100%</span>
+              <span
+                class="js-counter"
+                data-target="100"
+                data-prefix=""
+                data-suffix="%">100%</span
+              >
             </p>
-            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Commitment</p>
+            <p
+              class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted"
+            >
+              {t('about.stats.commitment')}
+            </p>
           </div>
           <div class="stat-tile">
-            <p class="font-display text-3xl text-orange">infinito</p>
-            <p class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted">Café consumido</p>
+            <p class="font-display text-3xl text-orange">{t('about.stats.coffee.val')}</p>
+            <p
+              class="mt-1 font-mono text-[0.72rem] uppercase tracking-wide text-muted"
+            >
+              {t('about.stats.coffee')}
+            </p>
           </div>
         </div>
       </article>
 
       <article
         class="about-bento-card bento-focus reveal rd2"
-        aria-label="Stack principal y enfoque"
+        aria-label={t('about.focus.aria')}
       >
-        <h3 class="font-display text-lg text-ink">Foco técnico actual</h3>
+        <h3 class="font-display text-lg text-ink">{t('about.focus.title')}</h3>
         <ul class="mt-5 space-y-3 text-sm text-muted">
           <li class="focus-item">
-            <span class="focus-dot bg-sky shadow-[0_0_10px_rgba(56,189,248,0.55)]"></span>
-            Linux, Docker y Nginx para operaciones y despliegue.
+            <span
+              class="focus-dot bg-sky shadow-[0_0_10px_rgba(56,189,248,0.55)]"
+            ></span>
+            {t('about.focus.li1')}
           </li>
           <li class="focus-item">
-            <span class="focus-dot bg-violet shadow-[0_0_10px_rgba(167,139,250,0.55)]"></span>
-            Laravel + APIs REST con criterio de mantenibilidad.
+            <span
+              class="focus-dot bg-violet shadow-[0_0_10px_rgba(167,139,250,0.55)]"
+            ></span>
+            {t('about.focus.li2')}
           </li>
           <li class="focus-item">
-            <span class="focus-dot bg-green shadow-[0_0_10px_rgba(52,211,153,0.55)]"></span>
-            QA funcional y mejora continua con mentalidad de equipo.
+            <span
+              class="focus-dot bg-green shadow-[0_0_10px_rgba(52,211,153,0.55)]"
+            ></span>
+            {t('about.focus.li3')}
           </li>
         </ul>
       </article>
 
       <article
         class="about-bento-card bento-timeline reveal rd3"
-        aria-label="Trayectoria profesional y académica"
+        aria-label={t('about.timeline.aria')}
       >
-        <h3 class="font-display text-lg text-ink">Trayectoria</h3>
+        <h3 class="font-display text-lg text-ink">{t('about.timeline.title')}</h3>
         <div class="timeline-container mt-5">
-          {featuredTimeline.map((item) => (
-            <div class="timeline-row">
-              <span class="timeline-dot"></span>
-              <p class="font-mono text-[0.72rem] uppercase tracking-wide text-sky">{item.yearLabel}</p>
-              <p class="mt-1 text-sm font-semibold text-ink">{item.role}</p>
-              <p class="text-xs text-muted">
-                {item.organization} · {item.period}
-              </p>
-              {item.details.length > 0 && (
-                <ul class="mt-2 flex flex-wrap gap-2">
-                  {item.details.slice(0, 3).map((detail) => (
-                    <li class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[0.68rem] text-muted">
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
+          {
+            featuredTimeline.map((item) => (
+              <div class="timeline-row">
+                <span class="timeline-dot" />
+                <p class="flex items-center font-mono text-[0.72rem] uppercase tracking-wide text-sky">
+                  {item.id === "certifications-active" ? t('timeline.certifications-active.yearLabel') : item.yearLabel}
+                  <svg
+                    class="rezero-timeline-clock ml-2 inline-block h-3.5 w-3.5 text-violet opacity-70"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-dasharray="2 3"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="12" x2="12" y2="6" />
+                  </svg>
+                </p>
+                <p class="mt-1 text-sm font-semibold text-ink">{t(`timeline.${item.id}.role` as any)}</p>
+                <p class="text-xs text-muted">
+                  {(item.organization === "CIFP Villa de Agüimes" || item.organization === "Bitbox SL" || item.organization === "Empire Systems" || item.organization === "Cloud Canary Services") ? item.organization : t(`timeline.${item.id}.organization` as any)} · {t(`timeline.${item.id}.period` as any)}
+                </p>
+                {item.details.length > 0 && (
+                  <ul class="mt-2 flex flex-wrap gap-2">
+                    {item.details.slice(0, 3).map((_detail, dIndex) => (
+                      <li class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[0.68rem] text-muted">
+                        {t(`timeline.${item.id}.detail.${dIndex}` as any)}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
         </div>
       </article>
     </div>
@@ -293,5 +351,20 @@ const featuredTimeline: readonly TimelineItem[] = TIMELINE_ITEMS.filter(
 
   :global([data-theme="light"]) .timeline-dot {
     background: var(--surf);
+  }
+  /* ── TAREA 4: Re:Zero clock ── */
+  @keyframes rewind-time {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  .rezero-timeline-clock {
+    transform-origin: center;
+    animation: rewind-time 8s linear infinite;
+    flex-shrink: 0;
   }
 </style>

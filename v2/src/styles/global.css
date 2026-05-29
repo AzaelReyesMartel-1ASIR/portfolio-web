@@ -300,12 +300,48 @@ select {
   will-change: transform;
 }
 
+/* ── TAREA 1: Exterminio del cursor nativo en elementos interactivos ── */
+a,
+button,
+input,
+textarea,
+select,
+[role="button"],
+.cursor-pointer {
+  cursor: none !important;
+}
+
+/* ── TAREA 2: Ring exterior del cursor personalizado ── */
+#cursor-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99997;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+  border-radius: 999px;
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  background: transparent;
+  transform: translate(-200px, -200px) translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+  will-change: transform;
+}
+
+#cursor-outline.cursor-hover {
+  width: 48px !important;
+  height: 48px !important;
+  background-color: rgba(56, 189, 248, 0.15) !important;
+  border-color: transparent !important;
+}
+
 @media (hover: none) {
   body {
     cursor: auto;
   }
 
   #cursor-dot,
+  #cursor-outline,
   .c-trail {
     display: none;
   }
@@ -513,7 +549,16 @@ select {
 }
 
 [data-theme="light"] #cursor-dot {
-  background: #0f1737;
+  background: #0f172a;
+}
+
+[data-theme="light"] #cursor-outline {
+  border-color: rgba(2, 132, 199, 0.5);
+}
+
+[data-theme="light"] #cursor-outline.cursor-hover {
+  background-color: rgba(2, 132, 199, 0.08);
+  border-color: var(--sky);
 }
 
 /* ──────────────────────────────────────────────
@@ -642,4 +687,63 @@ select {
     0 0 0 1px rgba(5, 150, 105, 0.28),
     0 0 24px rgba(5, 150, 105, 0.1),
     0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* ── TAREA 1: Graceful degradation — zoom extremo o pantallas >2.5dppx ── */
+@media (min-resolution: 2.5dppx) {
+  .scrolled,
+  .spt,
+  .project-card,
+  .skills-bento-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--card-bg-solid, rgba(12, 21, 48, 0.95)) !important;
+  }
+}
+
+/* ── TAREA 2: CRT overlay — light mode reduce opacity to near-zero ── */
+.crt-scanlines {
+  opacity: 0.03;
+}
+
+[data-theme="light"] .crt-scanlines {
+  opacity: 0.01 !important;
+}
+
+/* ── TAREA 5: Dual-image dark/light CSS toggle ── */
+/* Dark mode (default): dark image visible, light hidden */
+.img-dark  { opacity: 1;   pointer-events: auto;  transition: opacity 0.3s ease; }
+.img-light { opacity: 0;   pointer-events: none;  transition: opacity 0.3s ease; }
+
+/* Light mode: swap */
+[data-theme="light"] .img-dark  { opacity: 0;   pointer-events: none; }
+[data-theme="light"] .img-light { opacity: 1;   pointer-events: auto; }
+
+/* ── Kill-switch: low-power-mode (zoom > 150% o pantalla HiDPI) ── */
+body.low-power-mode .scrolled,
+body.low-power-mode .spt,
+body.low-power-mode .project-card,
+body.low-power-mode .skills-bento-card,
+body.low-power-mode #site-header {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--card-bg-solid, rgba(12, 21, 48, 0.98)) !important;
+}
+
+body.low-power-mode .crt-scanlines {
+  display: none !important;
+}
+
+/* TAREA 2: Apagado total del canvas WebGL en zoom extremo */
+body.low-power-mode #vanta-bg {
+  display: none !important;
+}
+
+/* Light mode + low-power-mode: solid light background */
+[data-theme="light"] body.low-power-mode .scrolled,
+[data-theme="light"] body.low-power-mode .spt,
+[data-theme="light"] body.low-power-mode .project-card,
+[data-theme="light"] body.low-power-mode .skills-bento-card,
+[data-theme="light"] body.low-power-mode #site-header {
+  background: rgba(248, 250, 252, 0.98) !important;
 }

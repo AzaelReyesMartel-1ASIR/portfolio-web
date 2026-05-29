@@ -8,6 +8,9 @@ export interface ProjectItem {
   featured: boolean;
   stack: readonly string[];
   githubUrl: string;
+  /** Optional dual-theme preview image paths (from /public) */
+  imageDark?: string;
+  imageLight?: string;
 }
 
 export const PROJECTS: readonly ProjectItem[] = [
@@ -20,6 +23,8 @@ export const PROJECTS: readonly ProjectItem[] = [
     featured: false,
     stack: ["Astro", "TypeScript", "Tailwind CSS", "Docker", "Nginx"],
     githubUrl: "https://github.com/AzaelReyesMartel-1ASIR/portfolio-web",
+    imageDark:  "/img/portfolio.webp",
+    imageLight: "/img/portfolio-claro.webp",
   },
   {
     id: "lotusblack-ecommerce",

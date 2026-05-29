@@ -48,7 +48,7 @@ const hasBars: boolean = bars.length > 0;
             <span class="font-mono text-[0.68rem]" style="color: var(--sky)">{bar.value}%</span>
           </div>
           <div class="skill-progress-track" aria-hidden="true">
-            <span class="skill-progress-fill"></span>
+            <span class="skill-progress-fill" style="--target-width: var(--bar-value)"></span>
           </div>
         </li>
       ))}
@@ -187,6 +187,26 @@ const hasBars: boolean = bars.length > 0;
     to {
       transform: scaleX(1);
     }
+  }
+
+  /* ── TAREA 3: SAO HP Drain animation on card hover ── */
+  @keyframes hpDrain {
+    0%   { width: 100%;                background-color: #f97316; transform: scaleX(1); }
+    40%  { width: var(--target-width);  background-color: #f97316; transform: scaleX(1); }
+    100% { width: var(--target-width);  background-color: var(--sky); transform: scaleX(1); }
+  }
+
+  /* Reset to normal grow when card is NOT hovered */
+  .skills-bento-card.vis .skill-progress-fill {
+    animation: skillBarGrow 0.8s ease forwards;
+    animation-delay: calc(var(--bar-order) * 110ms);
+  }
+
+  /* HP drain override on card hover */
+  .skills-bento-card:hover .skill-progress-fill {
+    transform: scaleX(1); /* cancel scaleX mid-animation */
+    animation: hpDrain 0.8s ease-out forwards;
+    animation-delay: calc(var(--bar-order) * 80ms);
   }
 
   /* ── Light mode ── */

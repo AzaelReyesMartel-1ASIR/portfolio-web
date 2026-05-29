@@ -1,5 +1,9 @@
 ---
 import Logo from "../ui/Logo.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 interface FooterLink {
   href: string;
@@ -7,30 +11,29 @@ interface FooterLink {
 }
 
 const quickLinks: FooterLink[] = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#sobre-mi", label: "Sobre mí" },
-  { href: "#skills", label: "Skills" },
-  { href: "#proyectos", label: "Proyectos" },
-  { href: "#contacto", label: "Contacto" },
+  { href: `/${lang === 'es' ? '' : lang + '/'}#inicio`, label: t('nav.home') },
+  { href: `/${lang === 'es' ? '' : lang + '/'}#sobre-mi`, label: t('nav.about') },
+  { href: `/${lang === 'es' ? '' : lang + '/'}#skills`, label: t('nav.skills') },
+  { href: `/${lang === 'es' ? '' : lang + '/'}#proyectos`, label: t('nav.projects') },
+  { href: `/${lang === 'es' ? '' : lang + '/'}#contacto`, label: t('nav.contact') },
 ];
 ---
 
 <!-- [ASTRO: Footer.astro] -->
-<footer class="footer-root border-t" aria-label="Pie de página del portfolio">
+<footer class="footer-root border-t" aria-label={t('footer.aria')}>
   <div
     class="mx-auto grid w-full max-w-6xl gap-6 px-5 py-8 md:px-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center"
   >
     <p
       class="footer-copy text-center font-mono text-xs tracking-[0.04em] lg:text-left"
     >
-      built with <span class="grad-text font-bold">&lt;determination /&gt;</span
-      > by Azael Reyes © 2026
+      {t('footer.built')} <span class="grad-text font-bold">&lt;determination /&gt;</span> {t('footer.by')}
     </p>
 
     <a
-      href="#inicio"
-      class="footer-logo-link mx-auto inline-flex items-center justify-center transition-transform duration-300 hover:scale-110"
-      aria-label="Volver al inicio"
+      href={`/${lang === 'es' ? '' : lang + '/'}#inicio`}
+      class="footer-logo-link mx-auto inline-flex items-center justify-center bg-transparent transition-transform duration-300 hover:scale-110"
+      aria-label={t('footer.back')}
     >
       <Logo className="scale-125" showDevLabel={false} />
     </a>

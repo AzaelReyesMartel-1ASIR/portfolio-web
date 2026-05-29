@@ -1,11 +1,15 @@
 ---
 import { Image } from "astro:assets";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <!-- [ASTRO: Hero.astro] -->
 <section
   id="inicio"
-  aria-label="Presentación principal de Azael Reyes"
+  aria-label={t('hero.aria')}
   class="hero-section relative overflow-x-clip px-6 pt-[5rem] pb-14 md:px-10 lg:px-14"
 >
   <!-- Animated CSS grid background -->
@@ -15,45 +19,65 @@ import { Image } from "astro:assets";
     id="hero-glow-a"
     class="hero-glow-a pointer-events-none absolute -left-20 top-8 h-72 w-72 rounded-full bg-sky/20 blur-3xl transition-transform duration-500 ease-out"
     aria-hidden="true"
-  ></div>
+  >
+  </div>
   <div
     id="hero-glow-b"
     class="hero-glow-b pointer-events-none absolute -right-14 bottom-0 h-80 w-80 rounded-full bg-violet/20 blur-3xl transition-transform duration-500 ease-out"
     aria-hidden="true"
-  ></div>
+  >
+  </div>
 
-  <div class="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_380px] lg:items-start">
+  <div
+    class="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_380px] lg:items-start"
+  >
     <div class="hero-left space-y-6">
-      <p class="font-mono text-sm text-muted">$ whoami</p>
-      <h1 id="scramble-name" class="grad-text font-display text-[clamp(2.8rem,6vw,4.5rem)] leading-[0.95]">
-        Azael Reyes
+      <p class="font-mono text-sm text-muted">{t('hero.whoami')}</p>
+      <h1
+        id="scramble-name"
+        class="grad-text font-display text-[clamp(2.8rem,6vw,4.5rem)] leading-[0.95]"
+      >
+        {t('hero.name')}
       </h1>
 
       <!-- Typewriter role line -->
-      <p class="hero-role font-mono text-base text-sky md:text-lg" aria-live="polite" aria-label="Rol actual">
-        &gt; <span id="hero-role-text"></span><span class="animate-term-blink" aria-hidden="true">|</span>
+      <p
+        class="hero-role font-mono text-base text-sky md:text-lg"
+        aria-live="polite"
+        aria-label={t('hero.role.aria')}
+      >
+        &gt; <span id="hero-role-text"></span><span
+          class="animate-term-blink"
+          aria-hidden="true">|</span
+        >
       </p>
 
       <div class="flex flex-wrap items-center gap-2.5">
         <span
           class="inline-flex items-center gap-2 rounded-full border border-sky/30 bg-sky/10 px-3 py-1.5 font-mono text-xs text-sky"
         >
-          <span class="h-1.5 w-1.5 animate-dot-pulse rounded-full bg-sky shadow-[0_0_8px_var(--sky)]"></span>
-          B2B &amp; Teams
+          <span
+            class="h-1.5 w-1.5 animate-dot-pulse rounded-full bg-sky shadow-[0_0_8px_var(--sky)]"
+          ></span>
+          {t('hero.badge.b2b')}
         </span>
         <span
           class="inline-flex items-center gap-2 rounded-full border border-green/30 bg-green/10 px-3 py-1.5 font-mono text-xs text-green"
         >
-          <span class="hero-dot-delay h-1.5 w-1.5 animate-dot-pulse rounded-full bg-green shadow-[0_0_8px_var(--green)]"></span>
-          Freelance Open
+          <span
+            class="hero-dot-delay h-1.5 w-1.5 animate-dot-pulse rounded-full bg-green shadow-[0_0_8px_var(--green)]"
+          ></span>
+          {t('hero.badge.open')}
         </span>
       </div>
 
       <article
-        aria-label="Emulador de terminal de arranque"
+        aria-label={t('hero.terminal.aria')}
         class="terminal-shell relative overflow-hidden rounded-2xl border border-white/8 bg-card shadow-[0_0_0_1px_rgba(56,189,248,0.06),0_24px_60px_rgba(0,0,0,0.5)]"
       >
-        <header class="flex items-center justify-between border-b border-white/10 bg-[#0a1228] px-4 py-2.5">
+        <header
+          class="flex items-center justify-between border-b border-white/10 bg-[#0a1228] px-4 py-2.5"
+        >
           <div class="flex items-center gap-2" aria-hidden="true">
             <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
             <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
@@ -63,29 +87,53 @@ import { Image } from "astro:assets";
           <span class="w-[52px]" aria-hidden="true"></span>
         </header>
 
-        <div id="terminal-lines" class="relative space-y-1.5 bg-[#050b1a] px-4 py-4 font-mono text-[0.73rem] leading-[1.9]">
+        <div
+          id="terminal-lines"
+          class="relative space-y-1.5 bg-[#050b1a] px-4 py-4 font-mono text-[0.73rem] leading-[1.9]"
+        >
           <!-- Lines injected by terminal.ts -->
         </div>
       </article>
     </div>
 
-    <aside aria-label="Foto de perfil con máscara animada" class="photo-wrapper relative mx-auto w-fit animate-float-y lg:self-center">
-      <div class="photo-ring relative h-[300px] w-[300px] animate-morph-blob animate-glow-pulse bg-gradient-to-br from-sky via-violet to-violet p-[3px]">
-        <div class="photo-inner h-full w-full overflow-hidden">
+    <aside
+      aria-label={t('hero.photo.aria')}
+      class="photo-wrapper relative mx-auto w-fit animate-float-y lg:self-center"
+    >
+      <div
+        class="photo-ring relative h-[300px] w-[300px] animate-morph-blob animate-glow-pulse bg-gradient-to-br from-sky via-violet to-violet p-[3px]"
+      >
+        <div
+          class="photo-img-container relative h-full w-full overflow-hidden"
+          style="border-radius: inherit"
+        >
+          <!-- Dark mode image (default visible) -->
           <Image
-            src="/img/YO-FORMAL.png"
-            alt="Foto de perfil de Azael Reyes Martel"
+            src="/img/YO-FORMAL.webp"
+            alt={t('hero.photo.alt.dark')}
             width={300}
             height={300}
-            class="photo-img h-full w-full object-cover object-[center_top]"
+            class="img-dark photo-img absolute inset-0 h-full w-full object-cover object-[center_top]"
             loading="eager"
+            decoding="async"
+          />
+          <!-- Light mode image (hidden by default, shown via CSS) -->
+          <Image
+            src="/img/YO-FORMAL-CLARO.webp"
+            alt={t('hero.photo.alt.light')}
+            width={300}
+            height={300}
+            class="img-light photo-img absolute inset-0 h-full w-full object-cover object-[center_top]"
+            loading="lazy"
             decoding="async"
           />
           <div
             class="photo-fallback pointer-events-none absolute inset-0 hidden items-center justify-center bg-bg/80"
             aria-hidden="true"
           >
-            <span class="grad-text font-display text-6xl font-extrabold">AR</span>
+            <span class="grad-text font-display text-6xl font-extrabold"
+              >AR</span
+            >
           </div>
         </div>
       </div>
@@ -93,14 +141,15 @@ import { Image } from "astro:assets";
       <span
         class="absolute -left-6 top-5 inline-flex items-center gap-2 rounded-full border border-green/35 bg-[rgba(8,15,36,0.9)] px-3 py-1.5 font-mono text-xs text-green backdrop-blur-md"
       >
-        <span class="h-1.5 w-1.5 animate-dot-pulse rounded-full bg-green"></span>
-        Open to work
+        <span class="h-1.5 w-1.5 animate-dot-pulse rounded-full bg-green"
+        ></span>
+        {t('hero.badge.work')}
       </span>
 
       <span
         class="absolute -bottom-2 -right-7 rounded-full border border-sky/35 bg-[rgba(8,15,36,0.9)] px-3 py-1.5 font-mono text-xs text-sky backdrop-blur-md"
       >
-        ASIR · DAW
+        {t('hero.badge.degree')}
       </span>
     </aside>
   </div>
@@ -118,12 +167,20 @@ import { Image } from "astro:assets";
       linear-gradient(90deg, rgba(56, 189, 248, 0.045) 1px, transparent 1px);
     background-size: 52px 52px;
     animation: gridDrift 18s linear infinite;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+    mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      black 30%,
+      transparent 100%
+    );
   }
 
   @keyframes gridDrift {
-    0%   { background-position: 0 0; }
-    100% { background-position: 52px 52px; }
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 52px 52px;
+    }
   }
 
   /* Light mode: grid even subtler */
@@ -150,7 +207,11 @@ import { Image } from "astro:assets";
     right: 0;
     top: -2px;
     height: 18px;
-    background: linear-gradient(to bottom, rgba(56, 189, 248, 0.16), rgba(56, 189, 248, 0));
+    background: linear-gradient(
+      to bottom,
+      rgba(56, 189, 248, 0.16),
+      rgba(56, 189, 248, 0)
+    );
     animation: scanline 4s linear infinite;
     pointer-events: none;
   }
@@ -175,7 +236,9 @@ import { Image } from "astro:assets";
   }
 
   .photo-ring:hover {
-    box-shadow: 0 0 80px rgba(56, 189, 248, 0.5), 0 0 120px rgba(167, 139, 250, 0.3);
+    box-shadow:
+      0 0 80px rgba(56, 189, 248, 0.5),
+      0 0 120px rgba(167, 139, 250, 0.3);
   }
 
   /* ── Light mode hero overrides ── */
