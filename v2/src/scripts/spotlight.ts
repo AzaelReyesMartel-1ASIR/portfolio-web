@@ -1,4 +1,4 @@
-const SPOTLIGHT_SELECTOR = ".project-spotlight";
+const SPOTLIGHT_SELECTOR = ".spt";
 
 function updateSpotlightPosition(
   event: PointerEvent,
@@ -19,7 +19,8 @@ function attachSpotlightListeners(element: HTMLElement): void {
 }
 
 export function initSpotlight(): void {
-  const spotlightElements: NodeListOf<HTMLElement> = document.querySelectorAll(SPOTLIGHT_SELECTOR);
+  const spotlightElements: NodeListOf<HTMLElement> =
+    document.querySelectorAll(SPOTLIGHT_SELECTOR);
   if (spotlightElements.length === 0) {
     return;
   }

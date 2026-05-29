@@ -111,9 +111,10 @@ const featuredTimeline: readonly TimelineItem[] = TIMELINE_ITEMS.filter(
         aria-label="Trayectoria profesional y académica"
       >
         <h3 class="font-display text-lg text-ink">Trayectoria</h3>
-        <div class="mt-5 space-y-3">
+        <div class="timeline-container mt-5">
           {featuredTimeline.map((item) => (
             <div class="timeline-row">
+              <span class="timeline-dot"></span>
               <p class="font-mono text-[0.72rem] uppercase tracking-wide text-sky">{item.yearLabel}</p>
               <p class="mt-1 text-sm font-semibold text-ink">{item.role}</p>
               <p class="text-xs text-muted">
@@ -122,7 +123,7 @@ const featuredTimeline: readonly TimelineItem[] = TIMELINE_ITEMS.filter(
               {item.details.length > 0 && (
                 <ul class="mt-2 flex flex-wrap gap-2">
                   {item.details.slice(0, 3).map((detail) => (
-                    <li class="rounded-full border border-white/10 bg-white/4 px-2.5 py-1 font-mono text-[0.68rem] text-muted">
+                    <li class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[0.68rem] text-muted">
                       {detail}
                     </li>
                   ))}
@@ -193,12 +194,62 @@ const featuredTimeline: readonly TimelineItem[] = TIMELINE_ITEMS.filter(
     flex-shrink: 0;
   }
 
+  /* ── git-log timeline ── */
+  .timeline-container {
+    position: relative;
+    padding-left: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Vertical gradient line anchored to container */
+  .timeline-container::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 12px;
+    bottom: 12px;
+    width: 1.5px;
+    background: linear-gradient(
+      to bottom,
+      var(--sky),
+      var(--violet),
+      transparent
+    );
+    border-radius: 99px;
+  }
+
   .timeline-row {
+    position: relative;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-left: 2px solid rgba(56, 189, 248, 0.35);
     border-radius: 14px;
     background: rgba(4, 8, 26, 0.45);
-    padding: 0.8rem;
+    padding: 0.8rem 0.8rem 0.8rem 0.9rem;
+    transition: border-color 0.22s ease;
+  }
+
+  .timeline-row:hover {
+    border-color: rgba(56, 189, 248, 0.28);
+  }
+
+  /* Dot that sits on the vertical line */
+  .timeline-dot {
+    position: absolute;
+    left: -1.65rem;
+    top: 0.85rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--bg, #04081a);
+    border: 2px solid var(--sky);
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.55);
+    z-index: 2;
+    transition: box-shadow 0.22s ease;
+  }
+
+  .timeline-row:hover .timeline-dot {
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.85);
   }
 
   @media (max-width: 1080px) {
@@ -220,5 +271,27 @@ const featuredTimeline: readonly TimelineItem[] = TIMELINE_ITEMS.filter(
         "focus"
         "timeline";
     }
+  }
+
+  /* ── Light mode overrides ── */
+  :global([data-theme="light"]) .about-bento-card {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.09);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    backdrop-filter: none;
+  }
+
+  :global([data-theme="light"]) .stat-tile {
+    background: rgba(0, 0, 0, 0.025);
+    border-color: rgba(0, 0, 0, 0.07);
+  }
+
+  :global([data-theme="light"]) .timeline-row {
+    background: rgba(248, 249, 253, 0.95);
+    border-color: rgba(0, 0, 0, 0.07);
+  }
+
+  :global([data-theme="light"]) .timeline-dot {
+    background: var(--surf);
   }
 </style>

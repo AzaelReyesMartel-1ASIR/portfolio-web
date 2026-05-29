@@ -1,0 +1,111 @@
+---
+// [ASTRO: Background.astro] — Premium Aurora + Noise background
+// z-index: -1, pointer-events: none, fixed position
+---
+
+<div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none" aria-hidden="true">
+  <!-- Aurora background -->
+  <div class="bg-orbs">
+    <div class="aurora aurora-sky"></div>
+    <div class="aurora aurora-violet"></div>
+    <div class="aurora aurora-green"></div>
+  </div>
+
+  <!-- Noise texture overlay -->
+  <div class="bg-noise"></div>
+</div>
+
+<script>
+  import "../../scripts/dynamic-bg.ts";
+</script>
+
+<style>
+  .bg-orbs {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* ── Aurora orbs ── */
+  .aurora {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.18;
+    will-change: transform;
+  }
+
+  /* ── Sky aurora ── */
+  .aurora-sky {
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, var(--sky) 0%, transparent 70%);
+    top: -250px;
+    left: -200px;
+    animation: auroraDriftA 28s ease-in-out infinite alternate;
+  }
+
+  /* ── Violet aurora ── */
+  .aurora-violet {
+    width: 850px;
+    height: 850px;
+    background: radial-gradient(circle, var(--violet) 0%, transparent 70%);
+    bottom: -200px;
+    right: -180px;
+    animation: auroraDriftB 32s ease-in-out infinite alternate;
+  }
+
+  /* ── Green aurora ── */
+  .aurora-green {
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, var(--green) 0%, transparent 70%);
+    top: 40%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    animation: auroraDriftC 24s ease-in-out infinite alternate;
+    opacity: 0.12;
+  }
+
+  /* ── Aurora keyframes ── */
+  @keyframes auroraDriftA {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(80px, 60px) scale(1.1); }
+    66%  { transform: translate(40px, 100px) scale(0.95); }
+    100% { transform: translate(100px, 40px) scale(1.05); }
+  }
+
+  @keyframes auroraDriftB {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(-70px, -50px) scale(1.08); }
+    66%  { transform: translate(-30px, -90px) scale(0.92); }
+    100% { transform: translate(-90px, -20px) scale(1.03); }
+  }
+
+  @keyframes auroraDriftC {
+    0%   { transform: translate(-50%, -50%) scale(1); }
+    50%  { transform: translate(-44%, -56%) scale(1.15); }
+    100% { transform: translate(-56%, -44%) scale(0.9); }
+  }
+
+  /* ── Noise texture overlay ── */
+  .bg-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Light mode: aurora more subtle ── */
+  :global([data-theme="light"]) .aurora-sky    { opacity: 0.10; }
+  :global([data-theme="light"]) .aurora-violet { opacity: 0.08; }
+  :global([data-theme="light"]) .aurora-green   { opacity: 0.05; }
+  :global([data-theme="light"]) .bg-noise       { opacity: 0.03; }
+
+  /* Reduce motion: freeze aurora */
+  @media (prefers-reduced-motion: reduce) {
+    .aurora {
+      animation: none;
+    }
+  }
+</style>

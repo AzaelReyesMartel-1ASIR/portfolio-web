@@ -1,47 +1,97 @@
 @import "tailwindcss";
 @import "./fonts.css";
 
-/* Tailwind v4 theme tokens */
+/* ──────────────────────────────────────────────
+   Tailwind v4 theme tokens (dark mode base)
+   ────────────────────────────────────────────── */
 @theme {
-  --color-bg: #04081a;
-  --color-surf: #080f24;
-  --color-card: #0c1530;
-  --color-sky: #38bdf8;
+  --color-bg:     #04081a;
+  --color-surf:   #080f24;
+  --color-card:   #0c1530;
+  --color-sky:    #38bdf8;
   --color-violet: #a78bfa;
-  --color-green: #34d399;
+  --color-green:  #34d399;
   --color-orange: #fb923c;
-  --color-red: #f87171;
-  --color-muted: #7a90bb;
-  --color-ink: #e0eaff;
+  --color-red:    #f87171;
+  --color-muted:  #7a90bb;
+  --color-ink:    #e0eaff;
 
   --font-display: "Syne", sans-serif;
-  --font-body: "Manrope", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-body:    "Manrope", sans-serif;
+  --font-mono:    "JetBrains Mono", monospace;
 
-  --animate-grad-move: gradMove 4s linear infinite alternate;
-  --animate-morph-blob: morphBlob 10s ease-in-out infinite;
-  --animate-float-y: floatY 5s ease-in-out infinite;
-  --animate-dot-pulse: dotPulse 2s ease-in-out infinite;
-  --animate-marquee-run: marqueeRun 26s linear infinite;
-  --animate-term-blink: termBlink 0.7s step-end infinite;
-  --animate-scanline: scanline 4s linear infinite;
-  --animate-glow-pulse: glowPulse 4s ease-in-out infinite;
+  --animate-grad-move:   gradMove   4s linear        infinite alternate;
+  --animate-morph-blob:  morphBlob  10s ease-in-out  infinite;
+  --animate-float-y:     floatY     5s ease-in-out   infinite;
+  --animate-dot-pulse:   dotPulse   2s ease-in-out   infinite;
+  --animate-marquee-run: marqueeRun 26s linear        infinite;
+  --animate-term-blink:  termBlink  0.7s step-end    infinite;
+  --animate-scanline:    scanline   4s linear         infinite;
+  --animate-glow-pulse:  glowPulse  4s ease-in-out   infinite;
 }
 
+/* ──────────────────────────────────────────────
+   Map @theme tokens to CSS variables for consistency
+   ────────────────────────────────────────────── */
 :root {
-  --bg: #04081a;
-  --surf: #080f24;
-  --card: #0c1530;
-  --border: rgba(255, 255, 255, 0.065);
-  --text: #e0eaff;
-  --muted: #7a90bb;
-  --sky: #38bdf8;
-  --violet: #a78bfa;
-  --green: #34d399;
-  --orange: #fb923c;
-  --red: #f87171;
+  --color-bg: var(--bg);
+  --color-surf: var(--surf);
+  --color-card: var(--card);
+  --color-sky: var(--sky);
+  --color-violet: var(--violet);
+  --color-green: var(--green);
+  --color-orange: var(--orange);
+  --color-red: var(--red);
+  --color-muted: var(--muted);
+  --color-ink: var(--ink);
 }
 
+/* ──────────────────────────────────────────────
+   CSS Custom Properties — DARK (default)
+   ────────────────────────────────────────────── */
+:root {
+  --bg:     #04081a;
+  --surf:   #080f24;
+  --card:   #0c1530;
+  --border: rgba(255, 255, 255, 0.065);
+  --text:   #e0eaff;
+  --muted:  #7a90bb;
+  --sky:    #38bdf8;
+  --violet: #a78bfa;
+  --green:  #34d399;
+  --orange: #fb923c;
+  --red:    #f87171;
+  --ink:    #e0eaff;
+
+  /* Spotlight background (used in .spt cards) */
+  --spot-bg: rgba(255, 255, 255, 0.15);
+}
+
+/* ──────────────────────────────────────────────
+   CSS Custom Properties — LIGHT
+   Premium off-white, not flat white.
+   Fixed for opacity utilities (bg-surf/70, etc.)
+   ────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:     #f8fafc;
+  --surf:   #e2e8f0;
+  --card:   #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --text:   #0f1737;
+  --muted:  #5a6a8e;
+  --sky:    #0ea5e9;    /* slightly deeper for contrast on white */
+  --violet: #7c3aed;
+  --green:  #059669;
+  --orange: #ea580c;
+  --red:    #dc2626;
+  --ink:    #0f1737;
+
+  --spot-bg: rgba(0, 0, 0, 0.06);
+}
+
+/* ──────────────────────────────────────────────
+   Base reset
+   ────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -49,9 +99,29 @@
 }
 
 html {
-  color-scheme: dark;
   scroll-behavior: smooth;
+  /* Offset anchor targets by the fixed header height (h-18 = 4.5rem = 72px) */
+  scroll-padding-top: 4.5rem;
 }
+
+/* Apply color-scheme based on theme */
+html:not([data-theme="light"]) {
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* ── Theme icon toggle (CSS-driven, no flash) ──
+   #icon-sun  → visible in DARK mode (click → light)
+   #icon-moon → visible in LIGHT mode (click → dark)
+   Both start as .hidden in HTML; CSS overrides with !important
+   so it fires even before JS applyTheme() runs.           */
+html:not([data-theme="light"]) #icon-sun  { display: block !important; }
+html:not([data-theme="light"]) #icon-moon { display: none  !important; }
+[data-theme="light"]           #icon-sun  { display: none  !important; }
+[data-theme="light"]           #icon-moon { display: block !important; }
 
 body {
   margin: 0;
@@ -63,6 +133,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: none;
+  /* Smooth theme transition */
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
 }
 
 img,
@@ -87,6 +161,9 @@ select {
   color: inherit;
 }
 
+/* ──────────────────────────────────────────────
+   Utility: Animated gradient text
+   ────────────────────────────────────────────── */
 .grad-text {
   background: linear-gradient(135deg, #38bdf8 0%, #818cf8 55%, #a78bfa 100%);
   background-size: 200%;
@@ -96,6 +173,19 @@ select {
   animation: gradMove 4s linear infinite alternate;
 }
 
+/* Light mode: brighter gradient for legibility on white */
+[data-theme="light"] .grad-text {
+  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 55%, #7c3aed 100%);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradMove 4s linear infinite alternate;
+}
+
+/* ──────────────────────────────────────────────
+   Utility: Scroll reveal
+   ────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -107,22 +197,50 @@ select {
   transform: none;
 }
 
-.rd1 {
-  transition-delay: 0.1s;
+.rd1 { transition-delay: 0.1s; }
+.rd2 { transition-delay: 0.2s; }
+.rd3 { transition-delay: 0.3s; }
+.rd4 { transition-delay: 0.4s; }
+
+/* ──────────────────────────────────────────────
+   Utility: fade-in-up (alternative to reveal,
+   usable standalone with animation-delay)
+   ────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-.rd2 {
-  transition-delay: 0.2s;
+.fade-in-up {
+  animation: fadeInUp 0.6s ease both;
 }
 
-.rd3 {
-  transition-delay: 0.3s;
+/* ──────────────────────────────────────────────
+   Card hover helpers — scale + border glow
+   ────────────────────────────────────────────── */
+.card-hover {
+  transition:
+    transform      0.28s ease,
+    border-color   0.28s ease,
+    box-shadow     0.28s ease;
 }
 
-.rd4 {
-  transition-delay: 0.4s;
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.012);
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.18),
+    0 16px 40px rgba(0, 0, 0, 0.32);
 }
 
+[data-theme="light"] .card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(14, 165, 233, 0.22),
+    0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* ──────────────────────────────────────────────
+   Cursor
+   ────────────────────────────────────────────── */
 #cursor-dot {
   position: fixed;
   top: 0;
@@ -134,8 +252,10 @@ select {
   border-radius: 999px;
   background: #ffffff;
   mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease;
+  /* No initial transform — JS owns the translation via translate(x,y) translate(-50%,-50%) */
+  transform: translate(-200px, -200px);
+  transition: width 0.2s ease, height 0.2s ease, transform 0s;
+  will-change: transform;
 }
 
 #cursor-dot.big {
@@ -145,13 +265,15 @@ select {
 
 .c-trail {
   position: fixed;
-  top: -100px;
-  left: -100px;
+  top: 0;
+  left: 0;
   z-index: 99998;
   pointer-events: none;
   border-radius: 999px;
   background: var(--sky);
-  transform: translate(0, 0);
+  /* Same: starts offscreen, JS drives transform */
+  transform: translate(-200px, -200px);
+  will-change: transform;
 }
 
 @media (hover: none) {
@@ -165,87 +287,335 @@ select {
   }
 }
 
+/* ──────────────────────────────────────────────
+   Glow helpers: shared across components.
+   The .spt class uses --spot-x/y set by spotlight.ts
+   ────────────────────────────────────────────── */
+.spt,
+.skills-bento-card,
+.project-card {
+  /* Ensure the CSS vars are always defined */
+  --spot-x: 50%;
+  --spot-y: 50%;
+  
+  /* Vercel-level deep glass effect */
+  background: linear-gradient(145deg, rgba(12, 21, 48, 0.4) 0%, rgba(12, 21, 48, 0.1) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  /* Smooth transitions */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  
+  /* Position context for border glow */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Border glow pseudo-element */
+.spt::before,
+.skills-bento-card::before,
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.15),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* Hover effects - elevation + border glow */
+.spt:hover,
+.skills-bento-card:hover,
+.project-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 12px 32px rgba(0, 0, 0, 0.3),
+    0 0 48px var(--spot-bg);
+}
+
+.spt:hover::before,
+.skills-bento-card:hover::before,
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* Per-accent border glow */
+.spt.accent-sky::before,
+.skills-bento-card.accent-sky::before,
+.project-card.accent-sky::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(56, 189, 248, 0.2),
+    transparent 40%
+  );
+}
+
+.spt.accent-violet::before,
+.skills-bento-card.accent-violet::before,
+.project-card.accent-violet::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(167, 139, 250, 0.2),
+    transparent 40%
+  );
+}
+
+.spt.accent-green::before,
+.skills-bento-card.accent-green::before,
+.project-card.accent-green::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(52, 211, 153, 0.2),
+    transparent 40%
+  );
+}
+
+/* Light mode - softer glass and glow */
+[data-theme="light"] .spt,
+[data-theme="light"] .skills-bento-card,
+[data-theme="light"] .project-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .spt:hover,
+[data-theme="light"] .skills-bento-card:hover,
+[data-theme="light"] .project-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.1),
+    0 0 32px var(--spot-bg);
+}
+
+[data-theme="light"] .spt.accent-sky::before,
+[data-theme="light"] .skills-bento-card.accent-sky::before,
+[data-theme="light"] .project-card.accent-sky::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(14, 165, 233, 0.15),
+    transparent 40%
+  );
+}
+
+[data-theme="light"] .spt.accent-violet::before,
+[data-theme="light"] .skills-bento-card.accent-violet::before,
+[data-theme="light"] .project-card.accent-violet::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(124, 58, 237, 0.15),
+    transparent 40%
+  );
+}
+
+[data-theme="light"] .spt.accent-green::before,
+[data-theme="light"] .skills-bento-card.accent-green::before,
+[data-theme="light"] .project-card.accent-green::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(5, 150, 105, 0.15),
+    transparent 40%
+  );
+}
+
+/* ──────────────────────────────────────────────
+   Keyframes
+   ────────────────────────────────────────────── */
 @keyframes gradMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
+  0%   { background-position: 0%   50%; }
+  100% { background-position: 200% 50%; }
 }
 
 @keyframes morphBlob {
-  0%,
-  100% {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  }
-  25% {
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  }
-  50% {
-    border-radius: 50% 60% 30% 40% / 30% 40% 50% 60%;
-  }
-  75% {
-    border-radius: 40% 50% 60% 30% / 40% 60% 40% 50%;
-  }
+  0%,  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25%        { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50%        { border-radius: 50% 60% 30% 40% / 30% 40% 50% 60%; }
+  75%        { border-radius: 40% 50% 60% 30% / 40% 60% 40% 50%; }
 }
 
 @keyframes floatY {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-12px); }
 }
 
 @keyframes dotPulse {
-  0%,
-  100% {
-    opacity: 0.4;
-    transform: scale(0.9);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.3);
-  }
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50%       { opacity: 1;   transform: scale(1.3); }
 }
 
 @keyframes marqueeRun {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0);    }
+  to   { transform: translateX(-50%); }
 }
 
 @keyframes termBlink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
 @keyframes scanline {
-  0% {
-    top: -2px;
-  }
-  100% {
-    top: 102%;
-  }
+  0%   { top: -2px;  }
+  100% { top: 102%;  }
 }
 
 @keyframes glowPulse {
-  0%,
-  100% {
+  0%, 100% {
     box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
   }
   50% {
-    box-shadow: 0 0 55px rgba(56, 189, 248, 0.5), 0 0 90px rgba(167, 139, 250, 0.2);
+    box-shadow:
+      0 0 55px rgba(56, 189, 248, 0.5),
+      0 0 90px rgba(167, 139, 250, 0.2);
   }
+}
+
+/* ──────────────────────────────────────────────
+   Light mode: hero glows softer
+   ────────────────────────────────────────────── */
+[data-theme="light"] .c-trail {
+  background: var(--sky);
+  opacity: 0.6;
+}
+
+[data-theme="light"] #cursor-dot {
+  background: #0f1737;
+}
+
+/* ──────────────────────────────────────────────
+   Light mode: forced contrast on text elements
+   (overrides dark defaults for legibility)
+   ────────────────────────────────────────────── */
+
+/* Section // labels */
+[data-theme="light"] [class*="text-sky"][class*="font-mono"][class*="uppercase"] {
+  color: var(--sky);
+  font-weight: 600;
+}
+
+/* All h2 / h3 headings — force ink token (#0f1737) */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3 {
+  color: var(--ink);
+}
+
+/* Muted body text — enough contrast on off-white */
+[data-theme="light"] .text-muted {
+  color: var(--muted);
+}
+
+/* Card internal descriptive text */
+[data-theme="light"] [class*="text-muted"],
+[data-theme="light"] [style*="color: var(--muted)"] {
+  color: var(--muted);
+}
+
+/* Ensure card backgrounds don't leave text stranded */
+[data-theme="light"] [class*="text-ink"],
+[data-theme="light"] [style*="color: var(--ink)"] {
+  color: var(--ink);
+}
+
+/* Timeline date strings */
+[data-theme="light"] .font-mono.text-sky {
+  color: var(--sky);
+}
+
+/* ──────────────────────────────────────────────
+   FIX: Status badge (#status-badge) in light mode
+   bg-green/10 on #f4f6fb renders near-invisible.
+   Force white pill + readable green.
+   ────────────────────────────────────────────── */
+[data-theme="light"] #status-badge > div {
+  background: #ffffff !important;
+  border-color: rgba(5, 150, 105, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+[data-theme="light"] #status-badge span.text-green {
+  color: var(--green) !important;
+}
+
+/* ──────────────────────────────────────────────
+   UPGRADE: Card hover — more lift + accent glow
+   ────────────────────────────────────────────── */
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.013);
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.22),
+    0 20px 48px rgba(0, 0, 0, 0.38);
+}
+
+/* Per-accent glow variants on hover */
+.project-accent-sky.card-hover:hover,
+.bento-accent-sky.card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.30),
+    0 0 32px rgba(56, 189, 248, 0.14),
+    0 20px 48px rgba(0, 0, 0, 0.36);
+}
+
+.project-accent-violet.card-hover:hover,
+.bento-accent-violet.card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(167, 139, 250, 0.30),
+    0 0 32px rgba(167, 139, 250, 0.14),
+    0 20px 48px rgba(0, 0, 0, 0.36);
+}
+
+.project-accent-green.card-hover:hover,
+.bento-accent-green.card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(52, 211, 153, 0.28),
+    0 0 32px rgba(52, 211, 153, 0.12),
+    0 20px 48px rgba(0, 0, 0, 0.36);
+}
+
+.bento-accent-orange.card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(251, 146, 60, 0.28),
+    0 0 32px rgba(251, 146, 60, 0.12),
+    0 20px 48px rgba(0, 0, 0, 0.36);
+}
+
+/* Light mode card hovers — softer shadows */
+[data-theme="light"] .card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(14, 165, 233, 0.25),
+    0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .project-accent-sky.card-hover:hover,
+[data-theme="light"] .bento-accent-sky.card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(14, 165, 233, 0.35),
+    0 0 24px rgba(14, 165, 233, 0.12),
+    0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .project-accent-violet.card-hover:hover,
+[data-theme="light"] .bento-accent-violet.card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(124, 58, 237, 0.3),
+    0 0 24px rgba(124, 58, 237, 0.1),
+    0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .project-accent-green.card-hover:hover,
+[data-theme="light"] .bento-accent-green.card-hover:hover {
+  box-shadow:
+    0 0 0 1px rgba(5, 150, 105, 0.28),
+    0 0 24px rgba(5, 150, 105, 0.1),
+    0 12px 32px rgba(0, 0, 0, 0.1);
 }

@@ -16,21 +16,23 @@ const quickLinks: FooterLink[] = [
 ---
 
 <!-- [ASTRO: Footer.astro] -->
-<footer
-  class="border-t border-white/10 bg-surf/40"
-  aria-label="Pie de página del portfolio"
->
-  <div class="mx-auto grid w-full max-w-6xl gap-6 px-5 py-8 md:px-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-    <p class="text-center font-mono text-xs tracking-[0.04em] text-muted lg:text-left">
-      built with &lt;determination /&gt; by Azael Reyes © 2026
+<footer class="footer-root border-t" aria-label="Pie de página del portfolio">
+  <div
+    class="mx-auto grid w-full max-w-6xl gap-6 px-5 py-8 md:px-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center"
+  >
+    <p
+      class="footer-copy text-center font-mono text-xs tracking-[0.04em] lg:text-left"
+    >
+      built with <span class="grad-text font-bold">&lt;determination /&gt;</span
+      > by Azael Reyes © 2026
     </p>
 
     <a
       href="#inicio"
-      class="mx-auto inline-flex items-center justify-center rounded-full border border-white/10 bg-card/70 px-3 py-1.5 transition-colors duration-200 hover:border-sky/35"
+      class="footer-logo-link mx-auto inline-flex items-center justify-center transition-transform duration-300 hover:scale-110"
       aria-label="Volver al inicio"
     >
-      <Logo className="scale-90" showDevLabel={false} />
+      <Logo className="scale-125" showDevLabel={false} />
     </a>
 
     <nav
@@ -41,7 +43,7 @@ const quickLinks: FooterLink[] = [
         quickLinks.map((item) => (
           <a
             href={item.href}
-            class="font-body text-xs font-medium text-ink/80 transition-colors duration-200 hover:text-sky"
+            class="footer-nav-link font-body text-xs font-medium transition-colors duration-200 hover:text-sky"
           >
             {item.label}
           </a>
@@ -50,3 +52,55 @@ const quickLinks: FooterLink[] = [
     </nav>
   </div>
 </footer>
+
+<style>
+  /* ── Dark mode (default) ── */
+  .footer-root {
+    background: var(--surf);
+    border-top-color: var(--border);
+  }
+
+  .footer-copy {
+    color: var(--muted);
+  }
+
+  .footer-logo-link {
+    border-color: var(--border);
+    background: rgba(12, 21, 48, 0.7);
+  }
+
+  .footer-logo-link:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+  }
+
+  .footer-nav-link {
+    color: var(--muted);
+  }
+
+  .footer-nav-link:hover {
+    color: var(--sky);
+  }
+
+  /* ── Light mode ── */
+  :global([data-theme="light"]) .footer-root {
+    background: var(--surf);
+    border-top-color: var(--border);
+  }
+
+  :global([data-theme="light"]) .footer-copy {
+    color: var(--muted);
+  }
+
+  :global([data-theme="light"]) .footer-logo-link {
+    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  :global([data-theme="light"]) .footer-logo-link:hover {
+    border-color: rgba(14, 165, 233, 0.4);
+  }
+
+  :global([data-theme="light"]) .footer-nav-link {
+    color: var(--muted);
+  }
+</style>

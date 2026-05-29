@@ -6,26 +6,32 @@ import { Image } from "astro:assets";
 <section
   id="inicio"
   aria-label="Presentación principal de Azael Reyes"
-  class="relative overflow-hidden px-6 pb-14 pt-10 md:px-10 lg:px-14"
+  class="hero-section relative overflow-hidden px-6 pt-[5rem] pb-14 md:px-10 lg:px-14"
 >
+  <!-- Animated CSS grid background -->
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+
   <div
+    id="hero-glow-a"
     class="hero-glow-a pointer-events-none absolute -left-20 top-8 h-72 w-72 rounded-full bg-sky/20 blur-3xl transition-transform duration-500 ease-out"
     aria-hidden="true"
   ></div>
   <div
+    id="hero-glow-b"
     class="hero-glow-b pointer-events-none absolute -right-14 bottom-0 h-80 w-80 rounded-full bg-violet/20 blur-3xl transition-transform duration-500 ease-out"
     aria-hidden="true"
   ></div>
 
-  <div class="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_380px] lg:items-center">
+  <div class="relative mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[1fr_380px] lg:items-start">
     <div class="hero-left space-y-6">
       <p class="font-mono text-sm text-muted">$ whoami</p>
       <h1 id="scramble-name" class="grad-text font-display text-[clamp(2.8rem,6vw,4.5rem)] leading-[0.95]">
         Azael Reyes
       </h1>
 
-      <p class="font-mono text-base text-sky md:text-lg">
-        &gt; <span id="hero-role-text">Software Engineer</span><span class="animate-term-blink">|</span>
+      <!-- Typewriter role line -->
+      <p class="hero-role font-mono text-base text-sky md:text-lg" aria-live="polite" aria-label="Rol actual">
+        &gt; <span id="hero-role-text"></span><span class="animate-term-blink" aria-hidden="true">|</span>
       </p>
 
       <div class="flex flex-wrap items-center gap-2.5">
@@ -45,7 +51,7 @@ import { Image } from "astro:assets";
 
       <article
         aria-label="Emulador de terminal de arranque"
-        class="terminal-shell relative min-h-[182px] overflow-hidden rounded-2xl border border-white/8 bg-card shadow-[0_0_0_1px_rgba(56,189,248,0.06),0_24px_60px_rgba(0,0,0,0.5)]"
+        class="terminal-shell relative overflow-hidden rounded-2xl border border-white/8 bg-card shadow-[0_0_0_1px_rgba(56,189,248,0.06),0_24px_60px_rgba(0,0,0,0.5)]"
       >
         <header class="flex items-center justify-between border-b border-white/10 bg-[#0a1228] px-4 py-2.5">
           <div class="flex items-center gap-2" aria-hidden="true">
@@ -58,22 +64,12 @@ import { Image } from "astro:assets";
         </header>
 
         <div id="terminal-lines" class="relative space-y-1.5 bg-[#050b1a] px-4 py-4 font-mono text-[0.73rem] leading-[1.9]">
-          <p class="text-sky">$ ./boot_profile.sh --verbose</p>
-          <p class="text-muted">[....] Initializing kernel...</p>
-          <p class="text-green">[OK]   Docker daemon started</p>
-          <p class="text-green">[OK]   PostgreSQL :: connected</p>
-          <p class="text-green">[OK]   Laravel API :: port 8000</p>
-          <p class="text-green">[OK]   Nginx :: proxy_pass ready</p>
-          <p class="text-green">[OK]   SSL/TLS :: cert valid 365d</p>
-          <p class="text-orange">[WARN] Frontend: vanilla mode</p>
-          <p class="text-violet">
-            &gt; Stack ready. Loading engineer_<span class="animate-term-blink">|</span>
-          </p>
+          <!-- Lines injected by terminal.ts -->
         </div>
       </article>
     </div>
 
-    <aside aria-label="Foto de perfil con máscara animada" class="photo-wrapper relative mx-auto w-fit animate-float-y">
+    <aside aria-label="Foto de perfil con máscara animada" class="photo-wrapper relative mx-auto w-fit animate-float-y lg:self-center">
       <div class="photo-ring relative h-[300px] w-[300px] animate-morph-blob animate-glow-pulse bg-gradient-to-br from-sky via-violet to-violet p-[3px]">
         <div class="photo-inner h-full w-full overflow-hidden">
           <Image
@@ -111,6 +107,38 @@ import { Image } from "astro:assets";
 </section>
 
 <style>
+  /* ── Animated CSS grid background ── */
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(56, 189, 248, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.045) 1px, transparent 1px);
+    background-size: 52px 52px;
+    animation: gridDrift 18s linear infinite;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  @keyframes gridDrift {
+    0%   { background-position: 0 0; }
+    100% { background-position: 52px 52px; }
+  }
+
+  /* Light mode: grid even subtler */
+  :global([data-theme="light"]) .hero-grid-bg {
+    background-image:
+      linear-gradient(rgba(14, 165, 233, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14, 165, 233, 0.06) 1px, transparent 1px);
+  }
+
+  /* NOTE: Removed .hero-section > * { position: relative }
+     It was un-layered CSS overriding Tailwind's @layer utilities .absolute
+     on #hero-glow-a (h-72=288px) and #hero-glow-b (h-80=320px),
+     pulling them into the document flow and creating ~300px phantom gap.
+     The content grid already has class="relative" explicitly. */
+
   .hero-dot-delay {
     animation-delay: 0.5s;
   }
@@ -148,5 +176,26 @@ import { Image } from "astro:assets";
 
   .photo-ring:hover {
     box-shadow: 0 0 80px rgba(56, 189, 248, 0.5), 0 0 120px rgba(167, 139, 250, 0.3);
+  }
+
+  /* ── Light mode hero overrides ── */
+  :global([data-theme="light"]) .terminal-shell {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  :global([data-theme="light"]) .terminal-shell header {
+    background: #f0f2f8;
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+
+  :global([data-theme="light"]) #terminal-lines {
+    background: #f8f9fd;
+  }
+
+  /* Light mode: role line uses deeper sky for contrast */
+  :global([data-theme="light"]) .hero-role {
+    color: var(--sky);
   }
 </style>

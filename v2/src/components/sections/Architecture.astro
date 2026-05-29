@@ -1,0 +1,152 @@
+---
+interface Props {}
+
+const {} = Astro.props as Props;
+
+const ciCdFlow: string[] = [
+  "Push main",
+  "GitHub Actions",
+  "Build + Test",
+  "GHCR Image",
+  "Deploy EC2",
+];
+
+const nTierFlow: string[] = [
+  "Client",
+  "Nginx",
+  "Astro Frontend",
+  "API Hono",
+  "Data Layer",
+];
+---
+
+<!-- [ASTRO: Architecture.astro] -->
+<section
+  id="architecture"
+  aria-label="Sección de arquitectura de despliegue"
+  class="px-6 py-28 md:px-10 lg:px-14"
+>
+  <div class="mx-auto w-full max-w-6xl">
+    <div class="mb-10 space-y-4">
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky reveal">// architecture</p>
+      <h2 class="max-w-4xl font-display text-[clamp(1.8rem,4vw,2.5rem)] leading-tight text-ink reveal rd1">
+        Diseño de
+        <span class="grad-text">pipeline CI/CD y arquitectura N-Tier</span>
+      </h2>
+      <p class="max-w-3xl text-sm leading-7 text-muted reveal rd2">
+        Flujo orientado a despliegue continuo con contenedores y separación clara de capas para frontend,
+        servicios API y operación de infraestructura.
+      </p>
+    </div>
+
+    <div class="grid gap-4 lg:grid-cols-2">
+      <article
+        class="reveal rd2 rounded-2xl border border-white/10 bg-linear-to-br from-card to-surf p-6 shadow-[0_18px_45px_rgba(0,0,0,0.35)]"
+        aria-label="Bloque de flujo CI/CD"
+      >
+        <header class="mb-5 flex items-center justify-between gap-3">
+          <h3 class="font-display text-xl text-ink">CI/CD Pipeline</h3>
+          <span class="rounded-full border border-sky/30 bg-sky/10 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-sky">
+            GitHub Actions
+          </span>
+        </header>
+
+        <ol class="architecture-flow" aria-label="Cadena de despliegue continuo">
+          {ciCdFlow.map((node, index) => (
+            <li class="flow-node">
+              <span class="node-chip">{node}</span>
+              {index < ciCdFlow.length - 1 && (
+                <span class="flow-arrow" aria-label="Flujo hacia">
+                  <span aria-hidden="true">→</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </article>
+
+      <article
+        class="reveal rd3 rounded-2xl border border-white/10 bg-linear-to-br from-card to-surf p-6 shadow-[0_18px_45px_rgba(0,0,0,0.35)]"
+        aria-label="Bloque de arquitectura N-Tier"
+      >
+        <header class="mb-5 flex items-center justify-between gap-3">
+          <h3 class="font-display text-xl text-ink">N-Tier Topology</h3>
+          <span class="rounded-full border border-violet/30 bg-violet/10 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-violet">
+            Production Route
+          </span>
+        </header>
+
+        <ol class="architecture-flow" aria-label="Cadena de capas N-Tier">
+          {nTierFlow.map((node, index) => (
+            <li class="flow-node">
+              <span class="node-chip">{node}</span>
+              {index < nTierFlow.length - 1 && (
+                <span class="flow-arrow" aria-label="Flujo hacia">
+                  <span aria-hidden="true">→</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .architecture-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow-node {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .node-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.45rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    background: linear-gradient(135deg, rgba(8, 15, 36, 0.85), rgba(12, 21, 48, 0.85));
+    border-radius: 0.85rem;
+    padding: 0.55rem 0.85rem;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .flow-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    color: var(--sky);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  /* ── Light mode ── */
+  :global([data-theme="light"]) article.reveal {
+    background: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.09) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07) !important;
+  }
+
+  :global([data-theme="light"]) .node-chip {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text);
+  }
+</style>

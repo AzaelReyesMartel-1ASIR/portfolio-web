@@ -2,6 +2,7 @@
 import Footer from "../components/layout/Footer.astro";
 import Header from "../components/layout/Header.astro";
 import Cursor from "../components/ui/Cursor.astro";
+import Background from "../components/ui/Background.astro";
 
 interface Props {
   title?: string;
@@ -28,25 +29,78 @@ import "../styles/global.css";
     <title>{title}</title>
   </head>
   <body>
+    <!-- Apply theme before first paint to prevent FOUC -->
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem('theme');
+        var preferLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        var theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : (preferLight ? 'light' : 'dark');
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+    <Background />
     <Header />
     <Cursor />
     <slot />
     <Footer />
+    <!-- Back to top: visibility driven by JS (opacity + transform transition) -->
     <button
       id="back-to-top"
       type="button"
-      class="magnetic fixed bottom-5 right-5 z-[950] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-card/90 text-sky opacity-0 shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:border-sky/45"
+      class="btt-btn magnetic fixed bottom-6 right-6 z-[950] inline-flex h-11 w-11 items-center justify-center rounded-full border shadow-lg transition-all duration-300"
       aria-label="Volver arriba"
+      style="opacity:0; transform:translateY(12px); pointer-events:none;"
     >
-      <span aria-hidden="true" class="font-mono text-base">↑</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 15l-6-6-6 6"/>
+      </svg>
     </button>
 
-    <script type="module">
-      import { initHeader } from "../scripts/header.ts";
-      import { initCursor } from "../scripts/cursor.ts";
+    <script>
+      import { initHeader }     from "../scripts/header.ts";
+      import { initCursor }     from "../scripts/cursor.ts";
+      import { initTerminal }   from "../scripts/terminal.ts";
+      import { initTypewriter } from "../scripts/typewriter.ts";
 
       initHeader();
       initCursor();
+      initTerminal();
+      initTypewriter();
     </script>
+
+    <style>
+      /* Dark mode (default) */
+      .btt-btn {
+        background: rgba(12, 21, 48, 0.88);
+        border-color: rgba(255, 255, 255, 0.12);
+        color: #38bdf8;
+        backdrop-filter: blur(8px);
+      }
+
+      .btt-btn:hover {
+        border-color: rgba(56, 189, 248, 0.45);
+        background: rgba(12, 21, 48, 0.98);
+        box-shadow: 0 0 18px rgba(56, 189, 248, 0.22), 0 10px 28px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Light mode */
+      :global([data-theme="light"]) .btt-btn {
+        background: #ffffff;
+        border-color: rgba(0, 0, 0, 0.1);
+        color: #0ea5e9;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        backdrop-filter: none;
+      }
+
+      :global([data-theme="light"]) .btt-btn:hover {
+        border-color: rgba(14, 165, 233, 0.5);
+        background: #f0f9ff;
+        box-shadow: 0 0 18px rgba(14, 165, 233, 0.2), 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+    </style>
   </body>
 </html>

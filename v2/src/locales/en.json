@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "inicio":    "Home",
+    "sobre-mi":  "About",
+    "skills":    "Skills",
+    "proyectos": "Projects",
+    "contacto":  "Contact"
+  },
+  "hero": {
+    "whoami":    "$ whoami",
+    "available": "Open to work",
+    "tagline":   "B2B & Teams",
+    "freelance": "Freelance Open"
+  },
+  "about": {
+    "section-label": "// about.ts",
+    "heading":        "Where infrastructure meets code",
+    "profile-title":  "SysAdmin + Backend profile oriented to production"
+  },
+  "skills": {
+    "section-label": "// skills.ts",
+    "heading":        "Production-ready technical stack, built to scale"
+  },
+  "projects": {
+    "section-label": "// projects.ts",
+    "heading":        "Projects focused on real architecture and execution",
+    "view-code":      "View code"
+  },
+  "contact": {
+    "section-label":  "// contact",
+    "heading":         "Shall we build something",
+    "subheading":      "in production?",
+    "availability":    "Availability",
+    "email-label":     "Direct Email",
+    "email-btn":       "Direct Email",
+    "availability-b2b":"B2B & Teams",
+    "availability-fl": "Freelance Open"
+  },
+  "footer": {
+    "tagline": "built with <determination /> by Azael Reyes © 2026"
+  }
+}

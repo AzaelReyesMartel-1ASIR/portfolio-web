@@ -20,7 +20,7 @@ const revealDelayClass = delayClassMap[index % delayClassMap.length];
 
 <!-- [ASTRO: ProjectCard.astro] -->
 <article
-  class={`project-card project-spotlight reveal ${revealDelayClass} ${accentClassMap[project.accent]}`}
+  class={`project-card card-hover spt reveal ${revealDelayClass} ${accentClassMap[project.accent]}`}
   aria-label={`Proyecto ${project.title}`}
 >
   <div class="project-card__top">
@@ -32,8 +32,8 @@ const revealDelayClass = delayClassMap[index % delayClassMap.length];
     )}
   </div>
 
-  <h3 class="mt-4 font-display text-2xl leading-tight text-ink">{project.title}</h3>
-  <p class="mt-4 text-sm leading-6 text-muted">{project.description}</p>
+  <h3 class="mt-4 font-display text-2xl leading-tight" style="color: var(--ink)">{project.title}</h3>
+  <p class="mt-4 text-sm leading-6" style="color: var(--muted)">{project.description}</p>
 
   <ul class="mt-5 flex flex-wrap gap-2" aria-label={`Stack usado en ${project.title}`}>
     {project.stack.map((item) => (
@@ -45,11 +45,11 @@ const revealDelayClass = delayClassMap[index % delayClassMap.length];
     href={project.githubUrl}
     target="_blank"
     rel="noreferrer noopener"
-    class="project-link mt-7 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.16em]"
+    class="project-link mt-7 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.16em] group"
     aria-label={`Abrir repositorio de ${project.title} en GitHub`}
   >
     <span>Ver código</span>
-    <span aria-hidden="true">↗</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
   </a>
 </article>
 
@@ -63,11 +63,6 @@ const revealDelayClass = delayClassMap[index % delayClassMap.length];
     background: rgba(12, 21, 48, 0.74);
     backdrop-filter: blur(8px);
     isolation: isolate;
-    transition: transform 0.28s ease, border-color 0.28s ease;
-  }
-
-  .project-card:hover {
-    transform: translateY(-4px);
   }
 
   .project-card::before {
@@ -109,27 +104,29 @@ const revealDelayClass = delayClassMap[index % delayClassMap.length];
     font-family: var(--font-mono);
     font-size: 0.62rem;
     letter-spacing: 0.14em;
-    color: #67ceff;
+    color: var(--sky);
   }
 
   .project-tag {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.03);
     padding: 0.28rem 0.58rem;
     font-family: var(--font-mono);
     font-size: 0.68rem;
-    color: #b8c7e8;
+    color: var(--muted);
+    transition: color 0.2s ease, border-color 0.2s ease;
   }
 
   .project-link {
-    color: #9adfff;
+    color: var(--sky);
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
   .project-link:hover {
-    color: #c9edff;
+    color: var(--sky);
+    opacity: 0.8;
   }
 
   .project-accent-sky {
@@ -143,4 +140,34 @@ const revealDelayClass = delayClassMap[index % delayClassMap.length];
   .project-accent-green {
     border-color: rgba(52, 211, 153, 0.24);
   }
+
+  /* ── Light mode ── */
+  :global([data-theme="light"]) .project-card {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.09);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  }
+
+  :global([data-theme="light"]) .project-card::before {
+    background: radial-gradient(
+      320px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(14, 165, 233, 0.1),
+      transparent 65%
+    );
+  }
+
+  :global([data-theme="light"]) .project-featured-badge {
+    background: rgba(14, 165, 233, 0.12);
+    border-color: rgba(14, 165, 233, 0.3);
+  }
+
+  :global([data-theme="light"]) .project-tag {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--muted);
+  }
+
+  :global([data-theme="light"]) .project-accent-sky   { border-color: rgba(14, 165, 233, 0.35); }
+  :global([data-theme="light"]) .project-accent-violet { border-color: rgba(124, 58, 237, 0.3); }
+  :global([data-theme="light"]) .project-accent-green  { border-color: rgba(5, 150, 105, 0.3);  }
 </style>

@@ -39,18 +39,45 @@ function setupCursorScale(cursorDot: HTMLElement): void {
 function setupMagneticElements(): void {
   document.querySelectorAll<HTMLElement>(".magnetic").forEach((element) => {
     let magneticRaf = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    const animateMagnetic = (): void => {
+      currentX += (targetX - currentX) * 0.24;
+      currentY += (targetY - currentY) * 0.24;
+      element.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      const hasMovement = Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1;
+      if (hasMovement) {
+        magneticRaf = requestAnimationFrame(animateMagnetic);
+      } else {
+        magneticRaf = 0;
+      }
+    };
+
     element.addEventListener("mousemove", (event: MouseEvent) => {
+      const rect = element.getBoundingClientRect();
+      const offsetX = event.clientX - rect.left;
+      const offsetY = event.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const deltaX = offsetX - centerX;
+      const deltaY = offsetY - centerY;
+      targetX = deltaX * MAGNETIC_FACTOR;
+      targetY = deltaY * MAGNETIC_FACTOR;
+      element.style.transition = "none";
       cancelAnimationFrame(magneticRaf);
-      magneticRaf = requestAnimationFrame(() => {
-        const rect = element.getBoundingClientRect();
-        const deltaX = event.clientX - (rect.left + rect.width / 2);
-        const deltaY = event.clientY - (rect.top + rect.height / 2);
-        element.style.transition = "transform 0.1s";
-        element.style.transform = `translate(${deltaX * MAGNETIC_FACTOR}px, ${deltaY * MAGNETIC_FACTOR}px)`;
-      });
+      magneticRaf = requestAnimationFrame(animateMagnetic);
     });
+
     element.addEventListener("mouseleave", () => {
       cancelAnimationFrame(magneticRaf);
+      magneticRaf = 0;
+      targetX = 0;
+      targetY = 0;
+      currentX = 0;
+      currentY = 0;
       element.style.transition = "transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
       element.style.transform = "";
     });
@@ -96,9 +123,8 @@ export function initCursor(): void {
       const leader = index === 0 ? pointer : trailPoints[index - 1];
       point.x += (leader.x - point.x) * FOLLOW_FACTOR;
       point.y += (leader.y - point.y) * FOLLOW_FACTOR;
-      point.node.style.transform = `translate(${point.x}px, ${point.y}px)`;
+      point.node.style.transform = `translate(${point.x}px, ${point.y}px) translate(-50%, -50%)`;
     });
-
     cursorDot.style.transform = `translate(${pointer.x}px, ${pointer.y}px) translate(-50%, -50%)`;
     trailRaf = requestAnimationFrame(animateTrail);
   };
