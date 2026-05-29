@@ -54,14 +54,14 @@
   --surf:   #080f24;
   --card:   #0c1530;
   --border: rgba(255, 255, 255, 0.065);
-  --text:   #e0eaff;
-  --muted:  #7a90bb;
+  --text:   #f8fafc;   /* upgraded: cleaner white over Vanta dark bg */
+  --muted:  #94a3b8;   /* upgraded: more legible over dark topology bg */
   --sky:    #38bdf8;
   --violet: #a78bfa;
   --green:  #34d399;
   --orange: #fb923c;
   --red:    #f87171;
-  --ink:    #e0eaff;
+  --ink:    #f8fafc;
 
   /* Spotlight background (used in .spt cards) */
   --spot-bg: rgba(255, 255, 255, 0.15);
@@ -77,16 +77,32 @@
   --surf:   #e2e8f0;
   --card:   #ffffff;
   --border: rgba(0, 0, 0, 0.1);
-  --text:   #0f1737;
-  --muted:  #5a6a8e;
-  --sky:    #0ea5e9;    /* slightly deeper for contrast on white */
+  --text:   #0f172a;   /* upgraded: near-black for AAA contrast */
+  --muted:  #475569;   /* upgraded: deeper slate for legibility */
+  --sky:    #0ea5e9;
   --violet: #7c3aed;
   --green:  #059669;
   --orange: #ea580c;
   --red:    #dc2626;
-  --ink:    #0f1737;
+  --ink:    #0f172a;
 
   --spot-bg: rgba(0, 0, 0, 0.06);
+}
+
+/* Vanta fix — light mode: reduce network canvas to 15% so text stays readable */
+[data-theme="light"] #vanta-bg canvas {
+  opacity: 0.15 !important;
+}
+
+/* CV button fix — light mode: solid sky background for enough contrast */
+[data-theme="light"] .cv-btn {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.5);
+  color: #0369a1;
+}
+[data-theme="light"] .cv-btn:hover {
+  background: rgba(14, 165, 233, 0.25);
+  color: #0284c7;
 }
 
 /* ──────────────────────────────────────────────
@@ -122,6 +138,14 @@ html:not([data-theme="light"]) #icon-sun  { display: block !important; }
 html:not([data-theme="light"]) #icon-moon { display: none  !important; }
 [data-theme="light"]           #icon-sun  { display: none  !important; }
 [data-theme="light"]           #icon-moon { display: block !important; }
+
+/* ── Vanta canvas: dedicated GPU compositing layer — prevents repaint on zoom ── */
+#vanta-bg {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
 
 body {
   margin: 0;
