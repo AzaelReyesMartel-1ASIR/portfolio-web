@@ -71,7 +71,8 @@ const navItems: NavItem[] = [
       }
     </nav>
 
-    <div class="flex items-center gap-2">
+    <!-- Desktop-only: lang selector + CV button -->
+    <div class="hidden items-center gap-2 lg:flex">
       <!-- i18n Language selector (Simple ES | EN) -->
       <div
         class="flex items-center gap-1 font-mono text-xs font-semibold text-muted mr-2"
@@ -80,17 +81,17 @@ const navItems: NavItem[] = [
           href="/"
           data-astro-reload
           onclick="sessionStorage.setItem('langLockY', window.scrollY)"
-          class={`lang-switch-btn px-1.5 py-1 transition-colors ${lang === "es" ? "text-sky font-bold pointer-events-none" : "hover:text-sky"}`}
+          class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "es" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
           aria-label="Cambiar a Español"
         >
           ES
         </a>
-        <span class="opacity-30">|</span>
+        <span class="opacity-20 select-none">/</span>
         <a
           href="/en/"
           data-astro-reload
           onclick="sessionStorage.setItem('langLockY', window.scrollY)"
-          class={`lang-switch-btn px-1.5 py-1 transition-colors ${lang === "en" ? "text-sky font-bold pointer-events-none" : "hover:text-sky"}`}
+          class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "en" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
           aria-label="Switch to English"
         >
           EN
@@ -126,7 +127,10 @@ const navItems: NavItem[] = [
         </svg>
         <span class="hidden sm:inline">{t("cv.label")}</span>
       </a>
+    </div>
 
+    <!-- Always-visible: theme toggle + hamburger -->
+    <div class="flex items-center gap-2">
       <!-- Theme toggle: JS sets exactly one icon visible after determining stored theme -->
       <button
         type="button"
@@ -177,15 +181,17 @@ const navItems: NavItem[] = [
       <button
         type="button"
         id="menu-toggle"
+        data-open="false"
         class="header-btn inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-transparent text-ink transition-all duration-200 hover:border-sky/35 hover:text-sky lg:hidden"
         aria-label="Abrir menú de navegación"
         aria-controls="mobile-menu"
         aria-expanded="false"
       >
         <span class="sr-only">Abrir menú</span>
-        <!-- Hamburger icon -->
+        <!-- Hamburger icon (3 bars) -->
         <svg
           id="icon-menu-open"
+          class="menu-icon-bars"
           xmlns="http://www.w3.org/2000/svg"
           width="18"
           height="18"
@@ -201,9 +207,10 @@ const navItems: NavItem[] = [
           <line x1="4" y1="12" x2="20" y2="12"></line>
           <line x1="4" y1="18" x2="20" y2="18"></line>
         </svg>
-        <!-- Close icon -->
+        <!-- Close icon (X) -->
         <svg
           id="icon-menu-close"
+          class="menu-icon-close"
           xmlns="http://www.w3.org/2000/svg"
           width="18"
           height="18"
@@ -214,7 +221,6 @@ const navItems: NavItem[] = [
           stroke-linecap="round"
           stroke-linejoin="round"
           aria-hidden="true"
-          class="hidden"
         >
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -235,13 +241,55 @@ const navItems: NavItem[] = [
           <li>
             <a
               href={item.href}
-              class="inline-flex w-full rounded-xl px-3 py-2 font-body text-sm font-medium text-ink/90 transition-colors duration-200 hover:bg-white/5 hover:text-sky"
+              class="mobile-menu-link inline-flex w-full rounded-xl px-3 py-2 font-body text-sm font-medium text-ink/90 transition-colors duration-200 hover:bg-white/5 hover:text-sky"
             >
               {item.label}
             </a>
           </li>
         ))
       }
+
+      {/* ── Mobile-only: lang selector + CV ── */}
+      <li class="mt-2 border-t border-white/10 pt-3">
+        <div class="flex items-center justify-between px-3">
+          <div class="flex items-center gap-1 font-mono text-xs font-semibold text-muted">
+            <a
+              href="/"
+              data-astro-reload
+              onclick="sessionStorage.setItem('langLockY', window.scrollY)"
+              class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "es" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
+              aria-label="Cambiar a Español"
+            >
+              ES
+            </a>
+            <span class="opacity-20 select-none">/</span>
+            <a
+              href="/en/"
+              data-astro-reload
+              onclick="sessionStorage.setItem('langLockY', window.scrollY)"
+              class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "en" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
+              aria-label="Switch to English"
+            >
+              EN
+            </a>
+          </div>
+          <a
+            href="/CV/AZAELREYESMARTELCV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cv-btn inline-flex items-center gap-1.5 rounded-full border border-sky/30 bg-sky/10 px-4 py-1.5 font-mono text-[0.7rem] text-sky transition-all duration-200 hover:border-sky/60 hover:bg-sky/20 hover:shadow-[0_0_15px_rgba(56,189,248,0.25)]"
+            aria-label={t("cv.aria")}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            {t("cv.label")}
+          </a>
+        </div>
+      </li>
     </ul>
   </nav>
 </header>
@@ -308,6 +356,12 @@ const navItems: NavItem[] = [
     border-top-color: var(--border);
     opacity: 1;
   }
+
+  /* ── Hamburger ↔ X icon toggle (driven by data-open on the button) ── */
+  #menu-toggle[data-open="false"] .menu-icon-bars  { display: block; }
+  #menu-toggle[data-open="false"] .menu-icon-close { display: none;  }
+  #menu-toggle[data-open="true"]  .menu-icon-bars  { display: none;  }
+  #menu-toggle[data-open="true"]  .menu-icon-close { display: block; }
 
   /* ─────────────────────────────────────────────
      LIGHT MODE

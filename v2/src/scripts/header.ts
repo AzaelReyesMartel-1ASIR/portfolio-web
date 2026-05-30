@@ -34,18 +34,15 @@ function setupMobileMenu(
   menuBtn: HTMLButtonElement,
   mobileMenu: HTMLElement,
 ): void {
-  const iconOpen  = menuBtn.querySelector<SVGElement>("#icon-menu-open");
-  const iconClose = menuBtn.querySelector<SVGElement>("#icon-menu-close");
 
   const setMenuState = (open: boolean): void => {
     mobileMenu.dataset.open = String(open);
+    menuBtn.dataset.open = String(open);
     menuBtn.setAttribute("aria-expanded", String(open));
     menuBtn.setAttribute(
       "aria-label",
       open ? "Cerrar menú de navegación" : "Abrir menú de navegación",
     );
-    if (iconOpen)  iconOpen.classList.toggle("hidden", open);
-    if (iconClose) iconClose.classList.toggle("hidden", !open);
   };
 
   menuBtn.addEventListener("click", () => {
@@ -53,7 +50,7 @@ function setupMobileMenu(
     setMenuState(!isOpen);
   });
 
-  mobileMenu.querySelectorAll<HTMLAnchorElement>("a[href^='#']").forEach((link) => {
+  mobileMenu.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
     link.addEventListener("click", () => setMenuState(false));
   });
 }

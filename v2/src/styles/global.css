@@ -747,3 +747,22 @@ body.low-power-mode #vanta-bg {
 [data-theme="light"] body.low-power-mode #site-header {
   background: rgba(248, 250, 252, 0.98) !important;
 }
+
+/* ──────────────────────────────────────────────
+   MOBILE: Static fallback — kill WebGL canvas,
+   use a solid background for native 60 FPS.
+   ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #vanta-bg {
+    background: #04081a !important;
+  }
+
+  #vanta-bg canvas {
+    display: none !important;
+  }
+
+  /* Light mode mobile */
+  [data-theme="light"] #vanta-bg {
+    background: #f1f5f9 !important;
+  }
+}

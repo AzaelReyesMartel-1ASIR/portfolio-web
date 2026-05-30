@@ -141,6 +141,7 @@ import "../styles/global.css";
                     spacing: 16,
                 };
 
+                var MOBILE_BREAKPOINT = 768;
                 var tries = 0;
                 var vantaEffect = null;
 
@@ -151,8 +152,36 @@ import "../styles/global.css";
                     return isLight ? LIGHT : DARK;
                 }
 
+                /** Apply static gradient fallback for mobile — zero GPU cost */
+                function applyMobileFallback(el) {
+                    var isLight =
+                        document.documentElement.getAttribute("data-theme") ===
+                        "light";
+                    el.style.background = isLight
+                        ? "linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%)"
+                        : "linear-gradient(135deg, #04081a 0%, #0c1530 40%, #04081a 100%)";
+                }
+
                 function initVanta() {
                     tries++;
+
+                    /* ── KILL-SWITCH: no WebGL on mobile ── */
+                    var el = document.getElementById("vanta-bg");
+                    if (!el) return;
+
+                    if (window.innerWidth < MOBILE_BREAKPOINT || matchMedia('(pointer:coarse)').matches) {
+                        applyMobileFallback(el);
+                        /* Listen for theme changes even on mobile to swap gradient */
+                        var mobileObs = new MutationObserver(function () {
+                            applyMobileFallback(el);
+                        });
+                        mobileObs.observe(document.documentElement, {
+                            attributes: true,
+                            attributeFilter: ["data-theme"],
+                        });
+                        return; /* ← never touch VANTA on mobile */
+                    }
+
                     if (
                         typeof window.VANTA === "undefined" ||
                         typeof window.THREE === "undefined"
@@ -160,8 +189,6 @@ import "../styles/global.css";
                         if (tries < 60) requestAnimationFrame(initVanta);
                         return;
                     }
-                    var el = document.getElementById("vanta-bg");
-                    if (!el) return;
 
                     var opts = getThemeOptions();
                     vantaEffect = window.VANTA.NET({
