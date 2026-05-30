@@ -1,53 +1,77 @@
-# Portfolio Profesional - Azael Reyes Martel
+# Azael's Portfolio — Frontend
 
-Bienvenido al código fuente de mi portfolio personal. Este proyecto ha sido diseñado y desarrollado desde cero para demostrar competencias avanzadas en estructuración de interfaces web, diseño responsive y arquitectura CSS.
+Personal portfolio site. Built to be fast, light, and not annoying.
 
-## 🚀 Sobre el Proyecto
+Live at: [portfolio-azaelrm.vercel.app](https://portfolio-azaelrm.vercel.app/en/)
 
-Soy un Técnico Superior en ASIR y estoy finalizando mi formación de DAW. Mi enfoque hacia el desarrollo web no se basa en simplemente escribir código visual, sino en entender la estructura y el rendimiento detrás de cada caja. Por ello, este portfolio evita el uso de plantillas prefabricadas y que el código sea fácil de entender y para el usuario sea una navegación óptima y fluida. Además, incluyo documentación detallada del proceso de desarrollo del diseño, aunque sé que es básico, pero cumple su propósito y se puede seguir mejorando con el tiempo.
+---
 
-### Características Principales:
-- **Desarrollo "Vanilla":** construido sin frameworks CSS pesados. Se utiliza CSS Grid, Flexbox y el Modelo de Cajas para demostrar los conocimientos de Diseño de Interfaces Web.
-- **Arquitectura de Variables:** uso de CSS Custom Properties para un mantenimiento escalable.
-- **HTML Semántico:** estructura pensada para lectores de pantalla y buen SEO (etiquetas `<main>`, `<section>`, `<nav>`, `<header>`).
-- **Diseño Responsive:** adaptado a dispositivos móviles mediante Media Queries.
+## Tech Stack
 
-## 🛠️ Stack Tecnológico
+| Layer        | Tool                        |
+| ------------ | --------------------------- |
+| Framework    | Astro 6 (static output)     |
+| Styling      | Tailwind CSS v4             |
+| Language     | TypeScript                  |
+| 3D Background | Vanta.js (Three.js r134)  |
+| Transitions  | Astro View Transitions API  |
+| Fonts        | Syne, Manrope, JetBrains Mono (self-hosted) |
 
-- **HTML5** Semántico
-- **CSS3** (Variables, Flexbox, Transiciones)
-- **Vite** (Como herramienta de *bundling* y servidor de desarrollo eficiente)
+## Core Features
 
-## ⚙️ Instalación y Despliegue en Local
+- **Static i18n (ES/EN)** — No runtime i18n library. Routes are `/` (Spanish) and `/en/`. Language detection is a compile-time Astro function. Zero client-side overhead.
+- **SPA-like navigation** — Uses Astro's `<ViewTransitions />` for instant page swaps without a full reload. Still ships as a static MPA under the hood.
+- **WebGL GPU kill-switch** — On mobile (`< 768px`) or touch-only devices (`pointer: coarse`), Vanta.js never initializes. A static CSS gradient takes its place. This prevents GPU crashes when users pinch-zoom and saves battery.
+- **Theme toggle** — Dark/light mode with OS preference detection, `localStorage` persistence, and zero-flash on load (inline blocking script sets `data-theme` before first paint).
+- **Custom cursor** — Dot + trailing ring with hover states. Auto-disabled on touch devices via `@media (hover: none)`.
+- **Easter egg** — The 404 page. Go find it.
 
-Si deseas ejecutar este proyecto en tu propia máquina para revisar el código:
+## Quick Start
 
-1. Clona el repositorio
-   ```bash
-   git clone https://github.com/AzaelReyesMartel-1ASIR/portfolio-web.git 
-   ```
+```bash
+# Clone and enter the project
+git clone https://github.com/AzaelReyesMartel-1ASIR/portfolio-web.git
+cd portfolio-web/v2
 
-2. Accede a la carpeta
-    ```bash
-    cd portfolio-web
-    ```
+# Install dependencies
+npm install
 
-3. Instalar las dependencias del desarrollo
-    ```bash
-    npm install
-    ```
+# Dev server (hot reload)
+npm run dev
 
-4. Levantar el servidor en local
-    ```bash
-    npm run dev
-    ```
+# Production build
+npm run build
 
-🗺️ Roadmap (Próximos Pasos)
+# Preview the production build locally
+npm run preview
+```
 
-[ ] Migrar a Astro.
+Default dev server: `http://localhost:4321`
 
-[ ] Optimizar la estructura de directorios y ficheros, modulando y encapsulando de forma eficiente para que sea escalable.
+## Project Structure
 
-[ ] Mejorar Estilos / Añadir animaciones y cosas chulas.
+```
+v2/
+├── src/
+│   ├── components/     # Astro components (Header, Footer, cards, etc.)
+│   ├── layouts/        # Layout.astro (single layout, handles <head> + Vanta)
+│   ├── pages/          # Route files: index.astro, en/index.astro, 404.astro
+│   ├── i18n/           # Translation strings (es.ts, en.ts) + utility functions
+│   ├── scripts/        # Client-side TS: header, cursor, terminal, typewriter
+│   └── styles/         # global.css (Tailwind config + custom properties)
+├── public/             # Static assets: images, CV, favicon
+└── astro.config.mjs
+```
 
-[ ] Implementar algún sistema sencillo de APIs para mostrar conocimientos en Backend y no solo Frontend.
+## Deployment
+
+The output is fully static (`output: "static"` in Astro config). Deploy the `dist/` folder to any CDN or static host: Cloudflare Pages, Vercel, Netlify, GitHub Pages, a Raspberry Pi — it doesn't matter.
+
+```bash
+npm run build
+# Upload dist/ to your host
+```
+
+## License
+
+Personal project. If you want to fork the structure for your own portfolio, go ahead. Just swap out the content, don't pretend to be me.
