@@ -103,6 +103,31 @@ The site is a portfolio. It doesn't need React state management, a virtual DOM, 
 
 ---
 
+### 2.5 Graceful Degradation (No-JS Fallback)
+
+**Problem:** When JavaScript is disabled, the website completely broke. Specifically:
+- **Blank Page Syndrome:** All major page sections (Hero, About, Skills, Projects, Contact) defaulted to `opacity: 0` because they utilized the `.reveal` class for scroll-reveal animations, which depends entirely on JS scroll listeners to toggle visibility.
+- **Broken Submissions:** The interactive contact form remained visible but became unusable because the submit event relies on client-side JS validation and a `fetch()` API request to the backend workers gateway. Submitting it statically would only refresh the page without sending any email.
+- **Visual Glitches:** JS-only components (custom cursor dots, trailing outlines, dynamic back-to-top buttons) would remain stuck, unrendered, or floated awkwardly on screen.
+
+**Solution — a complete, automatic No-JS fallback strategy:**
+
+1. **CSS Overrides (`<noscript>` in `<head>`):**
+   We injected a `<noscript>` tag within the head of `Layout.astro` containing global CSS overrides. If JS is disabled:
+   - All `.reveal` classes are instantly set to `opacity: 1 !important` and `transform: none !important`, making the full site instantly visible and readable.
+   - The interactive `#contact-form` is hidden (`display: none !important`).
+   - Stuck interactive components like `#cursor-dot`, `#cursor-outline`, `.c-trail`, and `#back-to-top` are hidden completely.
+   - The native browser cursor and hover indicators are fully restored (`cursor: auto` / `cursor: pointer`).
+   - The header's position is adjusted to `relative` instead of `fixed` to allow normal static scrolling.
+
+2. **Top-Level warning banner:**
+   A `<noscript>` block inside the layouts displays a warning banner at the top of the webpage. This banner is styled using premium theme-aware glassmorphism (soft orange borders and background with high-contrast text matching the light/dark theme) and is localized into Spanish or English depending on the current route.
+
+3. **Static Contact Path:**
+   Within `Contact.astro`, the hidden `#contact-form` is replaced inside a `<noscript>` block with an amber warning panel that details the JS limitation and immediately directs the user to the direct email (`mailto:`) and social media anchors positioned directly below, keeping the layout fully functional and beautiful.
+
+---
+
 ## 3. Mobile Menu Architecture
 
 The mobile hamburger menu uses a `data-open` attribute pattern instead of toggling CSS classes on individual SVG icons:

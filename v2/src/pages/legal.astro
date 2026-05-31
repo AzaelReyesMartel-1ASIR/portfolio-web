@@ -1,0 +1,137 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout
+  title="Aviso Legal y Privacidad — Azael Reyes"
+  description="Información legal, política de privacidad de datos y uso de cookies de la web portfolio de Azael Reyes Martel."
+  lang="es"
+>
+  <main id="main-content" tabindex="-1" class="focus:outline-none mx-auto max-w-4xl px-6 py-28 md:px-10" aria-label="Aviso Legal y Privacidad">
+    <div class="mb-8">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 rounded-xl border border-sky/35 bg-sky/10 px-4 py-2 font-mono text-[0.72rem] uppercase tracking-[0.13em] text-sky transition-all duration-200 hover:-translate-y-0.5 hover:bg-sky/20 hover:shadow-[0_0_15px_rgba(56,189,248,0.2)]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Volver al Inicio
+      </a>
+    </div>
+
+    <article class="spt reveal vis rounded-2xl border border-white/10 bg-linear-to-br from-card to-surf p-8 shadow-2xl">
+      <header class="border-b border-white/5 pb-6">
+        <p class="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-sky">
+          // legal-notice
+        </p>
+        <h1 class="mt-2 font-display text-3xl leading-tight text-ink sm:text-4xl">
+          Aviso Legal y <span class="grad-text">Privacidad</span>
+        </h1>
+        <p class="mt-2 text-xs text-muted">
+          Última actualización: Mayo 2026
+        </p>
+      </header>
+
+      <div class="mt-8 flex flex-col gap-8 font-body text-sm leading-7 text-muted">
+        <section>
+          <h2 class="font-display text-xl text-ink">1. Información General (LSSI)</h2>
+          <p class="mt-3">
+            En cumplimiento del deber de información establecido en la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se facilitan a continuación los siguientes datos informativos de este sitio web:
+          </p>
+          <ul class="mt-3 list-disc pl-5 flex flex-col gap-1.5">
+            <li><strong>Titular de la web:</strong> Azael Reyes Martel</li>
+            <li><strong>Contacto directo:</strong> <a href="mailto:azadaw2004@gmail.com" class="text-sky hover:underline">azadaw2004@gmail.com</a></li>
+            <li><strong>Finalidad de la web:</strong> Portfolio personal interactivo con fines curriculares, de demostración técnica y de presentación de servicios profesionales.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl text-ink">2. Política de Privacidad (RGPD)</h2>
+          <p class="mt-3">
+            De conformidad con el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo (Reglamento General de Protección de Datos o RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), te informo sobre cómo se tratan los datos de carácter personal enviados a través de esta plataforma:
+          </p>
+          
+          <div class="mt-4 grid gap-4 rounded-xl border border-white/5 bg-surf/35 p-4 sm:grid-cols-2">
+            <div>
+              <h3 class="font-semibold text-ink text-xs uppercase tracking-wide">// Responsable</h3>
+              <p class="mt-1 text-xs">Azael Reyes Martel</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-ink text-xs uppercase tracking-wide">// Finalidad</h3>
+              <p class="mt-1 text-xs">Dar respuesta a tus consultas y propuestas profesionales enviadas por el formulario de contacto.</p>
+            </div>
+            <div class="mt-2">
+              <h3 class="font-semibold text-ink text-xs uppercase tracking-wide">// Legitimación</h3>
+              <p class="mt-1 text-xs">Consentimiento inequívoco e informado del usuario al pulsar "Enviar Mensaje".</p>
+            </div>
+            <div class="mt-2">
+              <h3 class="font-semibold text-ink text-xs uppercase tracking-wide">// Destinatarios</h3>
+              <p class="mt-1 text-xs">Los datos no se ceden a terceros, salvo obligación legal, y se procesan de forma privada.</p>
+            </div>
+          </div>
+
+          <p class="mt-4">
+            <strong>Plazo de Conservación:</strong> Los datos de contacto facilitados se conservarán únicamente durante el tiempo imprescindible para gestionar tu consulta profesional o mientras dure la relación comercial que pudiera derivarse.
+          </p>
+          <p class="mt-2">
+            <strong>Tus Derechos:</strong> Tienes derecho a acceder, rectificar, suprimir y limitar el tratamiento de tus datos personales, así como a revocar tu consentimiento en cualquier momento. Para ejercer estos derechos, basta con enviar un correo electrónico a <a href="mailto:azadaw2004@gmail.com" class="text-sky hover:underline">azadaw2004@gmail.com</a> indicando tu solicitud.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-display text-xl text-ink">3. Política de Cookies (Transparencia Técnica)</h2>
+          <p class="mt-3">
+            Para ofrecer una navegación más fluida y un rendimiento impecable, he optado por una solución técnica <strong>libre de rastreadores y cookies de terceros</strong>:
+          </p>
+          <ul class="mt-3 list-disc pl-5 flex flex-col gap-2">
+            <li><strong>Sin Cookies de Seguimiento:</strong> No se utilizan cookies analíticas de terceros (como Google Analytics), ni píxeles publicitarios, ni scripts intrusivos de comportamiento. Tu navegación es completamente privada.</li>
+            <li><strong>Almacenamiento Local (Técnico):</strong> Únicamente se emplean variables de almacenamiento local en el navegador del usuario para recordar sus preferencias técnicas de usabilidad:
+              <ul class="list-circle pl-5 mt-1.5 flex flex-col gap-1 text-xs">
+                <li><code>localStorage.theme</code>: Almacena tu preferencia de interfaz visual (Modo Claro o Modo Oscuro) para evitar parpadeos visuales al cambiar de página.</li>
+                <li><code>sessionStorage.langLockY</code>: Bloquea y sincroniza la posición del scroll de tu pantalla al alternar de idioma (Español / Inglés).</li>
+              </ul>
+            </li>
+          </ul>
+          <p class="mt-3 text-xs leading-relaxed border-l-2 border-green/50 bg-green/5 p-3 rounded-r-xl">
+            ℹ️ Al tratarse de herramientas exclusivamente técnicas y funcionales indispensables para el funcionamiento y diseño del portfolio (permitiendo recordar el tema claro/oscuro de tu preferencia), no requieren de un consentimiento de cookies según las directivas vigentes de la AEPD y de la Unión Europea.
+          </p>
+        </section>
+
+        <section class="border-t border-white/5 pt-6">
+          <h2 class="font-display text-xl text-ink">4. Propiedad Intelectual y Enlaces</h2>
+          <p class="mt-3">
+            Los derechos de propiedad intelectual del diseño de la web, código fuente, logotipos y contenidos de texto son de titularidad exclusiva del autor, o dispone de los permisos pertinentes para su uso. Se autoriza la visualización y copia del código de los repositorios públicos enlazados para fines didácticos, manteniendo siempre la autoría original.
+          </p>
+        </section>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  :global([data-theme="light"]) .spt {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  }
+  :global([data-theme="light"]) h2,
+  :global([data-theme="light"]) h3 {
+    color: var(--ink);
+  }
+</style>

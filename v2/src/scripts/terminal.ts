@@ -33,8 +33,8 @@ const TERMINAL_LINES: TerminalLine[] = [
 const BASE_CHAR_DELAY = 26;
 const JITTER = 12;
 
-// Guard: prevents double-run if called multiple times (Layout + index both init)
-let _running = false;
+// Auto-incrementing run counter to cancel old loops on navigation
+let _currentRunId = 0;
 
 const getTypingDelay = (): number =>
   BASE_CHAR_DELAY + Math.floor(Math.random() * (JITTER * 2 + 1)) - JITTER;
@@ -50,12 +50,15 @@ const appendBlinkCursor = (element: HTMLElement): void => {
 };
 
 export const initTerminal = (): void => {
-  if (_running) return; // idempotency guard
-
   const container = document.querySelector<HTMLElement>("#terminal-lines");
   if (!container) return;
 
-  _running = true;
+  // Idempotency guard: prevent duplicate runs on the same DOM element
+  if (container.dataset.initialized) return;
+  container.dataset.initialized = "true";
+
+  _currentRunId += 1;
+  const myRunId = _currentRunId;
 
   // ── Step 1: Ghost pre-render ──────────────────────────────────────────
   // Render all lines at full length but invisible (opacity: 0).
@@ -76,6 +79,8 @@ export const initTerminal = (): void => {
   // Container height stays constant → zero layout shift after step 1.
   void (async () => {
     for (let i = 0; i < TERMINAL_LINES.length; i++) {
+      if (myRunId !== _currentRunId || !container.isConnected) return;
+
       const { text } = TERMINAL_LINES[i];
       const line = ghostLines[i];
 
@@ -86,16 +91,19 @@ export const initTerminal = (): void => {
 
       // Type characters
       for (const char of text) {
+        if (myRunId !== _currentRunId || !container.isConnected) return;
         line.textContent = `${line.textContent ?? ""}${char}`;
         await wait(Math.max(8, getTypingDelay()));
       }
 
       // Add blinking cursor to last line
-      if (i === TERMINAL_LINES.length - 1) appendBlinkCursor(line);
+      if (i === TERMINAL_LINES.length - 1) {
+        if (myRunId !== _currentRunId || !container.isConnected) return;
+        appendBlinkCursor(line);
+      }
 
+      if (myRunId !== _currentRunId || !container.isConnected) return;
       await wait(i === 0 ? 300 : 120);
     }
-
-    _running = false; // allow re-init after completion (e.g. SPA nav)
   })();
 };

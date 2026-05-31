@@ -1,4 +1,79 @@
 export function initContactForm() {
+  const emailBtn = document.getElementById("email-btn") as HTMLAnchorElement | null;
+  const emailBtnText = document.getElementById("email-btn-text") as HTMLSpanElement | null;
+  const emailDropdown = document.getElementById("email-dropdown") as HTMLDivElement | null;
+  const optCopy = document.getElementById("opt-copy") as HTMLButtonElement | null;
+  const optCopyText = document.getElementById("opt-copy-text") as HTMLSpanElement | null;
+
+  if (emailBtn && emailBtnText && emailDropdown && optCopy && optCopyText && !emailBtn.dataset.initialized) {
+    emailBtn.dataset.initialized = "true";
+
+    const showDropdown = () => {
+      emailDropdown.classList.remove("hidden");
+      // Force reflow
+      emailDropdown.offsetHeight;
+      emailDropdown.classList.remove("scale-95", "opacity-0");
+      emailDropdown.classList.add("scale-100", "opacity-100");
+      emailBtn.setAttribute("aria-expanded", "true");
+    };
+
+    const hideDropdown = () => {
+      emailDropdown.classList.remove("scale-100", "opacity-100");
+      emailDropdown.classList.add("scale-95", "opacity-0");
+      emailBtn.setAttribute("aria-expanded", "false");
+      
+      const onTransitionEnd = () => {
+        emailDropdown.classList.add("hidden");
+        emailDropdown.removeEventListener("transitionend", onTransitionEnd);
+      };
+      emailDropdown.addEventListener("transitionend", onTransitionEnd);
+    };
+
+    emailBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isExpanded = emailBtn.getAttribute("aria-expanded") === "true";
+      if (isExpanded) {
+        hideDropdown();
+      } else {
+        showDropdown();
+      }
+    });
+
+    optCopy.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const email = "azadaw2004@gmail.com";
+      try {
+        await navigator.clipboard.writeText(email);
+        const originalText = optCopyText.innerText;
+        const copiedText = emailBtn.getAttribute("data-copied-text") || "¡Copiado!";
+        
+        optCopyText.innerText = copiedText;
+        optCopy.classList.remove("text-muted");
+        optCopy.classList.add("text-green");
+        
+        setTimeout(() => {
+          optCopyText.innerText = originalText;
+          optCopy.classList.remove("text-green");
+          optCopy.classList.add("text-muted");
+          hideDropdown();
+        }, 1500);
+      } catch (err) {
+        console.error("Failed to copy email to clipboard:", err);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (!emailBtn.contains(target) && !emailDropdown.contains(target)) {
+        const isExpanded = emailBtn.getAttribute("aria-expanded") === "true";
+        if (isExpanded) {
+          hideDropdown();
+        }
+      }
+    });
+  }
+
   const form = document.getElementById("contact-form") as HTMLFormElement | null;
   const feedbackEl = document.getElementById("form-feedback") as HTMLParagraphElement | null;
   const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement | null;

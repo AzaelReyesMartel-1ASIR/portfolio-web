@@ -34,6 +34,8 @@ function setupMobileMenu(
   menuBtn: HTMLButtonElement,
   mobileMenu: HTMLElement,
 ): void {
+  if (menuBtn.dataset.initialized) return;
+  menuBtn.dataset.initialized = "true";
 
   const setMenuState = (open: boolean): void => {
     mobileMenu.dataset.open = String(open);
@@ -88,6 +90,9 @@ function applyTheme(theme: Theme, toggleBtn: HTMLButtonElement): void {
 }
 
 function setupThemeToggle(toggleBtn: HTMLButtonElement): void {
+  if (toggleBtn.dataset.initialized) return;
+  toggleBtn.dataset.initialized = "true";
+
   // Apply persisted / OS-inferred theme immediately
   const initial = getStoredTheme();
   applyTheme(initial, toggleBtn);
@@ -104,6 +109,8 @@ function setupThemeToggle(toggleBtn: HTMLButtonElement): void {
 }
 
 // ── Init ─────────────────────────────────────
+let _scrollListener: (() => void) | null = null;
+
 export function initHeader(): void {
   const header       = document.getElementById("site-header");
   const progressBar  = document.getElementById("scroll-bar");
@@ -116,6 +123,11 @@ export function initHeader(): void {
     return;
   }
 
+  // Remove old scroll listener to prevent duplicate triggers and memory leaks on SPA page transitions
+  if (_scrollListener) {
+    window.removeEventListener("scroll", _scrollListener);
+  }
+
   // Initial state
   updateHeaderState(header);
   updateScrollBar(progressBar);
@@ -124,17 +136,15 @@ export function initHeader(): void {
   }
 
   // Scroll listener (passive for performance)
-  window.addEventListener(
-    "scroll",
-    () => {
-      updateHeaderState(header);
-      updateScrollBar(progressBar);
-      if (backToTop instanceof HTMLButtonElement) {
-        updateBackToTop(backToTop);
-      }
-    },
-    { passive: true },
-  );
+  _scrollListener = () => {
+    updateHeaderState(header);
+    updateScrollBar(progressBar);
+    if (backToTop instanceof HTMLButtonElement) {
+      updateBackToTop(backToTop);
+    }
+  };
+
+  window.addEventListener("scroll", _scrollListener, { passive: true });
 
   // Mobile menu
   if (menuToggle instanceof HTMLButtonElement && mobileMenu instanceof HTMLElement) {
@@ -142,7 +152,8 @@ export function initHeader(): void {
   }
 
   // Back to top
-  if (backToTop instanceof HTMLButtonElement) {
+  if (backToTop instanceof HTMLButtonElement && !backToTop.dataset.initialized) {
+    backToTop.dataset.initialized = "true";
     backToTop.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });

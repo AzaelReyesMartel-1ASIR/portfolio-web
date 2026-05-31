@@ -100,6 +100,14 @@ function setupHeroParallax(): void {
   });
 }
 
+// ── Init ─────────────────────────────────────
+let trailRaf = 0;
+let _mouseMoveListener: ((event: MouseEvent) => void) | null = null;
+let _mouseLeaveListener: (() => void) | null = null;
+let _mouseEnterListener: (() => void) | null = null;
+let _windowBlurListener: (() => void) | null = null;
+let _windowFocusListener: (() => void) | null = null;
+
 export function initCursor(): void {
   if (isTouchDevice()) {
     return;
@@ -111,15 +119,28 @@ export function initCursor(): void {
     return;
   }
 
+  // Cancel old animation loop and clean up existing trail nodes from DOM to prevent memory leaks during SPA navigation
+  if (trailRaf) {
+    cancelAnimationFrame(trailRaf);
+  }
+  document.querySelectorAll('.c-trail').forEach(el => el.remove());
+
   const trailPoints = createTrailNodes();
   const pointer  = { x: window.innerWidth / 2,  y: window.innerHeight / 2 };
   const outlined = { x: window.innerWidth / 2,  y: window.innerHeight / 2 };
-  let trailRaf = 0;
 
-  document.addEventListener('mousemove', (event: MouseEvent) => {
+  // Remove previous mousemove listener to prevent duplication
+  if (_mouseMoveListener) {
+    document.removeEventListener('mousemove', _mouseMoveListener);
+  }
+
+  _mouseMoveListener = (event: MouseEvent) => {
     pointer.x = event.clientX;
     pointer.y = event.clientY;
-  });
+    document.body.classList.remove('cursor-hidden');
+  };
+
+  document.addEventListener('mousemove', _mouseMoveListener);
 
   const animateTrail = (): void => {
     // Trail nodes
@@ -152,6 +173,22 @@ export function initCursor(): void {
       el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-hover'));
     });
   }
+
+  // Clean up previous event listeners on document/window to prevent duplicate events on navigation
+  if (_mouseLeaveListener) document.removeEventListener('mouseleave', _mouseLeaveListener);
+  if (_mouseEnterListener) document.removeEventListener('mouseenter', _mouseEnterListener);
+  if (_windowBlurListener) window.removeEventListener('blur', _windowBlurListener);
+  if (_windowFocusListener) window.removeEventListener('focus', _windowFocusListener);
+
+  _mouseLeaveListener = () => document.body.classList.add('cursor-hidden');
+  _mouseEnterListener = () => document.body.classList.remove('cursor-hidden');
+  _windowBlurListener = () => document.body.classList.add('cursor-hidden');
+  _windowFocusListener = () => document.body.classList.remove('cursor-hidden');
+
+  document.addEventListener('mouseleave', _mouseLeaveListener);
+  document.addEventListener('mouseenter', _mouseEnterListener);
+  window.addEventListener('blur', _windowBlurListener);
+  window.addEventListener('focus', _windowFocusListener);
 
   setupCursorScale(cursorDot);
   setupMagneticElements();

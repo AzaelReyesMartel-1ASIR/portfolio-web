@@ -300,6 +300,14 @@ select {
   will-change: transform;
 }
 
+body.cursor-hidden #cursor-dot,
+body.cursor-hidden #cursor-outline,
+body.cursor-hidden .c-trail {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.15s ease !important;
+}
+
 /* Disable native cursor on interactive elements */
 a,
 button,

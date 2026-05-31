@@ -13,6 +13,7 @@ export const ui = {
     'nav.projects': 'Proyectos',
     'nav.skills': 'Habilidades',
     'nav.contact': 'Contacto',
+    'nav.skip': 'Saltar al contenido principal',
     'cv.label': 'CV.pdf',
     'cv.aria': 'Ver CV en nueva pestaña',
 
@@ -159,6 +160,10 @@ export const ui = {
     'contact.heading.em': 'en producción?',
     'contact.body': 'Disponible para proyectos B2B, freelance y colaboración en equipos técnicos. Respondo con foco en arquitectura, delivery y operación real.',
     'contact.cta.email': 'Email Directo',
+    'contact.cta.email.copied': '¡Copiado!',
+    'contact.dropdown.copy': 'Copiar correo',
+    'contact.dropdown.gmail': 'Abrir en Gmail',
+    'contact.dropdown.default': 'App de Correo (Outlook)',
     'contact.cta.github': 'GitHub',
     'contact.cta.linkedin': 'LinkedIn',
     'contact.availability': 'Availability',
@@ -178,10 +183,14 @@ export const ui = {
     'footer.built': 'built with',
     'footer.by': 'by Azael Reyes © 2026',
     'footer.back': 'Volver al inicio',
+    'footer.legal': 'Aviso Legal & Privacidad',
 
     // Misc
     'theme.toggle': 'Cambiar tema',
     'lang.toggle': 'Cambiar idioma',
+    'noscript.banner': '⚠️ Para una mejor experiencia visual, con animaciones e interactividad completa, te recomendamos activar JavaScript en tu navegador. Puedes contactarme directamente por correo electrónico a continuación.',
+    'contact.noscript.title': 'Formulario Estático (Sin JS)',
+    'contact.noscript.body': 'El formulario interactivo requiere JavaScript para validar y enviar mensajes. Por favor, utiliza el botón de correo electrónico directo o mis redes sociales a continuación para ponerte en contacto inmediatamente.',
   },
   en: {
     // Nav
@@ -190,6 +199,7 @@ export const ui = {
     'nav.projects': 'Projects',
     'nav.skills': 'Skills',
     'nav.contact': 'Contact',
+    'nav.skip': 'Skip to main content',
     'cv.label': 'Resume.pdf',
     'cv.aria': 'View Resume in new tab',
 
@@ -336,6 +346,10 @@ export const ui = {
     'contact.heading.em': 'in production?',
     'contact.body': 'Available for B2B projects, freelance work, and technical team collaboration. I respond with a focus on architecture, delivery, and real operations.',
     'contact.cta.email': 'Direct Email',
+    'contact.cta.email.copied': 'Copied!',
+    'contact.dropdown.copy': 'Copy email',
+    'contact.dropdown.gmail': 'Open in Gmail',
+    'contact.dropdown.default': 'Default Mail App',
     'contact.cta.github': 'GitHub',
     'contact.cta.linkedin': 'LinkedIn',
     'contact.availability': 'Availability',
@@ -355,10 +369,14 @@ export const ui = {
     'footer.built': 'built with',
     'footer.by': 'by Azael Reyes © 2026',
     'footer.back': 'Back to top',
+    'footer.legal': 'Legal Notice & Privacy Policy',
 
     // Misc
     'theme.toggle': 'Toggle theme',
     'lang.toggle': 'Change language',
+    'noscript.banner': '⚠️ For the best visual experience, including full animations and interactivity, we recommend enabling JavaScript in your browser. You can reach out directly via email below.',
+    'contact.noscript.title': 'Static Contact Form (No-JS)',
+    'contact.noscript.body': 'The interactive contact form requires JavaScript to validate and send messages. Please use the direct email button or my social links below to get in touch immediately.',
   },
 } as const;
 

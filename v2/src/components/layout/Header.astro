@@ -5,6 +5,10 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+const currentPath = Astro.url.pathname;
+const esPath = lang === "en" ? (currentPath.replace(/^\/en/, "") || "/") : currentPath;
+const enPath = lang === "es" ? (`/en${currentPath === "/" ? "/" : currentPath}`) : currentPath;
+
 interface NavItem {
   href: string;
   label: string;
@@ -44,6 +48,31 @@ const navItems: NavItem[] = [
   class="fixed left-0 top-0 z-[1000] w-full border-b border-white/[0.06] bg-[rgba(4,8,26,0.55)] backdrop-blur-[18px] saturate-[160%] transition-all duration-300 ease-in-out"
   aria-label="Cabecera principal"
 >
+  <noscript>
+    <div 
+      class="w-full border-b border-orange/25 bg-orange/10 px-5 py-3 text-center text-xs sm:text-sm font-mono text-ink/90 backdrop-blur-md"
+      style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="text-orange shrink-0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span class="leading-relaxed">
+        {lang === 'es' ? (
+          <>
+            Para una mejor experiencia visual con animaciones e interactividad completa, te recomendamos activar JavaScript. Puedes contactarme directamente por correo a: 
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=azadaw2004@gmail.com" target="_blank" rel="noopener noreferrer" class="text-sky underline hover:text-sky/80 ml-1 font-bold">azadaw2004@gmail.com (Gmail)</a>
+            o 
+            <a href="mailto:azadaw2004@gmail.com" class="text-sky underline hover:text-sky/80 ml-1 font-bold">App de Correo</a>.
+          </>
+        ) : (
+          <>
+            For the best visual experience including animations and full interactivity, we recommend enabling JavaScript. You can reach out directly via email to: 
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=azadaw2004@gmail.com" target="_blank" rel="noopener noreferrer" class="text-sky underline hover:text-sky/80 ml-1 font-bold">azadaw2004@gmail.com (Gmail)</a>
+            or 
+            <a href="mailto:azadaw2004@gmail.com" class="text-sky underline hover:text-sky/80 ml-1 font-bold">Mail App</a>.
+          </>
+        )}
+      </span>
+    </div>
+  </noscript>
   <div
     class="mx-auto flex h-18 w-full max-w-6xl items-center justify-between gap-4 px-5 md:px-8"
   >
@@ -78,7 +107,7 @@ const navItems: NavItem[] = [
         class="flex items-center gap-1 font-mono text-xs font-semibold text-muted mr-2"
       >
         <a
-          href="/"
+          href={esPath}
           data-astro-reload
           onclick="sessionStorage.setItem('langLockY', window.scrollY)"
           class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "es" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
@@ -88,7 +117,7 @@ const navItems: NavItem[] = [
         </a>
         <span class="opacity-20 select-none">/</span>
         <a
-          href="/en/"
+          href={enPath}
           data-astro-reload
           onclick="sessionStorage.setItem('langLockY', window.scrollY)"
           class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "en" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
@@ -254,7 +283,7 @@ const navItems: NavItem[] = [
         <div class="flex items-center justify-between px-3">
           <div class="flex items-center gap-1 font-mono text-xs font-semibold text-muted">
             <a
-              href="/"
+              href={esPath}
               data-astro-reload
               onclick="sessionStorage.setItem('langLockY', window.scrollY)"
               class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "es" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
@@ -264,7 +293,7 @@ const navItems: NavItem[] = [
             </a>
             <span class="opacity-20 select-none">/</span>
             <a
-              href="/en/"
+              href={enPath}
               data-astro-reload
               onclick="sessionStorage.setItem('langLockY', window.scrollY)"
               class={`lang-switch-btn rounded-md px-2 py-0.5 transition-all duration-200 ${lang === "en" ? "bg-sky/15 text-sky font-bold border border-sky/30 pointer-events-none" : "text-muted/70 hover:text-sky hover:bg-white/5 cursor-pointer"}`}
