@@ -300,7 +300,7 @@ select {
   will-change: transform;
 }
 
-/* ── TAREA 1: Exterminio del cursor nativo en elementos interactivos ── */
+/* Disable native cursor on interactive elements */
 a,
 button,
 input,
@@ -311,7 +311,7 @@ select,
   cursor: none !important;
 }
 
-/* ── TAREA 2: Ring exterior del cursor personalizado ── */
+/* Custom cursor outer ring */
 #cursor-outline {
   position: fixed;
   top: 0;
@@ -689,7 +689,7 @@ select,
     0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
-/* ── TAREA 1: Graceful degradation — zoom extremo o pantallas >2.5dppx ── */
+/* Graceful degradation for extreme zoom or >2.5dppx displays */
 @media (min-resolution: 2.5dppx) {
   .scrolled,
   .spt,
@@ -701,7 +701,7 @@ select,
   }
 }
 
-/* ── TAREA 2: CRT overlay — light mode reduce opacity to near-zero ── */
+/* CRT overlay — light mode reduce opacity to near-zero */
 .crt-scanlines {
   opacity: 0.03;
 }
@@ -710,7 +710,7 @@ select,
   opacity: 0.01 !important;
 }
 
-/* ── TAREA 5: Dual-image dark/light CSS toggle ── */
+/* Dual-image dark/light CSS toggle */
 /* Dark mode (default): dark image visible, light hidden */
 .img-dark  { opacity: 1;   pointer-events: auto;  transition: opacity 0.3s ease; }
 .img-light { opacity: 0;   pointer-events: none;  transition: opacity 0.3s ease; }
@@ -719,7 +719,7 @@ select,
 [data-theme="light"] .img-dark  { opacity: 0;   pointer-events: none; }
 [data-theme="light"] .img-light { opacity: 1;   pointer-events: auto; }
 
-/* ── Kill-switch: low-power-mode (zoom > 150% o pantalla HiDPI) ── */
+/* Kill-switch: low-power mode (zoom > 150% or HiDPI display) */
 body.low-power-mode .scrolled,
 body.low-power-mode .spt,
 body.low-power-mode .project-card,
@@ -734,7 +734,7 @@ body.low-power-mode .crt-scanlines {
   display: none !important;
 }
 
-/* TAREA 2: Apagado total del canvas WebGL en zoom extremo */
+/* Completely disable WebGL canvas on extreme zoom */
 body.low-power-mode #vanta-bg {
   display: none !important;
 }
