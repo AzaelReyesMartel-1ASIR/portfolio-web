@@ -35,9 +35,31 @@ const {} = Astro.props as Props;
       </p>
 
       <noscript>
-        <div class="rounded-2xl border border-orange/25 bg-orange/10 p-5 mt-7 mb-2 text-sm font-mono text-ink/90 shadow-md">
-          <p class="font-bold flex items-center gap-2 text-[0.8rem] uppercase tracking-wide text-orange">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div
+          class="rounded-2xl border border-orange/25 bg-orange/10 p-5 mt-7 mb-2 text-sm font-mono text-ink/90 shadow-md"
+        >
+          <p
+            class="font-bold flex items-center gap-2 text-[0.8rem] uppercase tracking-wide text-orange"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="shrink-0"
+              ><path
+                d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
+              ></path><line x1="12" y1="9" x2="12" y2="13"></line><line
+                x1="12"
+                y1="17"
+                x2="12.01"
+                y2="17"></line></svg
+            >
             {t("contact.noscript.title")}
           </p>
           <p class="mt-2.5 text-xs text-muted leading-relaxed">
@@ -150,17 +172,47 @@ const {} = Astro.props as Props;
               id="opt-copy"
               class="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left font-mono text-[0.68rem] text-muted hover:bg-white/5 hover:text-sky transition-colors duration-150 cursor-pointer"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="shrink-0"
+                ><rect width="14" height="14" x="8" y="8" rx="2" ry="2"
+                ></rect><path
+                  d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                ></path></svg
+              >
               <span id="opt-copy-text">{t("contact.dropdown.copy")}</span>
             </button>
-            
+
             <a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=azadaw2004@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
               class="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left font-mono text-[0.68rem] text-muted hover:bg-white/5 hover:text-sky transition-colors duration-150 cursor-pointer"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z"/><path d="m22 9-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 9"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="shrink-0"
+                ><path
+                  d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z"
+                ></path><path d="m22 9-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 9"
+                ></path></svg
+              >
               {t("contact.dropdown.gmail")}
             </a>
           </div>
