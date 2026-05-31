@@ -166,6 +166,11 @@ export const ui = {
     'contact.availability.b2b': 'B2B & Teams',
     'contact.availability.freelance': 'Freelance Open',
     'contact.status.aria': 'Estado de la API',
+    'contact.form.name': 'Nombre',
+    'contact.form.email': 'Correo electrónico',
+    'contact.form.subject': 'Asunto',
+    'contact.form.message': 'Mensaje',
+    'contact.form.submit': 'Enviar Mensaje',
 
     // Footer
     'footer.aria': 'Pie de página del portfolio',
@@ -338,6 +343,11 @@ export const ui = {
     'contact.availability.b2b': 'B2B & Teams',
     'contact.availability.freelance': 'Freelance Open',
     'contact.status.aria': 'API status',
+    'contact.form.name': 'Name',
+    'contact.form.email': 'Email',
+    'contact.form.subject': 'Subject',
+    'contact.form.message': 'Message',
+    'contact.form.submit': 'Send Message',
 
     // Footer
     'footer.aria': 'Portfolio footer',
