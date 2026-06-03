@@ -30,6 +30,13 @@
   --animate-glow-pulse:  glowPulse  4s ease-in-out   infinite;
 }
 
+.animate-float-y {
+  will-change: transform;
+}
+.animate-term-blink {
+  will-change: opacity;
+}
+
 /* ──────────────────────────────────────────────
    Map @theme tokens to CSS variables for consistency
    ────────────────────────────────────────────── */
@@ -533,8 +540,8 @@ select,
 }
 
 @keyframes scanline {
-  0%   { top: -2px;  }
-  100% { top: 102%;  }
+  0%   { transform: translateY(-18px); }
+  100% { transform: translateY(100%); }
 }
 
 @keyframes glowPulse {

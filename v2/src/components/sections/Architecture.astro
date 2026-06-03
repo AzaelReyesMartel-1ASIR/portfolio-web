@@ -60,8 +60,8 @@ const nTierFlow: string[] = [
             <li class="flow-node">
               <span class="node-chip">{t('architecture.node.' + node as any)}</span>
               {index < ciCdFlow.length - 1 && (
-                <span class="flow-arrow" aria-label={t('architecture.cicd.flow.arrow')}>
-                  <span aria-hidden="true">→</span>
+                <span class="flow-arrow" aria-hidden="true">
+                  <span>→</span>
                 </span>
               )}
             </li>
@@ -85,8 +85,8 @@ const nTierFlow: string[] = [
             <li class="flow-node">
               <span class="node-chip">{t('architecture.node.' + node as any)}</span>
               {index < nTierFlow.length - 1 && (
-                <span class="flow-arrow" aria-label={t('architecture.cicd.flow.arrow')}>
-                  <span aria-hidden="true">→</span>
+                <span class="flow-arrow" aria-hidden="true">
+                  <span>→</span>
                 </span>
               )}
             </li>

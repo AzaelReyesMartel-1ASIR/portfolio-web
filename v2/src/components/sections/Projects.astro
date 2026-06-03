@@ -38,7 +38,92 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
       ))}
     </div>
   </div>
+
+  <!-- Lightbox Modal -->
+  <div id="project-media-modal" class="project-media-modal hidden" aria-hidden="true" role="dialog">
+    <div class="dialog-wrapper relative rounded-2xl border border-white/10 bg-card/95 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl max-w-[85vw] max-h-[85vh] flex flex-col items-center justify-center">
+      <button id="close-dialog-btn" class="close-dialog-btn absolute -top-3 -right-3 z-50 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-card/90 text-sky hover:bg-white/15 hover:text-white transition-all cursor-pointer shadow-md" aria-label="Cerrar modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div id="dialog-content" class="w-full h-full overflow-hidden flex items-center justify-center rounded-lg">
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  let handleKeyDown: ((e: KeyboardEvent) => void) | null = null;
+
+  const setupModal = () => {
+    const modal = document.getElementById("project-media-modal");
+    const content = document.getElementById("dialog-content");
+    const closeBtn = document.getElementById("close-dialog-btn");
+
+    if (!modal || !content || !closeBtn) return;
+
+    const triggerButtons = document.querySelectorAll("[data-open-modal]");
+    triggerButtons.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const type = btn.getAttribute("data-media-type");
+        const src = btn.getAttribute("data-media-src");
+
+        if (!src) return;
+
+        content.innerHTML = "";
+
+        if (type === "video") {
+          const video = document.createElement("video");
+          video.src = src;
+          video.autoplay = true;
+          video.controls = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.className = "max-w-full max-h-[70vh] rounded-lg shadow-inner object-contain";
+          content.appendChild(video);
+        } else if (type === "image") {
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = btn.getAttribute("aria-label") || "Media preview";
+          img.className = "max-w-full max-h-[70vh] rounded-lg shadow-inner object-contain";
+          content.appendChild(img);
+        }
+
+        modal.classList.remove("hidden");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.add("hidden");
+      modal.setAttribute("aria-hidden", "true");
+      content.innerHTML = "";
+      document.body.style.overflow = "";
+    };
+
+    closeBtn.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    if (handleKeyDown) {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+    handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        closeModal();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+  };
+
+  setupModal();
+  document.addEventListener("astro:page-load", setupModal);
+</script>
 
 <style>
   .projects-grid {
@@ -57,5 +142,43 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
     .projects-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* ── Lightbox Modal Styles (div custom refactor) ── */
+  .project-media-modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(4, 8, 26, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 9500;
+  }
+  .project-media-modal.hidden {
+    display: none !important;
+  }
+
+  /* Force cursor none for system mouse pointer inside modal elements */
+  .project-media-modal,
+  .project-media-modal * {
+    cursor: none !important;
+  }
+
+  /* Light mode styles */
+  :global([data-theme="light"]) .project-media-modal {
+    background: rgba(241, 245, 249, 0.82);
+  }
+  :global([data-theme="light"]) .dialog-wrapper {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  }
+  :global([data-theme="light"]) .close-dialog-btn {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--sky);
   }
 </style>

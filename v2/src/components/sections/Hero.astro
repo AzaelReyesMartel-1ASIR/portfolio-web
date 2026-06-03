@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import yoFormal from "../../../public/img/YO-FORMAL.webp";
+import yoFormalClaro from "../../../public/img/YO-FORMAL-CLARO.webp";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -109,22 +111,24 @@ const t = useTranslations(lang);
         >
           <!-- Dark mode image (default visible) -->
           <Image
-            src="/img/YO-FORMAL.webp"
+            src={yoFormal}
             alt={t('hero.photo.alt.dark')}
-            width={300}
-            height={300}
+            widths={[150, 300]}
+            sizes="(max-width: 768px) 150px, 300px"
             class="img-dark photo-img absolute inset-0 h-full w-full object-cover object-[center_top]"
             loading="eager"
+            fetchpriority="high"
             decoding="async"
           />
           <!-- Light mode image (hidden by default, shown via CSS) -->
           <Image
-            src="/img/YO-FORMAL-CLARO.webp"
+            src={yoFormalClaro}
             alt={t('hero.photo.alt.light')}
-            width={300}
-            height={300}
+            widths={[150, 300]}
+            sizes="(max-width: 768px) 150px, 300px"
             class="img-light photo-img absolute inset-0 h-full w-full object-cover object-[center_top]"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
             decoding="async"
           />
           <div
@@ -205,15 +209,17 @@ const t = useTranslations(lang);
     position: absolute;
     left: 0;
     right: 0;
-    top: -2px;
-    height: 18px;
+    top: 0;
+    height: 100%;
     background: linear-gradient(
       to bottom,
       rgba(56, 189, 248, 0.16),
-      rgba(56, 189, 248, 0)
+      rgba(56, 189, 248, 0) 18px,
+      transparent 18px
     );
     animation: scanline 4s linear infinite;
     pointer-events: none;
+    will-change: transform;
   }
 
   .photo-ring {

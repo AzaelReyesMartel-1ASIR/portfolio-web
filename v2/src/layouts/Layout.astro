@@ -55,9 +55,7 @@ import "../styles/global.css";
         <title>{title}</title>
         <ViewTransitions />
 
-        <!-- Three.js r134 + Vanta NET — 3D topology background (hosted locally to eliminate third-party cookie audits) -->
-        <script src="/js/three.min.js" defer></script>
-        <script src="/js/vanta.net.min.js" defer></script>
+        <!-- Three.js + Vanta NET — Loaded dynamically on user interaction -->
 
         <noscript>
             <style>
@@ -172,8 +170,9 @@ import "../styles/global.css";
                 };
 
                 var MOBILE_BREAKPOINT = 768;
-                var tries = 0;
                 var vantaEffect = null;
+                var scriptsLoaded = false;
+                var scriptLoadingPromise = null;
 
                 function getThemeOptions() {
                     var isLight =
@@ -192,13 +191,35 @@ import "../styles/global.css";
                         : "linear-gradient(135deg, #04081a 0%, #0c1530 40%, #04081a 100%)";
                 }
 
-                function initVanta() {
-                    tries++;
+                function loadVantaScripts() {
+                    if (scriptsLoaded) return Promise.resolve();
+                    if (scriptLoadingPromise) return scriptLoadingPromise;
+                    scriptLoadingPromise = new Promise(function (resolve, reject) {
+                        var s1 = document.createElement("script");
+                        s1.src = "/js/three.min.js";
+                        s1.async = true;
+                        s1.onload = function () {
+                            var s2 = document.createElement("script");
+                            s2.src = "/js/vanta.net.min.js";
+                            s2.async = true;
+                            s2.onload = function () {
+                                scriptsLoaded = true;
+                                resolve();
+                            };
+                            s2.onerror = reject;
+                            document.head.appendChild(s2);
+                        };
+                        s1.onerror = reject;
+                        document.head.appendChild(s1);
+                    });
+                    return scriptLoadingPromise;
+                }
 
-                    /* ── KILL-SWITCH: no WebGL on mobile ── */
+                function initVanta() {
                     var el = document.getElementById("vanta-bg");
                     if (!el) return;
 
+                    /* ── KILL-SWITCH: no WebGL on mobile ── */
                     if (window.innerWidth < MOBILE_BREAKPOINT || matchMedia('(pointer:coarse)').matches) {
                         applyMobileFallback(el);
                         /* Listen for theme changes even on mobile to swap gradient */
@@ -212,62 +233,84 @@ import "../styles/global.css";
                         return; /* ← never touch VANTA on mobile */
                     }
 
-                    if (
-                        typeof window.VANTA === "undefined" ||
-                        typeof window.THREE === "undefined"
-                    ) {
-                        if (tries < 60) requestAnimationFrame(initVanta);
-                        return;
+                    function startVanta() {
+                        loadVantaScripts().then(function () {
+                            if (vantaEffect) return;
+
+                            var opts = getThemeOptions();
+                            vantaEffect = window.VANTA.NET({
+                                el: el,
+                                THREE: window.THREE,
+                                mouseControls: true,
+                                touchControls: false,
+                                gyroControls: false,
+                                minHeight: 200,
+                                minWidth: 200,
+                                scale: 1.0,
+                                scaleMobile: 1.0,
+                                color: opts.color,
+                                backgroundColor: opts.backgroundColor,
+                                points: 12,
+                                maxDistance: opts.maxDistance,
+                                spacing: opts.spacing,
+                                showDots: true,
+                            });
+
+                            /* ── Reactive theme observer ── */
+                            var observer = new MutationObserver(function (mutations) {
+                                mutations.forEach(function (m) {
+                                    if (
+                                        m.attributeName === "data-theme" &&
+                                        vantaEffect
+                                    ) {
+                                        var next = getThemeOptions();
+                                        vantaEffect.setOptions({
+                                            color: next.color,
+                                            backgroundColor: next.backgroundColor,
+                                            maxDistance: next.maxDistance,
+                                            spacing: next.spacing,
+                                        });
+                                    }
+                                });
+                            });
+                            observer.observe(document.documentElement, {
+                                attributes: true,
+                                attributeFilter: ["data-theme"],
+                            });
+                        }).catch(function (err) {
+                            console.error("Vanta initialization failed:", err);
+                        });
                     }
 
-                    var opts = getThemeOptions();
-                    vantaEffect = window.VANTA.NET({
-                        el: el,
-                        THREE: window.THREE,
-                        mouseControls: true,
-                        touchControls: false,
-                        gyroControls: false,
-                        minHeight: 200,
-                        minWidth: 200,
-                        scale: 1.0,
-                        scaleMobile: 1.0,
-                        color: opts.color,
-                        backgroundColor: opts.backgroundColor,
-                        points: 12,
-                        maxDistance: opts.maxDistance,
-                        spacing: opts.spacing,
-                        showDots: true,
-                    });
+                    if (scriptsLoaded) {
+                        startVanta();
+                    } else {
+                        var runOnInteraction = function () {
+                            cleanupListeners();
+                            startVanta();
+                        };
+                        var cleanupListeners = function () {
+                            window.removeEventListener("scroll", runOnInteraction);
+                            window.removeEventListener("pointermove", runOnInteraction);
+                            window.removeEventListener("touchstart", runOnInteraction);
+                            window.removeEventListener("click", runOnInteraction);
+                            window.removeEventListener("keydown", runOnInteraction);
+                        };
 
-                    /* ── Reactive theme observer ── */
-                    var observer = new MutationObserver(function (mutations) {
-                        mutations.forEach(function (m) {
-                            if (
-                                m.attributeName === "data-theme" &&
-                                vantaEffect
-                            ) {
-                                var next = getThemeOptions();
-                                vantaEffect.setOptions({
-                                    color: next.color,
-                                    backgroundColor: next.backgroundColor,
-                                    maxDistance: next.maxDistance,
-                                    spacing: next.spacing,
-                                });
-                            }
-                        });
-                    });
-                    observer.observe(document.documentElement, {
-                        attributes: true,
-                        attributeFilter: ["data-theme"],
-                    });
+                        window.addEventListener("scroll", runOnInteraction, { passive: true });
+                        window.addEventListener("pointermove", runOnInteraction, { passive: true });
+                        window.addEventListener("touchstart", runOnInteraction, { passive: true });
+                        window.addEventListener("click", runOnInteraction, { passive: true });
+                        window.addEventListener("keydown", runOnInteraction, { passive: true });
+                    }
                 }
 
                 // Initial load binding
                 if (document.readyState === "complete") {
-                    requestAnimationFrame(initVanta);
+                    initVanta();
                 } else {
                     window.addEventListener("load", function () {
-                        requestAnimationFrame(initVanta);
+                        initVanta();
                     });
                 }
 
@@ -281,8 +324,7 @@ import "../styles/global.css";
                         }
                         vantaEffect = null;
                     }
-                    tries = 0;
-                    requestAnimationFrame(initVanta);
+                    initVanta();
                 });
             })();
         </script>
