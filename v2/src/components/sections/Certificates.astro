@@ -10,6 +10,8 @@ interface CertificateItem {
   issuer: string;
   date: string;
   accent: "sky" | "violet" | "green";
+  verificationUrl?: string;
+  imageUrl?: string;
 }
 
 const certificates: CertificateItem[] = [
@@ -19,6 +21,8 @@ const certificates: CertificateItem[] = [
     issuer: "CIFP Villa de Agüimes",
     date: "2024",
     accent: "sky",
+    imageUrl: "/cert/CFGS_certs/Cert.ASIR.azael/Cert.ASIR Reyes Martel Azael (1)_page-0001.webp",
+    verificationUrl: "/cert/CFGS_certs/Cert.ASIR.azael/Cert.ASIR Reyes Martel Azael (1)_page-0001.webp",
   },
   {
     id: "daw",
@@ -26,13 +30,71 @@ const certificates: CertificateItem[] = [
     issuer: "CIFP Villa de Agüimes",
     date: "2026",
     accent: "violet",
+    imageUrl: "/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0001.webp",
+    verificationUrl: "/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0001.webp",
   },
   {
-    id: "laravel",
-    title: "PHP/Laravel Backend Certification",
-    issuer: "Bitbox SL",
+    id: "datacamp-python",
+    title: t('certificates.datacamp.python' as any),
+    issuer: "DataCamp",
+    date: "2026",
+    accent: "sky",
+    verificationUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/track/d829fc4589406624dd94dbf63428a459b5b23421?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa",
+    imageUrl: "/cert/PythonCert.webp",
+  },
+  {
+    id: "datacamp-openai",
+    title: t('certificates.datacamp.openai' as any),
+    issuer: "DataCamp",
     date: "2026",
     accent: "green",
+    verificationUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/course/08394fa2b470b2171147dbe229ed4439cbb905e1?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa",
+    imageUrl: "/cert/WorkingWopenaiAPI.webp",
+  },
+  {
+    id: "ow-bash-fund",
+    title: t('certificates.ow.bash-fund' as any),
+    issuer: "OpenWebinars",
+    date: "2023",
+    accent: "sky",
+    imageUrl: "/cert/azael_certificado_fundamentos_de_scripting_en_bash.webp",
+    verificationUrl: "/cert/azael_certificado_fundamentos_de_scripting_en_bash.webp",
+  },
+  {
+    id: "ow-bash-proc",
+    title: t('certificates.ow.bash-proc' as any),
+    issuer: "OpenWebinars",
+    date: "2023",
+    accent: "violet",
+    imageUrl: "/cert/azael_certificado_curso_de_bash_scripting_y_automatización_de_procesos.webp",
+    verificationUrl: "/cert/azael_certificado_curso_de_bash_scripting_y_automatización_de_procesos.webp",
+  },
+  {
+    id: "ow-powershell",
+    title: t('certificates.ow.powershell' as any),
+    issuer: "OpenWebinars",
+    date: "2023",
+    accent: "green",
+    imageUrl: "/cert/azael_certificado_curso_de_powershell_para_administradores.webp",
+    verificationUrl: "/cert/azael_certificado_curso_de_powershell_para_administradores.webp",
+  },
+  {
+    id: "ow-bash-users",
+    title: t('certificates.ow.bash-users' as any),
+    issuer: "OpenWebinars",
+    date: "2023",
+    accent: "sky",
+    imageUrl: "/cert/azael_certificado_automatización_de_usuarios_con_bash_scripting.webp",
+    verificationUrl: "/cert/azael_certificado_automatización_de_usuarios_con_bash_scripting.webp",
+  },
+  {
+    id: "ow-crud-php",
+    title: t('certificates.ow.crud-php' as any),
+    issuer: "OpenWebinars",
+    date: "2024",
+    accent: "violet",
+    imageUrl: "/cert/azael_certificado_creando_un_crud_con_php_mysql_html_css_y_javascript.webp",
+    verificationUrl: "/cert/azael_certificado_creando_un_crud_con_php_mysql_html_css_y_javascript.webp",
   },
 ];
 ---
@@ -87,23 +149,48 @@ const certificates: CertificateItem[] = [
             <h3 class="font-display text-xl leading-snug text-ink mb-2">{cert.title}</h3>
             <p class="text-sm text-muted mb-4">{cert.issuer}</p>
 
-            <!-- Decorative certificate mockup graphic -->
-            <div class={`h-36 rounded-xl w-full relative overflow-hidden flex items-center justify-center border border-white/5 bg-linear-to-br ${
-              cert.accent === 'sky'
-                ? 'from-[#052b48] to-[#040f28]'
-                : cert.accent === 'violet'
-                ? 'from-[#2a174c] to-[#0a081c]'
-                : 'from-[#0a3525] to-[#04120f]'
-            }`} aria-hidden="true">
-              <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 8px 8px;"></div>
-              <!-- Simulated document crest -->
-              <div class="flex flex-col items-center opacity-60">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class={`mb-2 ${
-                  cert.accent === 'sky' ? 'text-sky' : cert.accent === 'violet' ? 'text-violet' : 'text-green'
-                }`}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <span class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">Azael Reyes</span>
+            {cert.verificationUrl && (
+              <a
+                href={cert.verificationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-xs font-mono mb-4 transition-opacity hover:opacity-80 font-semibold"
+                style={`color: var(--${cert.accent});`}
+              >
+                <span>{t('certificates.verify' as any)}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </a>
+            )}
+
+            <!-- Certificate preview image or decorative mockup graphic -->
+            {cert.imageUrl ? (
+              <div class="h-36 rounded-xl w-full relative overflow-hidden border border-white/5 bg-black/40 group/certimg">
+                <img 
+                  src={cert.imageUrl} 
+                  alt={cert.title} 
+                  class="w-full h-full object-cover object-center transition-transform duration-500 group-hover/certimg:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-linear-to-t from-[#04081a]/40 to-transparent opacity-0 group-hover/certimg:opacity-100 transition-opacity duration-300"></div>
               </div>
-            </div>
+            ) : (
+              <div class={`h-36 rounded-xl w-full relative overflow-hidden flex items-center justify-center border border-white/5 bg-linear-to-br ${
+                cert.accent === 'sky'
+                  ? 'from-[#052b48] to-[#040f28]'
+                  : cert.accent === 'violet'
+                  ? 'from-[#2a174c] to-[#0a081c]'
+                  : 'from-[#0a3525] to-[#04120f]'
+              }`} aria-hidden="true">
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 8px 8px;"></div>
+                <!-- Simulated document crest -->
+                <div class="flex flex-col items-center opacity-60">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class={`mb-2 ${
+                    cert.accent === 'sky' ? 'text-sky' : cert.accent === 'violet' ? 'text-violet' : 'text-green'
+                  }`}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">Azael Reyes</span>
+                </div>
+              </div>
+            )}
           </article>
         );
       })}
