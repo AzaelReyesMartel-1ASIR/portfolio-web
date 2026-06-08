@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "./fonts.css";
 
+/* Configure Tailwind dark mode variant to use data-theme selector */
+@variant dark (html:not([data-theme="light"]) &);
+
 /* ──────────────────────────────────────────────
    Tailwind v4 theme tokens (dark mode base)
    ────────────────────────────────────────────── */
@@ -276,10 +279,10 @@ select {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99999;
+  z-index: 999999 !important;
   width: 14px;
   height: 14px;
-  pointer-events: none;
+  pointer-events: none !important;
   border-radius: 999px;
   background: #ffffff;
   mix-blend-mode: difference;
@@ -298,8 +301,8 @@ select {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99998;
-  pointer-events: none;
+  z-index: 999998 !important;
+  pointer-events: none !important;
   border-radius: 999px;
   background: var(--sky);
   /* Same: starts offscreen, JS drives transform */
@@ -331,10 +334,10 @@ select,
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99997;
+  z-index: 999997 !important;
   width: 36px;
   height: 36px;
-  pointer-events: none;
+  pointer-events: none !important;
   border-radius: 999px;
   border: 1.5px solid rgba(56, 189, 248, 0.5);
   background: transparent;
@@ -361,6 +364,8 @@ select,
     display: none;
   }
 }
+
+
 
 /* ──────────────────────────────────────────────
    Glow helpers: shared across components.
@@ -781,3 +786,26 @@ body.low-power-mode #vanta-bg {
     background: #f1f5f9 !important;
   }
 }
+
+/* ──────────────────────────────────────────────
+   Fullscreen Video Custom Cursor Support
+   ────────────────────────────────────────────── */
+.video-wrapper:fullscreen,
+.video-wrapper:fullscreen * {
+  cursor: none !important;
+}
+
+.video-wrapper:-webkit-full-screen,
+.video-wrapper:-webkit-full-screen * {
+  cursor: none !important;
+}
+
+.video-wrapper:-moz-full-screen,
+.video-wrapper:-moz-full-screen * {
+  cursor: none !important;
+}
+
+.video-wrapper:-ms-fullscreen,
+.video-wrapper:-ms-fullscreen * {
+  cursor: none !important;
+}

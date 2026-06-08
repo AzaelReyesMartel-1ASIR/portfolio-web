@@ -12,6 +12,7 @@ export interface ProjectItem {
   accent: ProjectAccent;
   featured: boolean;
   isNew?: boolean;
+  isPrivate?: boolean;
   stack: readonly string[];
   githubUrl: string;
   /** Optional dual-theme preview image paths (from /public) */
@@ -42,8 +43,9 @@ export const PROJECTS: readonly ProjectItem[] = [
     accent: "green",
     featured: false,
     isNew: true,
+    isPrivate: true,
     stack: ["Cloudflare Workers", "Hono.js", "D1 SQLite", "Drizzle ORM"],
-    githubUrl: "https://github.com/AzaelReyesMartel-1ASIR/zero-trust-edge",
+    githubUrl: "",
     singleImage: "/img/architecture-diagram.webp",
     singleImageAlt: "Diagrama de Arquitectura Zero-Trust",
   },

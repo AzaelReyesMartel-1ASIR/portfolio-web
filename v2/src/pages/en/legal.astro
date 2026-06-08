@@ -125,6 +125,12 @@ const t = useTranslations(lang);
 </Layout>
 
 <style>
+  /* Dark theme style overrides */
+  html:not([data-theme="light"]) article.spt {
+    background-color: #0f172a !important;
+    border-color: #334155 !important; /* slate-700 */
+  }
+
   :global([data-theme="light"]) .spt {
     background: #ffffff;
     border-color: rgba(0, 0, 0, 0.08);

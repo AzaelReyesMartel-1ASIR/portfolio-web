@@ -12,6 +12,10 @@ interface CertificateItem {
   accent: "sky" | "violet" | "green";
   verificationUrl?: string;
   imageUrl?: string;
+  category: "cfgs" | "datacamp" | "ow";
+  featured: boolean;
+  images: string[];
+  externalUrl?: string;
 }
 
 const certificates: CertificateItem[] = [
@@ -21,8 +25,11 @@ const certificates: CertificateItem[] = [
     issuer: "CIFP Villa de Agüimes",
     date: "2024",
     accent: "sky",
-    imageUrl: "/cert/CFGS_certs/Cert.ASIR.azael/Cert.ASIR Reyes Martel Azael (1)_page-0001.webp",
-    verificationUrl: "/cert/CFGS_certs/Cert.ASIR.azael/Cert.ASIR Reyes Martel Azael (1)_page-0001.webp",
+    imageUrl: "/cert/CFGS_certs/Cert.ASIR.azael/azael-tituloASIR.webp",
+    verificationUrl: "/cert/CFGS_certs/Cert.ASIR.azael/azael-tituloASIR.webp",
+    category: "cfgs",
+    featured: true,
+    images: ["/cert/CFGS_certs/Cert.ASIR.azael/azael-tituloASIR.webp"],
   },
   {
     id: "daw",
@@ -32,6 +39,12 @@ const certificates: CertificateItem[] = [
     accent: "violet",
     imageUrl: "/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0001.webp",
     verificationUrl: "/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0001.webp",
+    category: "cfgs",
+    featured: true,
+    images: [
+      "/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0001.webp",
+      "/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0002.webp"
+    ],
   },
   {
     id: "datacamp-python",
@@ -41,6 +54,10 @@ const certificates: CertificateItem[] = [
     accent: "sky",
     verificationUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/track/d829fc4589406624dd94dbf63428a459b5b23421?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa",
     imageUrl: "/cert/PythonCert.webp",
+    category: "datacamp",
+    featured: true,
+    images: ["/cert/PythonCert.webp"],
+    externalUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/track/d829fc4589406624dd94dbf63428a459b5b23421?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa",
   },
   {
     id: "datacamp-openai",
@@ -50,6 +67,10 @@ const certificates: CertificateItem[] = [
     accent: "green",
     verificationUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/course/08394fa2b470b2171147dbe229ed4439cbb905e1?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa",
     imageUrl: "/cert/WorkingWopenaiAPI.webp",
+    category: "datacamp",
+    featured: true,
+    images: ["/cert/WorkingWopenaiAPI.webp"],
+    externalUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/course/08394fa2b470b2171147dbe229ed4439cbb905e1?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa",
   },
   {
     id: "ow-bash-fund",
@@ -59,6 +80,9 @@ const certificates: CertificateItem[] = [
     accent: "sky",
     imageUrl: "/cert/azael_certificado_fundamentos_de_scripting_en_bash.webp",
     verificationUrl: "/cert/azael_certificado_fundamentos_de_scripting_en_bash.webp",
+    category: "ow",
+    featured: false,
+    images: ["/cert/azael_certificado_fundamentos_de_scripting_en_bash.webp"],
   },
   {
     id: "ow-bash-proc",
@@ -68,6 +92,9 @@ const certificates: CertificateItem[] = [
     accent: "violet",
     imageUrl: "/cert/azael_certificado_curso_de_bash_scripting_y_automatización_de_procesos.webp",
     verificationUrl: "/cert/azael_certificado_curso_de_bash_scripting_y_automatización_de_procesos.webp",
+    category: "ow",
+    featured: true,
+    images: ["/cert/azael_certificado_curso_de_bash_scripting_y_automatización_de_procesos.webp"],
   },
   {
     id: "ow-powershell",
@@ -77,6 +104,9 @@ const certificates: CertificateItem[] = [
     accent: "green",
     imageUrl: "/cert/azael_certificado_curso_de_powershell_para_administradores.webp",
     verificationUrl: "/cert/azael_certificado_curso_de_powershell_para_administradores.webp",
+    category: "ow",
+    featured: true,
+    images: ["/cert/azael_certificado_curso_de_powershell_para_administradores.webp"],
   },
   {
     id: "ow-bash-users",
@@ -86,6 +116,9 @@ const certificates: CertificateItem[] = [
     accent: "sky",
     imageUrl: "/cert/azael_certificado_automatización_de_usuarios_con_bash_scripting.webp",
     verificationUrl: "/cert/azael_certificado_automatización_de_usuarios_con_bash_scripting.webp",
+    category: "ow",
+    featured: false,
+    images: ["/cert/azael_certificado_automatización_de_usuarios_con_bash_scripting.webp"],
   },
   {
     id: "ow-crud-php",
@@ -95,6 +128,9 @@ const certificates: CertificateItem[] = [
     accent: "violet",
     imageUrl: "/cert/azael_certificado_creando_un_crud_con_php_mysql_html_css_y_javascript.webp",
     verificationUrl: "/cert/azael_certificado_creando_un_crud_con_php_mysql_html_css_y_javascript.webp",
+    category: "ow",
+    featured: false,
+    images: ["/cert/azael_certificado_creando_un_crud_con_php_mysql_html_css_y_javascript.webp"],
   },
 ];
 ---
@@ -118,13 +154,50 @@ const certificates: CertificateItem[] = [
       </p>
     </div>
 
+    <!-- Category filters -->
+    <div class="mb-10 flex flex-wrap gap-3 justify-start items-center reveal rd3">
+      <button
+        data-filter="featured"
+        class="cert-filter-btn px-4 py-2 text-xs font-mono tracking-wide rounded-xl border transition-all duration-200 cursor-pointer active-filter font-semibold"
+      >
+        {t('certificates.filter.featured')}
+      </button>
+      <button
+        data-filter="all"
+        class="cert-filter-btn px-4 py-2 text-xs font-mono tracking-wide rounded-xl border transition-all duration-200 cursor-pointer inactive-filter font-semibold"
+      >
+        {t('certificates.filter.all')}
+      </button>
+      <button
+        data-filter="cfgs"
+        class="cert-filter-btn px-4 py-2 text-xs font-mono tracking-wide rounded-xl border transition-all duration-200 cursor-pointer inactive-filter font-semibold"
+      >
+        {t('certificates.filter.cfgs')}
+      </button>
+      <button
+        data-filter="datacamp"
+        class="cert-filter-btn px-4 py-2 text-xs font-mono tracking-wide rounded-xl border transition-all duration-200 cursor-pointer inactive-filter font-semibold"
+      >
+        {t('certificates.filter.datacamp')}
+      </button>
+      <button
+        data-filter="ow"
+        class="cert-filter-btn px-4 py-2 text-xs font-mono tracking-wide rounded-xl border transition-all duration-200 cursor-pointer inactive-filter font-semibold"
+      >
+        {t('certificates.filter.ow')}
+      </button>
+    </div>
+
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {certificates.map((cert, index) => {
         const delayClassMap = ["rd1", "rd2", "rd3"];
         const delayClass = delayClassMap[index % 3];
+        const isFeatured = cert.featured;
         return (
           <article
-            class={`reveal ${delayClass} spt card-hover relative overflow-hidden rounded-2xl border p-6 bg-card/65 transition-all duration-300 ${
+            data-category={cert.category}
+            data-featured={isFeatured.toString()}
+            class={`cert-card reveal ${delayClass} spt card-hover relative overflow-hidden rounded-2xl border border-black/10 dark:border-slate-700 p-2 pb-4 bg-card dark:bg-[#0f172a] transition-all duration-300 ${isFeatured ? '' : 'hidden'} ${
               cert.accent === 'sky'
                 ? 'border-sky/20 hover:border-sky/45 project-accent-sky'
                 : cert.accent === 'violet'
@@ -132,55 +205,32 @@ const certificates: CertificateItem[] = [
                 : 'border-green/20 hover:border-green/45 project-accent-green'
             }`}
           >
-            <!-- Decorative certificate badge icon -->
-            <div class="flex items-center justify-between mb-6">
-              <div class={`p-2.5 rounded-xl ${
-                cert.accent === 'sky'
-                  ? 'bg-sky/10 text-sky border border-sky/20'
-                  : cert.accent === 'violet'
-                  ? 'bg-violet/10 text-violet border border-violet/20'
-                  : 'bg-green/10 text-green border border-green/20'
-              }`}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-              </div>
-              <span class="font-mono text-xs text-muted">{cert.date}</span>
-            </div>
-
-            <h3 class="font-display text-xl leading-snug text-ink mb-2">{cert.title}</h3>
-            <p class="text-sm text-muted mb-4">{cert.issuer}</p>
-
-            {cert.verificationUrl && (
-              <a
-                href={cert.verificationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 text-xs font-mono mb-4 transition-opacity hover:opacity-80 font-semibold"
-                style={`color: var(--${cert.accent});`}
-              >
-                <span>{t('certificates.verify' as any)}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-              </a>
-            )}
-
-            <!-- Certificate preview image or decorative mockup graphic -->
+            <!-- Certificate preview image container -->
             {cert.imageUrl ? (
-              <div class="h-36 rounded-xl w-full relative overflow-hidden border border-white/5 bg-black/40 group/certimg">
+              <div 
+                class="w-full aspect-[1.41/1] rounded-xl relative overflow-hidden border border-black/5 dark:border-slate-700 bg-black/40 group/certimg mb-3 cert-img-container cursor-pointer"
+                data-cert-id={cert.id}
+              >
                 <img 
                   src={cert.imageUrl} 
                   alt={cert.title} 
-                  class="w-full h-full object-cover object-center transition-transform duration-500 group-hover/certimg:scale-105"
+                  class="w-full h-full object-cover object-top transition-transform duration-500 group-hover/certimg:scale-105"
                   loading="lazy"
                 />
                 <div class="absolute inset-0 bg-linear-to-t from-[#04081a]/40 to-transparent opacity-0 group-hover/certimg:opacity-100 transition-opacity duration-300"></div>
               </div>
             ) : (
-              <div class={`h-36 rounded-xl w-full relative overflow-hidden flex items-center justify-center border border-white/5 bg-linear-to-br ${
-                cert.accent === 'sky'
-                  ? 'from-[#052b48] to-[#040f28]'
-                  : cert.accent === 'violet'
-                  ? 'from-[#2a174c] to-[#0a081c]'
-                  : 'from-[#0a3525] to-[#04120f]'
-              }`} aria-hidden="true">
+              <div 
+                class={`w-full aspect-[1.41/1] rounded-xl relative overflow-hidden flex items-center justify-center border border-black/10 dark:border-slate-700 bg-linear-to-br ${
+                  cert.accent === 'sky'
+                    ? 'from-[#052b48] to-[#040f28]'
+                    : cert.accent === 'violet'
+                    ? 'from-[#2a174c] to-[#0a081c]'
+                    : 'from-[#0a3525] to-[#04120f]'
+                } mb-3 cursor-pointer`} 
+                data-cert-id={cert.id}
+                aria-hidden="true"
+              >
                 <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 8px 8px;"></div>
                 <!-- Simulated document crest -->
                 <div class="flex flex-col items-center opacity-60">
@@ -191,9 +241,335 @@ const certificates: CertificateItem[] = [
                 </div>
               </div>
             )}
+
+
+            <div class="px-2 pb-1 flex flex-col justify-between h-auto">
+              <div>
+                <div class="flex items-center justify-between mb-1.5 text-[0.68rem] font-mono text-muted uppercase tracking-wide">
+                  <span>{cert.issuer}</span>
+                  <span class="text-muted/75">{cert.date}</span>
+                </div>
+
+                <h3 class="font-display text-[0.88rem] font-semibold leading-snug text-ink mb-2.5 line-clamp-2 min-h-[2.4rem]">
+                  {cert.title}
+                </h3>
+              </div>
+
+              {cert.verificationUrl && (
+                <a
+                  href={cert.externalUrl || "#"}
+                  target={cert.externalUrl ? "_blank" : undefined}
+                  rel={cert.externalUrl ? "noopener noreferrer" : undefined}
+                  class="inline-flex items-center gap-1 text-[0.7rem] font-mono transition-opacity hover:opacity-80 font-medium w-fit mt-auto cursor-pointer"
+                  style={`color: var(--${cert.accent});`}
+                  data-cert-id={cert.id}
+                >
+                  <span>{t('certificates.verify' as any)}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                </a>
+              )}
+            </div>
           </article>
         );
       })}
     </div>
   </div>
+
+  <!-- Lightbox modal preview for certificate credentials -->
+  <dialog
+    id="cert-lightbox"
+    class="fixed inset-0 m-auto z-[10000] rounded-2xl border border-white/10 bg-[#0c1530] p-5 md:p-7 shadow-2xl outline-none max-w-[90vw] max-h-[95vh]"
+  >
+    <div class="relative flex flex-col items-center max-w-4xl w-full mx-auto">
+      <!-- Close button -->
+      <button
+        id="close-lightbox-btn"
+        class="absolute top-0 right-0 text-muted hover:text-ink transition-colors p-2 rounded-xl bg-white/5 hover:bg-white/10 cursor-pointer"
+        aria-label="Cerrar modal"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Content Title -->
+      <h3 id="lightbox-title" class="font-display text-sm md:text-base text-ink mb-4 text-center pr-10">
+        {lang === 'en' ? 'Certificate' : 'Certificado'}
+      </h3>
+
+      <!-- Image Area -->
+      <div class="relative w-full flex items-center justify-center overflow-hidden bg-black/20 rounded-xl border border-white/5 select-none">
+        <img
+          id="lightbox-img"
+          src=""
+          alt="Vista ampliada del certificado"
+          class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-inner"
+        />
+      </div>
+
+      <!-- Pagination Controls (hidden by default unless multiple images) -->
+      <div id="lightbox-controls" class="flex items-center justify-between w-full mt-4 hidden">
+        <button
+          id="prev-lightbox-page"
+          class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-muted hover:text-ink disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+        >
+          &lt; Anterior
+        </button>
+        <span id="lightbox-page-indicator" class="font-mono text-xs text-muted">Página 1 de 1</span>
+        <button
+          id="next-lightbox-page"
+          class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-muted hover:text-ink disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+        >
+          Siguiente &gt;
+        </button>
+      </div>
+    </div>
+  </dialog>
 </section>
+
+<style>
+  /* Dark theme overrides */
+  html:not([data-theme="light"]) .cert-card {
+    background-color: #0f172a !important;
+    border-color: #334155 !important; /* slate-700 */
+  }
+  
+  html:not([data-theme="light"]) .cert-img-container {
+    border-color: #334155 !important;
+  }
+
+  /* Active Filter Button in Dark Mode */
+  html:not([data-theme="light"]) .cert-filter-btn.active-filter {
+    background-color: #0a2342 !important;
+    color: #38bdf8 !important;
+    border-color: #38bdf8 !important;
+  }
+
+  /* Inactive Filter Button in Dark Mode */
+  html:not([data-theme="light"]) .cert-filter-btn.inactive-filter {
+    background-color: #0f172a !important;
+    color: #94a3b8 !important;
+    border-color: #1e293b !important; /* slate-800 */
+  }
+
+  /* Light mode active overrides */
+  :global([data-theme="light"]) .cert-filter-btn.active-filter {
+    background-color: rgba(14, 165, 233, 0.15) !important;
+    color: #0ea5e9 !important;
+    border-color: #0ea5e9 !important;
+  }
+
+  /* Light mode inactive overrides */
+  :global([data-theme="light"]) .cert-filter-btn.inactive-filter {
+    background-color: #ffffff !important;
+    color: #475569 !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Lightbox Backdrop Styling */
+  #cert-lightbox::backdrop {
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Handles custom cursor visibility over dialog modal and backdrop */
+  #cert-lightbox,
+  #cert-lightbox * {
+    cursor: none !important;
+  }
+</style>
+
+<script>
+  // Save certificates array data in client context to avoid fetching
+  const certificatesData = [
+    { id: "asir", title: "Administración de Sistemas en Red (ASIR)", images: ["/cert/CFGS_certs/Cert.ASIR.azael/azael-tituloASIR.webp"] },
+    { id: "daw", title: "Desarrollo de Aplicaciones Web (DAW)", images: ["/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0001.webp", "/cert/CFGS_certs/Cert.DAW.azael/CertificadoDAW Azael_page-0002.webp"] },
+    { id: "datacamp-python", title: "Python para Ingeniería de Software", images: ["/cert/PythonCert.webp"], externalUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/track/d829fc4589406624dd94dbf63428a459b5b23421?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa" },
+    { id: "datacamp-openai", title: "Trabajando con la API de OpenAI", images: ["/cert/WorkingWopenaiAPI.webp"], externalUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/course/08394fa2b470b2171147dbe229ed4439cbb905e1?utm_medium=organic_social&utm_campaign=sharewidget&utm_content=soa" },
+    { id: "ow-bash-fund", title: "Fundamentos de Scripting en Bash", images: ["/cert/azael_certificado_fundamentos_de_scripting_en_bash.webp"] },
+    { id: "ow-bash-proc", title: "Curso de Bash Scripting y Automatización de Procesos", images: ["/cert/azael_certificado_curso_de_bash_scripting_y_automatización_de_procesos.webp"] },
+    { id: "ow-powershell", title: "Curso de PowerShell para Administradores", images: ["/cert/azael_certificado_curso_de_powershell_para_administradores.webp"] },
+    { id: "ow-bash-users", title: "Automatización de Usuarios con Bash Scripting", images: ["/cert/azael_certificado_automatización_de_usuarios_con_bash_scripting.webp"] },
+    { id: "ow-crud-php", title: "Creando un CRUD con PHP, MySQL, HTML, CSS y JavaScript", images: ["/cert/azael_certificado_creando_un_crud_con_php_mysql_html_css_y_javascript.webp"] }
+  ];
+
+  const initCertificates = () => {
+    // ── Certificate filter buttons and dynamic layout transitions ──
+    const buttons = document.querySelectorAll('.cert-filter-btn');
+    const cards = document.querySelectorAll('.cert-card');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-filter');
+
+        // Reset all buttons to inactive class
+        buttons.forEach(b => {
+          b.classList.remove('active-filter');
+          b.classList.add('inactive-filter');
+        });
+
+        // Set clicked button to active class
+        btn.classList.remove('inactive-filter');
+        btn.classList.add('active-filter');
+
+        cards.forEach((card, index) => {
+          const cardCat = card.getAttribute('data-category');
+          const isFeatured = card.getAttribute('data-featured') === 'true';
+
+          let show = false;
+          if (category === 'featured') {
+            show = isFeatured;
+          } else if (category === 'all') {
+            show = true;
+          } else {
+            show = (cardCat === category);
+          }
+
+          if (show) {
+            card.classList.remove('hidden');
+            // Subtle micro-animation reveal
+            const htmlCard = card as HTMLElement;
+            htmlCard.style.opacity = '0';
+            htmlCard.style.transform = 'translateY(8px)';
+            setTimeout(() => {
+              htmlCard.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+              htmlCard.style.opacity = '1';
+              htmlCard.style.transform = 'translateY(0)';
+            }, 20 + (index % 3) * 40);
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // ── Native dialog modal and carousel navigation controllers ──
+    const triggers = document.querySelectorAll('[data-cert-id]');
+    const lightbox = document.getElementById('cert-lightbox') as HTMLDialogElement;
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxControls = document.getElementById('lightbox-controls');
+    const pageIndicator = document.getElementById('lightbox-page-indicator');
+    const prevBtn = document.getElementById('prev-lightbox-page') as HTMLButtonElement;
+    const nextBtn = document.getElementById('next-lightbox-page') as HTMLButtonElement;
+    const closeBtn = document.getElementById('close-lightbox-btn');
+
+    // Query cursor elements
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorOutline = document.getElementById('cursor-outline');
+    const getTrails = () => document.querySelectorAll('.c-trail');
+
+    function promoteCursorToDialog(dlg: HTMLElement) {
+      if (cursorDot) dlg.appendChild(cursorDot);
+      if (cursorOutline) dlg.appendChild(cursorOutline);
+      getTrails().forEach(trail => dlg.appendChild(trail));
+    }
+
+    function demoteCursorToBody() {
+      if (cursorDot) document.body.appendChild(cursorDot);
+      if (cursorOutline) document.body.appendChild(cursorOutline);
+      getTrails().forEach(trail => document.body.appendChild(trail));
+    }
+
+    let currentCertImages: string[] = [];
+    let currentImageIndex = 0;
+
+    function openLightbox(cert: any) {
+      if (!lightbox || !lightboxImg || !lightboxTitle) return;
+      currentCertImages = cert.images || [];
+      currentImageIndex = 0;
+      lightboxTitle.textContent = cert.title;
+
+      updateLightboxImage();
+      
+      // Promote cursor to top layer before showing
+      promoteCursorToDialog(lightbox);
+      
+      lightbox.showModal();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightboxImage() {
+      if (!lightboxImg || !lightboxControls || !pageIndicator || !prevBtn || !nextBtn) return;
+      
+      lightboxImg.src = currentCertImages[currentImageIndex];
+
+      if (currentCertImages.length > 1) {
+        lightboxControls.classList.remove('hidden');
+        lightboxControls.classList.add('flex');
+        const isEn = document.documentElement.lang === "en";
+        pageIndicator.textContent = isEn 
+          ? `Page ${currentImageIndex + 1} of ${currentCertImages.length}`
+          : `Página ${currentImageIndex + 1} de ${currentCertImages.length}`;
+        prevBtn.disabled = currentImageIndex === 0;
+        nextBtn.disabled = currentImageIndex === currentCertImages.length - 1;
+      } else {
+        lightboxControls.classList.remove('flex');
+        lightboxControls.classList.add('hidden');
+      }
+    }
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        const certId = trigger.getAttribute('data-cert-id');
+        const cert = certificatesData.find(c => c.id === certId);
+        if (!cert) return;
+
+        if (cert.externalUrl) {
+          if (trigger.tagName !== 'A') {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open(cert.externalUrl, '_blank', 'noopener,noreferrer');
+          }
+        } else {
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(cert);
+        }
+      });
+    });
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentImageIndex > 0) {
+          currentImageIndex--;
+          updateLightboxImage();
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentImageIndex < currentCertImages.length - 1) {
+          currentImageIndex++;
+          updateLightboxImage();
+        }
+      });
+    }
+
+    if (closeBtn && lightbox) {
+      const handleClose = () => {
+        lightbox.close();
+      };
+      
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleClose();
+      });
+
+      lightbox.addEventListener('close', () => {
+        demoteCursorToBody();
+        document.body.style.overflow = '';
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          handleClose();
+        }
+      });
+    }
+  };
+
+  // Re-bind click handlers on page load and transitions
+  document.addEventListener("astro:page-load", initCertificates);
+</script>

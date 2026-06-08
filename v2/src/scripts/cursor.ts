@@ -179,12 +179,12 @@ export function initCursor(): void {
   if (_mouseEnterListener) document.removeEventListener('mouseenter', _mouseEnterListener);
   if (_windowBlurListener) window.removeEventListener('blur', _windowBlurListener);
   if (_windowFocusListener) window.removeEventListener('focus', _windowFocusListener);
-
+ 
   _mouseLeaveListener = () => document.body.classList.add('cursor-hidden');
   _mouseEnterListener = () => document.body.classList.remove('cursor-hidden');
   _windowBlurListener = () => document.body.classList.add('cursor-hidden');
   _windowFocusListener = () => document.body.classList.remove('cursor-hidden');
-
+ 
   document.addEventListener('mouseleave', _mouseLeaveListener);
   document.addEventListener('mouseenter', _mouseEnterListener);
   window.addEventListener('blur', _windowBlurListener);

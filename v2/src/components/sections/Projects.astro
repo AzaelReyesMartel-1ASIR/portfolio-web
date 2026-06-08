@@ -52,6 +52,7 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
 </section>
 
 <script>
+  let handleFullscreenRelocation: (() => void) | null = null;
   let handleKeyDown: ((e: KeyboardEvent) => void) | null = null;
 
   const setupModal = () => {
@@ -60,6 +61,23 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
     const closeBtn = document.getElementById("close-dialog-btn");
 
     if (!modal || !content || !closeBtn) return;
+
+    // Handles custom cursor elements when modal is active
+    const cursorDot = document.getElementById("cursor-dot");
+    const cursorOutline = document.getElementById("cursor-outline");
+    const getTrails = () => document.querySelectorAll(".c-trail");
+
+    const promoteCursorToModal = (container: HTMLElement) => {
+      if (cursorDot) container.appendChild(cursorDot);
+      if (cursorOutline) container.appendChild(cursorOutline);
+      getTrails().forEach((trail) => container.appendChild(trail));
+    };
+
+    const demoteCursorToBody = () => {
+      if (cursorDot) document.body.appendChild(cursorDot);
+      if (cursorOutline) document.body.appendChild(cursorOutline);
+      getTrails().forEach((trail) => document.body.appendChild(trail));
+    };
 
     const triggerButtons = document.querySelectorAll("[data-open-modal]");
     triggerButtons.forEach((btn) => {
@@ -73,14 +91,31 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
         content.innerHTML = "";
 
         if (type === "video") {
+          const videoWrapper = document.createElement("div");
+          videoWrapper.className = "video-wrapper relative overflow-hidden w-full h-full flex items-center justify-center";
+
           const video = document.createElement("video");
           video.src = src;
           video.autoplay = true;
           video.controls = true;
           video.loop = true;
           video.playsInline = true;
+          video.disablePictureInPicture = true;
+          video.setAttribute("controlslist", "nofullscreen nodownload noplaybackrate");
           video.className = "max-w-full max-h-[70vh] rounded-lg shadow-inner object-contain";
-          content.appendChild(video);
+          
+          videoWrapper.appendChild(video);
+          content.appendChild(videoWrapper);
+
+          videoWrapper.addEventListener("dblclick", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!document.fullscreenElement) {
+              videoWrapper.requestFullscreen().catch(err => console.error(err));
+            } else {
+              document.exitFullscreen().catch(err => console.error(err));
+            }
+          });
         } else if (type === "image") {
           const img = document.createElement("img");
           img.src = src;
@@ -89,6 +124,7 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
           content.appendChild(img);
         }
 
+        promoteCursorToModal(modal);
         modal.classList.remove("hidden");
         modal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
@@ -100,6 +136,7 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
       modal.setAttribute("aria-hidden", "true");
       content.innerHTML = "";
       document.body.style.overflow = "";
+      demoteCursorToBody();
     };
 
     closeBtn.addEventListener("click", closeModal);
@@ -119,6 +156,174 @@ const featuredProject: ProjectItem | undefined = PROJECTS.find((item) => item.fe
       }
     };
     window.addEventListener("keydown", handleKeyDown);
+
+    // ── Project card media interactivity and click propagation handlers ──
+    const mediaWrappers = document.querySelectorAll(".project-media-wrapper");
+    mediaWrappers.forEach((wrapper) => {
+      wrapper.addEventListener("click", (e) => {
+        const projectId = wrapper.getAttribute("data-project-id");
+        const hasVideo = wrapper.getAttribute("data-has-video") === "true";
+        const projectUrl = wrapper.getAttribute("data-project-url");
+
+        if (projectId === "openbio-waas" && hasVideo) {
+          // Play or pause the active theme-specific video player and scroll it smoothly into view
+          e.preventDefault();
+          e.stopPropagation();
+
+          const videos = wrapper.querySelectorAll("video");
+          let activeVideo: HTMLVideoElement | null = null;
+          
+          for (const video of Array.from(videos)) {
+            if (video.offsetParent !== null) {
+              activeVideo = video;
+              break;
+            }
+          }
+
+          if (activeVideo) {
+            if (e.target !== activeVideo) {
+              if (activeVideo.paused) {
+                activeVideo.play().catch(err => console.error("Error playing video:", err));
+              } else {
+                activeVideo.pause();
+              }
+            }
+            activeVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else if (projectUrl && projectUrl.trim() !== "") {
+          // Open public repository URL in a new tab
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(projectUrl, "_blank", "noopener,noreferrer");
+        } else {
+          // Open project preview image in certificates lightbox dialog if no public URL exists
+          e.preventDefault();
+          e.stopPropagation();
+
+          const certLightbox = document.getElementById('cert-lightbox') as HTMLDialogElement;
+          const certLightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+          const certLightboxTitle = document.getElementById('lightbox-title');
+          const certLightboxControls = document.getElementById('lightbox-controls');
+
+          if (certLightbox && certLightboxImg && certLightboxTitle) {
+            const imgElement = wrapper.querySelector('img');
+            const imgSrc = imgElement ? imgElement.getAttribute('src') : '';
+            const projectTitle = wrapper.closest('.project-card')?.querySelector('h3')?.textContent || 'Proyecto';
+
+            if (imgSrc) {
+              certLightboxImg.src = imgSrc;
+              certLightboxTitle.textContent = projectTitle;
+              
+              if (certLightboxControls) {
+                certLightboxControls.classList.remove('flex');
+                certLightboxControls.classList.add('hidden');
+              }
+
+              promoteCursorToModal(certLightbox);
+              certLightbox.showModal();
+              document.body.style.overflow = 'hidden';
+            }
+          }
+        }
+      });
+    });
+
+    // Handles warning for private repositories
+    const warningTriggers = document.querySelectorAll("[data-open-private-warning]");
+    warningTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const isEn = document.documentElement.lang === "en";
+        const titleText = isEn ? "Private Repository" : "Repositorio Privado";
+        const descText = isEn 
+          ? "This repository is private due to commercial confidentiality. However, you are welcome to view the backend flow diagram by clicking the card or the button next to this!"
+          : "Este repositorio es privado por confidencialidad comercial. ¡Te invito a ver el diagrama de flujo haciendo clic en la tarjeta o en el botón de al lado!";
+
+        content.innerHTML = `
+          <div class="p-6 text-center max-w-sm flex flex-col items-center select-none">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-sky/10 text-sky mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h4 class="font-display text-lg text-ink mb-2 font-semibold">${titleText}</h4>
+            <p class="text-xs text-muted leading-relaxed">${descText}</p>
+          </div>
+        `;
+
+        promoteCursorToModal(modal);
+        modal.classList.remove("hidden");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    // Double click to toggle fullscreen on video wrappers
+    const videoWrappers = document.querySelectorAll(".video-wrapper");
+    videoWrappers.forEach(vw => {
+      vw.addEventListener("dblclick", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (!document.fullscreenElement) {
+          const reqFs = vw.requestFullscreen || (vw as any).webkitRequestFullscreen || (vw as any).mozRequestFullScreen;
+          if (reqFs) reqFs.call(vw);
+        } else {
+          const exitFs = document.exitFullscreen || (document as any).webkitExitFullscreen || (document as any).mozCancelFullScreen;
+          if (exitFs) exitFs.call(document);
+        }
+      });
+    });
+
+    if (handleFullscreenRelocation) {
+      document.removeEventListener("fullscreenchange", handleFullscreenRelocation);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenRelocation);
+      document.removeEventListener("mozfullscreenchange", handleFullscreenRelocation);
+    }
+
+    // Intercept fullscreen events to redirect to the wrapper and relocate the custom cursor elements
+    handleFullscreenRelocation = () => {
+      const fullscreenElement = document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).mozFullScreenElement;
+      
+      // Redirect native <video> fullscreen requests to the parent .video-wrapper
+      if (fullscreenElement && fullscreenElement.tagName === "VIDEO") {
+        const video = fullscreenElement as HTMLVideoElement;
+        const wrapper = video.closest(".video-wrapper") as HTMLElement;
+        if (wrapper) {
+          const exitFs = document.exitFullscreen || (document as any).webkitExitFullscreen || (document as any).mozCancelFullScreen;
+          if (exitFs) {
+            exitFs.call(document).then(() => {
+              const reqFs = wrapper.requestFullscreen || (wrapper as any).webkitRequestFullscreen || (wrapper as any).mozRequestFullScreen;
+              if (reqFs) reqFs.call(wrapper);
+            }).catch(err => console.error("Error redirecting fullscreen:", err));
+          }
+          return;
+        }
+      }
+
+      // Relocate custom cursor elements so they are in the active fullscreen context (Top Layer)
+      if (fullscreenElement) {
+        if (cursorDot) fullscreenElement.appendChild(cursorDot);
+        if (cursorOutline) fullscreenElement.appendChild(cursorOutline);
+        getTrails().forEach(trail => fullscreenElement.appendChild(trail));
+      } else {
+        if (cursorDot) document.body.appendChild(cursorDot);
+        if (cursorOutline) document.body.appendChild(cursorOutline);
+        getTrails().forEach(trail => document.body.appendChild(trail));
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenRelocation);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenRelocation);
+    document.addEventListener("mozfullscreenchange", handleFullscreenRelocation);
+
+    // Prevent link and button clicks from bubbling up to card elements
+    const projectCardLinks = document.querySelectorAll(".project-card a, .project-card button");
+    projectCardLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    });
   };
 
   setupModal();
