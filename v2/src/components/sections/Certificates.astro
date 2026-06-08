@@ -370,6 +370,38 @@ const certificates: CertificateItem[] = [
     backdrop-filter: blur(8px);
   }
 
+  :global([data-theme="light"]) #cert-lightbox::backdrop {
+    background-color: rgba(241, 245, 249, 0.82);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Light mode overrides for #cert-lightbox dialog container */
+  :global([data-theme="light"]) #cert-lightbox {
+    background-color: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /* Light mode overrides for close button and pagination controls */
+  :global([data-theme="light"]) #close-lightbox-btn,
+  :global([data-theme="light"]) #prev-lightbox-page,
+  :global([data-theme="light"]) #next-lightbox-page {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    color: #475569 !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  :global([data-theme="light"]) #close-lightbox-btn:hover,
+  :global([data-theme="light"]) #prev-lightbox-page:hover,
+  :global([data-theme="light"]) #next-lightbox-page:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    color: #0f172a !important;
+  }
+
+  :global([data-theme="light"]) #cert-lightbox .border-white\/5 {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
   /* Handles custom cursor visibility over dialog modal and backdrop */
   #cert-lightbox,
   #cert-lightbox * {

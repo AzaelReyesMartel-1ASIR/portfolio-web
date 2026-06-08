@@ -307,6 +307,14 @@ const revealDelayClass = delayClassMap[index % delayClassMap.length];
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
   }
 
+  :global([data-theme="light"]) .project-link {
+    color: #0284c7 !important;
+  }
+
+  :global([data-theme="light"]) .project-link:hover {
+    color: #0369a1 !important;
+  }
+
   :global([data-theme="light"]) .project-card::before {
     background: radial-gradient(
       320px circle at var(--spot-x, 50%) var(--spot-y, 50%),
