@@ -7,7 +7,7 @@ export const defaultLang = 'es' as const;
 
 export const ui = {
   es: {
-    // Nav
+    // Nav.ts
     'nav.home': 'Inicio',
     'nav.about': 'Sobre mí',
     'nav.projects': 'Proyectos',
@@ -18,7 +18,7 @@ export const ui = {
     'cv.label': 'CV.pdf',
     'cv.aria': 'Ver CV en nueva pestaña',
 
-    // Hero
+    // Hero.ts
     'hero.aria': 'Presentación principal de Azael Reyes',
     'hero.whoami': '$ whoami',
     'hero.name': 'Azael Reyes',
@@ -33,7 +33,7 @@ export const ui = {
     'hero.photo.alt.dark': 'Foto de perfil de Azael Reyes Martel',
     'hero.photo.alt.light': 'Foto de perfil de Azael Reyes Martel (modo claro)',
 
-    // About
+    // About.ts
     'about.aria': 'Sección sobre Azael Reyes Martel',
     'about.label': '// sobre-mi.ts',
     'about.heading': 'Donde la infraestructura',
@@ -58,7 +58,7 @@ export const ui = {
     'about.timeline.aria': 'Trayectoria profesional y académica',
     'about.timeline.title': 'Trayectoria',
 
-    // Timeline items translations
+    // Timeline.ts
     'timeline.bitbox-fullstack-qa-2026.role': 'Full Stack Developer & QA',
     'timeline.bitbox-fullstack-qa-2026.period': 'Ene–Abr',
     'timeline.bitbox-fullstack-qa-2026.detail.0': 'Desarrollo backend en PHP/Laravel para arquitectura interna.',
@@ -84,9 +84,9 @@ export const ui = {
     'timeline.certifications-active.organization': 'Actualización profesional permanente',
     'timeline.certifications-active.detail.0': 'Espacio preparado para inyectar cursos de verano',
 
-    // Certificates
+    // Certificates.ts
     'certificates.aria': 'Sección de certificaciones y diplomas',
-    'certificates.label': '// certificaciones',
+    'certificates.label': '// certificates.ts',
     'certificates.title': 'Certificaciones y Logros',
     'certificates.subtitle': 'Credenciales y acreditaciones técnicas obtenidas',
     'certificates.filter.featured': 'Destacados',
@@ -103,7 +103,7 @@ export const ui = {
     'certificates.ow.bash-fund': 'Fundamentos de Scripting en Bash',
     'certificates.verify': 'Verificar credencial',
 
-    // Skills
+    // Skills.ts
     'skills.aria': 'Sección de habilidades técnicas',
     'skills.label': '// skills.ts',
     'skills.heading': 'Stack técnico listo para',
@@ -113,9 +113,9 @@ export const ui = {
     'skills.title.frontend': 'Frontend & UI',
     'skills.title.network': 'Redes & Seguridad',
 
-    // Architecture
+    // Architecture.ts
     'architecture.aria': 'Sección de arquitectura de despliegue',
-    'architecture.label': '// architecture',
+    'architecture.label': '// Architecture.ts',
     'architecture.heading': 'Diseño de',
     'architecture.heading.em': 'pipeline CI/CD y arquitectura N-Tier',
     'architecture.body': 'Flujo orientado a despliegue continuo con contenedores y separación clara de capas para frontend, servicios API y operación de infraestructura.',
@@ -128,7 +128,7 @@ export const ui = {
     'architecture.ntier.badge': 'Production Route',
     'architecture.ntier.flow.aria': 'Cadena de capas N-Tier',
 
-    // Architecture nodes
+    // Architecture.nodes.ts
     'architecture.node.pushmain': 'Push main',
     'architecture.node.githubactions': 'GitHub Actions',
     'architecture.node.buildtest': 'Compilación + Pruebas',
@@ -140,7 +140,7 @@ export const ui = {
     'architecture.node.apihono': 'API Hono',
     'architecture.node.datalayer': 'Capa de Datos',
 
-    // Projects
+    // Projects.ts
     'projects.aria': 'Sección de proyectos destacados y profesionales',
     'projects.label': '// projects.ts',
     'projects.heading': 'Proyectos con foco en',
@@ -148,7 +148,7 @@ export const ui = {
     'projects.body': 'Implementaciones orientadas a backend, despliegue y calidad técnica. Cada proyecto está alineado con objetivos de producción y mantenibilidad.',
     'projects.featured.prefix': 'Proyecto destacado actual: ',
 
-    // Project items
+    // Projects.items.ts
     'projects.item.portfolio-web.title': 'Portfolio Profesional',
     'projects.item.portfolio-web.description': 'Portfolio personal orientado a conversión con foco en backend, sistemas y despliegue.',
     'projects.item.lotusblack-ecommerce.title': 'Lotusblack E-commerce',
@@ -160,7 +160,7 @@ export const ui = {
     'projects.item.zero-trust-edge.title': 'Zero-Trust Edge API',
     'projects.item.zero-trust-edge.description': 'API Gateway Serverless desplegado en la red perimetral (Edge). Arquitectura protegida por autenticación de JWT efímeros, políticas WAF y mitigación de inyecciones SQL por diseño.',
 
-    // ProjectCard
+    // ProjectCard.ts
     'projects.badge.featured': 'FEATURED',
     'projects.badge.new': 'NEW',
     'projects.tag.project': 'proyecto',
@@ -177,7 +177,7 @@ export const ui = {
     'projects.aria.github': 'Abrir repositorio de ',
     'projects.aria.github.suffix': ' en GitHub',
 
-    // Contact
+    // Contact.ts
     'contact.aria': 'Sección de contacto profesional',
     'contact.label': '// contacto.ts',
     'contact.heading': '¿Construimos algo',
@@ -201,7 +201,7 @@ export const ui = {
     'contact.form.message': 'Mensaje',
     'contact.form.submit': 'Enviar Mensaje',
 
-    // Footer
+    // Footer.ts
     'footer.aria': 'Pie de página del portfolio',
     'footer.copy': 'built with <determination /> by Azael Reyes © 2026',
     'footer.built': 'built with',
@@ -209,7 +209,7 @@ export const ui = {
     'footer.back': 'Volver al inicio',
     'footer.legal': 'Aviso Legal & Privacidad',
 
-    // Misc
+    // Misc.ts
     'theme.toggle': 'Cambiar tema',
     'lang.toggle': 'Cambiar idioma',
     'noscript.banner': '⚠️ Para una mejor experiencia visual, con animaciones e interactividad completa, te recomendamos activar JavaScript en tu navegador. Puedes contactarme directamente por correo electrónico a continuación.',
@@ -217,7 +217,7 @@ export const ui = {
     'contact.noscript.body': 'El formulario interactivo requiere JavaScript para validar y enviar mensajes. Por favor, utiliza el botón de correo electrónico directo o mis redes sociales a continuación para ponerte en contacto inmediatamente.',
   },
   en: {
-    // Nav
+    // Nav.ts
     'nav.home': 'Home',
     'nav.about': 'About',
     'nav.projects': 'Projects',
@@ -228,7 +228,7 @@ export const ui = {
     'cv.label': 'Resume.pdf',
     'cv.aria': 'View Resume in new tab',
 
-    // Hero
+    // Hero.ts
     'hero.aria': 'Main presentation of Azael Reyes',
     'hero.whoami': '$ whoami',
     'hero.name': 'Azael Reyes',
@@ -243,7 +243,7 @@ export const ui = {
     'hero.photo.alt.dark': 'Profile picture of Azael Reyes Martel',
     'hero.photo.alt.light': 'Profile picture of Azael Reyes Martel (light mode)',
 
-    // About
+    // About.ts
     'about.aria': 'About Azael Reyes Martel section',
     'about.label': '// about-me.ts',
     'about.heading': 'Where infrastructure',
@@ -268,7 +268,7 @@ export const ui = {
     'about.timeline.aria': 'Professional and academic trajectory',
     'about.timeline.title': 'Trajectory',
 
-    // Timeline items translations
+    // Timeline.ts
     'timeline.bitbox-fullstack-qa-2026.role': 'Full Stack Developer & QA',
     'timeline.bitbox-fullstack-qa-2026.period': 'Jan–Apr',
     'timeline.bitbox-fullstack-qa-2026.detail.0': 'PHP/Laravel backend development for internal architecture.',
@@ -294,9 +294,9 @@ export const ui = {
     'timeline.certifications-active.organization': 'Permanent professional updates',
     'timeline.certifications-active.detail.0': 'Ready to showcase upcoming certifications',
 
-    // Certificates
+    // Certificates.ts
     'certificates.aria': 'Certifications and diplomas section',
-    'certificates.label': '// credentials',
+    'certificates.label': '// Certificates.ts',
     'certificates.title': 'Certifications & Achievements',
     'certificates.subtitle': 'Technical credentials and accreditations obtained',
     'certificates.filter.featured': 'Featured',
@@ -313,7 +313,7 @@ export const ui = {
     'certificates.ow.bash-fund': 'Fundamentals of Scripting in Bash',
     'certificates.verify': 'Verify credential',
 
-    // Skills
+    // Skills.ts
     'skills.aria': 'Technical skills section',
     'skills.label': '// skills.ts',
     'skills.heading': 'Technical stack ready for',
@@ -323,9 +323,9 @@ export const ui = {
     'skills.title.frontend': 'Frontend & UI',
     'skills.title.network': 'Networks & Security',
 
-    // Architecture
+    // Architecture.ts
     'architecture.aria': 'Deployment architecture section',
-    'architecture.label': '// architecture',
+    'architecture.label': '// Architecture.ts',
     'architecture.heading': 'Design of',
     'architecture.heading.em': 'CI/CD pipeline and N-Tier architecture',
     'architecture.body': 'Flow oriented towards continuous deployment with containers and clear separation of layers for frontend, API services, and infrastructure operation.',
@@ -338,7 +338,7 @@ export const ui = {
     'architecture.ntier.badge': 'Production Route',
     'architecture.ntier.flow.aria': 'N-Tier layers chain',
 
-    // Architecture nodes
+    // Architecture.nodes.ts
     'architecture.node.pushmain': 'Push main',
     'architecture.node.githubactions': 'GitHub Actions',
     'architecture.node.buildtest': 'Build + Test',
@@ -350,7 +350,7 @@ export const ui = {
     'architecture.node.apihono': 'API Hono',
     'architecture.node.datalayer': 'Data Layer',
 
-    // Projects
+    // Projects.ts
     'projects.aria': 'Featured and professional projects section',
     'projects.label': '// projects.ts',
     'projects.heading': 'Projects focused on',
@@ -358,7 +358,7 @@ export const ui = {
     'projects.body': 'Implementations focused on backend, deployment, and technical quality. Each project is aligned with production and maintainability objectives.',
     'projects.featured.prefix': 'Current featured project: ',
 
-    // Project items
+    // Projects.items.ts
     'projects.item.portfolio-web.title': 'Professional Portfolio',
     'projects.item.portfolio-web.description': 'Personal conversion-oriented portfolio focused on backend, systems, and deployment.',
     'projects.item.lotusblack-ecommerce.title': 'Lotusblack E-commerce',
@@ -370,7 +370,7 @@ export const ui = {
     'projects.item.zero-trust-edge.title': 'Zero-Trust Edge API',
     'projects.item.zero-trust-edge.description': 'Serverless API Gateway deployed at the Edge. Architecture protected by ephemeral JWT authentication, WAF policies, and SQL injection mitigation by design.',
 
-    // ProjectCard
+    // ProjectCard.ts
     'projects.badge.featured': 'FEATURED',
     'projects.badge.new': 'NEW',
     'projects.tag.project': 'project',
@@ -387,7 +387,7 @@ export const ui = {
     'projects.aria.github': 'Open repository of ',
     'projects.aria.github.suffix': ' on GitHub',
 
-    // Contact
+    // Contact.ts
     'contact.aria': 'Professional contact section',
     'contact.label': '// contact.ts',
     'contact.heading': "Let's build something",
@@ -411,7 +411,7 @@ export const ui = {
     'contact.form.message': 'Message',
     'contact.form.submit': 'Send Message',
 
-    // Footer
+    // Footer.ts
     'footer.aria': 'Portfolio footer',
     'footer.copy': 'built with <determination /> by Azael Reyes © 2026',
     'footer.built': 'built with',
@@ -419,7 +419,7 @@ export const ui = {
     'footer.back': 'Back to top',
     'footer.legal': 'Legal Notice & Privacy Policy',
 
-    // Misc
+    // Misc.ts
     'theme.toggle': 'Toggle theme',
     'lang.toggle': 'Change language',
     'noscript.banner': '⚠️ For the best visual experience, including full animations and interactivity, we recommend enabling JavaScript in your browser. You can reach out directly via email below.',
